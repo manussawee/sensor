@@ -24,5 +24,23 @@ public class DrawingUtility {
 		gc.fillText(text, x, y);
 		gc.strokeText(text, x, y);
 	}
+	
+	public static void drawGameButton(GraphicsContext gc, String text, int x, int y, int lineWidth,
+			Font font, Color fontColor, Color strokeColor, boolean isPointerOver) {
+		// TODO Auto-generated method stub
+		
+		// set property
+		gc.setFont(font);
+		gc.setFill(fontColor);
+		gc.setStroke(strokeColor);
+		gc.setLineWidth(lineWidth);
+		gc.setTextBaseline(VPos.BASELINE);
+		gc.setTextAlign(TextAlignment.LEFT);
+		
+		// draw
+		gc.fillText(text, x, y);
+		gc.strokeText(text, x, y);
+		
+	}
 
 }

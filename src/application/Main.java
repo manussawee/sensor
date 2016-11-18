@@ -32,7 +32,7 @@ public class Main extends Application {
 			}
 		});
 		
-		StartManager startManager = new StartManager();
+		StartManager startManager = new StartManager(primaryStage, currentManager);
 		currentManager = startManager;
 		
 		// create game scene

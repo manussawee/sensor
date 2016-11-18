@@ -20,7 +20,7 @@ public class GameText implements IRenderableObject {
 	
 	private int z;
 	
-	public GameText(String text, int x, int y, int lineWidth, Font font, Color fontColor, Color strokeColor) {
+	public GameText(String text, int x, int y, int z, int lineWidth, Font font, Color fontColor, Color strokeColor) {
 		this.text = text;
 		this.defaultX = x;
 		this.defaultY = y;
@@ -30,6 +30,7 @@ public class GameText implements IRenderableObject {
 		this.font = font;
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
+		this.z = z;
 	}
 
 	public int getDefaultX() {
