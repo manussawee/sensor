@@ -1,5 +1,9 @@
 package model;
 
 public class GameButton {
-	private String text = "NANAME";
+	private String text;
+	
+	public GameButton(String text) {
+		this.text = text;
+	}
 }
