@@ -7,4 +7,8 @@ public class GameButton {
 	private int x;
 	private int y;
 	private Color colorText;
+	
+	public GameButton(String text) {
+		this.text = text;
+	}
 }
