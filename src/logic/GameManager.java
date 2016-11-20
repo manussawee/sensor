@@ -1,28 +1,31 @@
 package logic;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import lib.ConfigurableOption;
 import lib.DefaultManager;
 import lib.IRenderableHolder;
 import lib.InputUtility;
 import model.Hero;
+import model.Map;
 
 public class GameManager extends DefaultManager {
-	
-	public static int[][] gameMap = new int[31][31];
-	private Hero myHero;
+
+	public static Hero myHero;
+	public static Hero enemyHero;
+	public static Map map;
 	
 	private int counter = 0;
 	
 	public GameManager() {
 		
-		for(int i = 1; i <= 30; i++) {
-			for(int j = 1; j <= 30; j++) {
-				gameMap[i][j] = 0;
-			}
-		}
+		myHero = new Hero(1, 1, 2, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, Color.BLUE, Color.CORNFLOWERBLUE, 1);
+		enemyHero = new Hero(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 2, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, Color.RED, Color.INDIANRED, 2);
 		
-		myHero = new Hero(1,1, 0);
+		map = new Map(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 0);
 		IRenderableHolder.getInstance().add(myHero);
-		gameMap[myHero.getX()][myHero.getY()] = 1;
+		IRenderableHolder.getInstance().add(enemyHero);
+		IRenderableHolder.getInstance().add(map);
 		counter = 0;
 	}
 
@@ -30,6 +33,8 @@ public class GameManager extends DefaultManager {
 	public void update() {
 		// TODO Auto-generated method stub
 		myHero.move(counter);
+		enemyHero.move(counter);
+		
 		// Reset
 		counter++;
 		InputUtility.clearKeyTriggered();

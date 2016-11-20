@@ -6,10 +6,8 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lib.DefaultManager;
-import logic.GameManager;
 import logic.StartManager;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import ui.GameScreen;
 
 public class Main extends Application {
@@ -34,7 +32,7 @@ public class Main extends Application {
 			}
 		});
 		
-		this.animationTimer = new AnimationTimer() {
+		animationTimer = new AnimationTimer() {
            
 			@Override
             public void handle(long now) {
@@ -44,14 +42,14 @@ public class Main extends Application {
         };
 		
         StartManager startManager = new StartManager(primaryStage);
-		this.currentManager = startManager;
+        currentManager = startManager;
 		
 		// create game scene
 		this.gameScreen = new GameScreen();
 		this.gameScene = new Scene(this.gameScreen);
 		this.gameScreen.requestFocusForCanvas();
         
-        this.animationTimer.start();
+        animationTimer.start();
         
 		this.primaryStage.setScene(this.gameScene);
 		this.primaryStage.show();

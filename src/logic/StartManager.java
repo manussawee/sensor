@@ -1,6 +1,5 @@
 package logic;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,9 +30,9 @@ public class StartManager extends DefaultManager {
 		this.primaryStage = primaryStage;
 		
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 3, font, Color.ORANGE, Color.BLACK);
-		startButton = new GameButton("START", 100, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
-		tutorialButton = new GameButton("TUTORIAL", 100, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
-		exitButton = new GameButton("EXIT", 100, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
+		startButton = new GameButton("START", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
+		tutorialButton = new GameButton("TUTORIAL", 50, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
+		exitButton = new GameButton("EXIT", 50, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
 		
 		
 		counter = 0;

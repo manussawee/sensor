@@ -3,25 +3,48 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import lib.DrawingUtility;
+import lib.ConfigurableOption;
 import lib.IRenderableObject;
 import lib.InputUtility;
+import logic.GameManager;
 
 public class Hero implements IRenderableObject {
 	
 	private int x;
 	private int y;
 	private int z;
+	private KeyCode up;
+	private KeyCode down;
+	private KeyCode left;
+	private KeyCode right;
+	private Color bodyColor;
+	private Color mapColor;
+	private int id;
+	private int mapChange;
 	
 	private int lastMove;
-	
-	private int radius = 50;
 
-	public Hero(int x, int y, int z) {
+	public Hero(int x, int y, int z, KeyCode up, KeyCode down, KeyCode left, KeyCode right, Color bodyColor, Color mapColor, int id) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.up = up;
+		this.down = down;
+		this.left = left;
+		this.right = right;
+		this.bodyColor = bodyColor;
+		this.mapColor = mapColor;
+		this.id = id;
+		this.mapChange = id;
 		lastMove = -5;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public Color getMapColor() {
+		return mapColor;
 	}
 
 	public int getX() {
@@ -55,28 +78,45 @@ public class Hero implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		DrawingUtility.drawHero(gc, this.x, this.y, this.radius, Color.BLUE);
+		gc.setFill(this.bodyColor);
+		gc.fillRect((this.x - GameManager.myHero.getX()) * 50 + 50 * 7.5, (this.y - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
 	}
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-//		if(counter - lastMove >= 0) {
-			if(InputUtility.getKeyPressed(KeyCode.UP)) {
-				this.y--;
-//				lastMove = counter;
+		int newX = this.x;
+		int newY = this.y;
+		
+		if(counter - lastMove >= 6) {
+			if(InputUtility.getKeyPressed(up) && this.y != 1) {
+				newY--;
 			}
-			else if(InputUtility.getKeyPressed(KeyCode.DOWN)) {
-				this.y++;
-//				lastMove = counter;
+			else if(InputUtility.getKeyPressed(down) && this.y != ConfigurableOption.mapHeight) {
+				newY++;
 			}
-			else if(InputUtility.getKeyPressed(KeyCode.LEFT)) {
-				this.x--;
-//				lastMove = counter;
+			else if(InputUtility.getKeyPressed(left) && this.x != 1) {
+				newX--;
 			}
-			else if(InputUtility.getKeyPressed(KeyCode.RIGHT)) {
-				this.x++;
-//				lastMove = counter;
+			else if(InputUtility.getKeyPressed(right) && this.x != ConfigurableOption.mapWidth) {
+				newX++;
 			}
-//		}
+			
+			if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+				lastMove = counter;
+				GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+				this.mapChange = this.id;
+				this.x = newX;
+				this.y = newY;
+				GameManager.map.setMapAt(this.x, this.y, -1);
+			}
+			else if(GameManager.map.getMapAt(newX, newY) != -1) {
+				lastMove = counter;
+				GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+				this.mapChange = -1;
+				this.x = newX;
+				this.y = newY;
+				GameManager.map.setMapAt(this.x, this.y, -1);
+			}
+		}
 	}
 }
