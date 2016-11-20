@@ -1,5 +1,6 @@
 package logic;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -10,11 +11,11 @@ import lib.InputUtility;
 import lib.Pointable;
 import model.GameButton;
 import model.GameText;
+import application.Main;
 
 public class StartManager extends DefaultManager {
 	
 	private Stage primaryStage;
-	private DefaultManager currentManager;
 	
 	private Font font = new Font("Tahoma", 72);
 	
@@ -25,10 +26,9 @@ public class StartManager extends DefaultManager {
 	
 	private int counter;
 	
-	public StartManager(Stage primaryStage, DefaultManager currentManager) {
+	public StartManager(Stage primaryStage) {
 		
 		this.primaryStage = primaryStage;
-		this.currentManager = currentManager;
 		
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 3, font, Color.ORANGE, Color.BLACK);
 		startButton = new GameButton("START", 100, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
@@ -53,7 +53,7 @@ public class StartManager extends DefaultManager {
 			if(InputUtility.isMouseLeftDown()) {
 				System.out.println("START");
 				IRenderableHolder.getInstance().getEntities().clear();
-				currentManager = null;
+				Main.changeManager(new GameManager());
 			}
 		}
 		else if(pointObject == tutorialButton) {

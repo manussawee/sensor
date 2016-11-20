@@ -6,9 +6,10 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lib.DefaultManager;
+import logic.GameManager;
 import logic.StartManager;
 import javafx.scene.Scene;
-
+import javafx.scene.input.KeyEvent;
 import ui.GameScreen;
 
 public class Main extends Application {
@@ -17,7 +18,8 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private Scene gameScene;
 	private GameScreen gameScreen;
-	private DefaultManager currentManager;
+	private static DefaultManager currentManager;
+	public static AnimationTimer animationTimer;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -32,34 +34,39 @@ public class Main extends Application {
 			}
 		});
 		
-		StartManager startManager = new StartManager(primaryStage, currentManager);
-		currentManager = startManager;
+		this.animationTimer = new AnimationTimer() {
+           
+			@Override
+            public void handle(long now) {
+				currentManager.update();
+            	gameScreen.paintComponent();
+            }
+        };
+		
+        StartManager startManager = new StartManager(primaryStage);
+		this.currentManager = startManager;
 		
 		// create game scene
 		this.gameScreen = new GameScreen();
 		this.gameScene = new Scene(this.gameScreen);
-		
-		new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-            	currentManager.update();
-            	gameScreen.paintComponent();
-            }
-        }.start();
+		this.gameScreen.requestFocusForCanvas();
+        
+        this.animationTimer.start();
         
 		this.primaryStage.setScene(this.gameScene);
 		this.primaryStage.show();
+	}
+	
+	public static void changeManager(DefaultManager manager) {
+		currentManager = manager;
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
-	public synchronized void changeScene(String sceneName) {
-		//
-	}
-	
 	public void drawGameScreen(){
 		this.gameScreen.paintComponent();
 	}
+	
 }

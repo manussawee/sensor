@@ -1,5 +1,8 @@
 package lib;
 
+import java.util.ArrayList;
+import javafx.scene.input.KeyCode;
+
 public class InputUtility {
 	
 	private static int mouseX = 0;
@@ -8,6 +11,26 @@ public class InputUtility {
 	private static boolean mouseLeftDown = false;
 	private static boolean isMouseOnScreen = false;
 	
+	private static ArrayList<KeyCode> keyPressed = new ArrayList<>();
+	private static ArrayList<KeyCode> keyTriggered = new ArrayList<>();
+	
+	public static boolean getKeyPressed(KeyCode keycode) {
+		return keyPressed.contains(keycode);
+	}
+
+	public static void setKeyPressed(KeyCode keycode, boolean pressed) {
+		if(pressed && !getKeyPressed(keycode)) keyPressed.add(keycode);
+		else if(getKeyPressed(keycode)) keyPressed.remove(keycode);
+	}
+
+	public static boolean getKeyTriggered(KeyCode keycode) {
+		return keyTriggered.contains(keycode);
+	}
+
+	public static void setKeyTriggered(KeyCode keycode, boolean pressed) {
+		if(pressed && !getKeyTriggered(keycode)) keyTriggered.add(keycode);
+		else if(getKeyTriggered(keycode)) keyTriggered.remove(keycode);
+	}
 	public static boolean isMouseOnScreen() {
 		return isMouseOnScreen;
 	}
@@ -37,5 +60,10 @@ public class InputUtility {
 	}
 	public static void setMouseY(int mouseY) {
 		InputUtility.mouseY = mouseY;
+	}
+
+	public static void clearKeyTriggered() {
+		// TODO Auto-generated method stub
+		keyTriggered.clear();
 	}
 }

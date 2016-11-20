@@ -43,4 +43,10 @@ public class DrawingUtility {
 		
 	}
 
+	public static void drawHero(GraphicsContext gc, int x, int y, int radius, Color color) {
+		// TODO Auto-generated method stub
+		gc.setFill(color);
+		gc.fillOval(x, y, radius, radius);
+	}
+
 }

@@ -2,6 +2,7 @@ package ui;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -36,7 +37,11 @@ public class GameScreen extends StackPane {
 		}
 	}
 	
-	public void addListener() {
+	public void requestFocusForCanvas(){
+		this.requestFocus();
+	}
+	
+	private void addListener() {
 		// get mouse pointer (x,y)
 		this.setOnMouseMoved((MouseEvent e) -> {
 			if(InputUtility.isMouseOnScreen()) {
@@ -56,14 +61,18 @@ public class GameScreen extends StackPane {
 		this.setOnMousePressed((MouseEvent e) -> {
 			if(e.getButton() == MouseButton.PRIMARY) {
 				InputUtility.setMouseLeftDown(true);
-//				InputUtility.setMouseLeftLastDown(true);
 			}
 		});
 		
-//		this.setOnMouseReleased((MouseEvent e) -> {
-//			if(e.getButton() == MouseButton.PRIMARY) {
-//				InputUtility.setMouseLeftDown(false);
-//			}
-//		});
+		this.setOnKeyPressed((KeyEvent e) -> {
+			if (!InputUtility.getKeyPressed(e.getCode()))
+				InputUtility.setKeyTriggered(e.getCode(), true);
+			InputUtility.setKeyPressed(e.getCode(), true);
+		});
+		
+		this.setOnKeyReleased((KeyEvent e) -> {
+			InputUtility.setKeyPressed(e.getCode(), false);
+		});
+		
 	}
 }
