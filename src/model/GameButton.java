@@ -1,10 +1,11 @@
 package model;
 
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import lib.Pointable;
-import lib.DrawingUtility;
 import lib.IRenderableObject;
 
 public class GameButton implements IRenderableObject, Pointable{
@@ -19,8 +20,6 @@ public class GameButton implements IRenderableObject, Pointable{
 	private Font font;
 	private Color fontColor; 
 	private Color strokeColor;
-	
-	private boolean isPointerOver;
 
 	private int z;
 	
@@ -96,7 +95,18 @@ public class GameButton implements IRenderableObject, Pointable{
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		DrawingUtility.drawGameButton(gc, text, x, y, lineWidth, font, fontColor, strokeColor, isPointerOver);
+
+		// set property
+		gc.setFont(font);
+		gc.setFill(fontColor);
+		gc.setStroke(strokeColor);
+		gc.setLineWidth(lineWidth);
+		gc.setTextBaseline(VPos.BASELINE);
+		gc.setTextAlign(TextAlignment.LEFT);
+				
+		// draw
+		gc.fillText(text, x, y);
+		gc.strokeText(text, x, y);
 	}
 
 }

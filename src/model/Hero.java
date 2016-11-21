@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import lib.ConfigurableOption;
 import lib.IRenderableObject;
 import lib.InputUtility;
+import lib.Requester;
 import logic.GameManager;
 
 public class Hero implements IRenderableObject {
@@ -78,44 +79,141 @@ public class Hero implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
+		if(!GameManager.isReady()) return;
 		gc.setFill(this.bodyColor);
 		gc.fillRect((this.x - GameManager.myHero.getX()) * 50 + 50 * 7.5, (this.y - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
+	}
+	
+	public boolean moveUp() {
+		
+		int newX = this.x;
+		int newY = this.y;
+		
+		if(this.y != 1) newY--;
+		else return false;
+		
+		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = this.id;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		else if(GameManager.map.getMapAt(newX, newY) != -1) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = -1;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean moveDown() {
+		
+		int newX = this.x;
+		int newY = this.y;
+		
+		if(this.y != ConfigurableOption.mapHeight) newY++;
+		else return false;
+		
+		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = this.id;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		else if(GameManager.map.getMapAt(newX, newY) != -1) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = -1;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean moveLeft() {
+		
+		int newX = this.x;
+		int newY = this.y;
+		
+		if(this.x != 1) newX--;
+		else return false;
+		
+		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = this.id;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		else if(GameManager.map.getMapAt(newX, newY) != -1) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = -1;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean moveRight() {
+		
+		int newX = this.x;
+		int newY = this.y;
+		
+		if(this.x != ConfigurableOption.mapWidth) newX++;
+		else return false;
+		
+		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = this.id;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		else if(GameManager.map.getMapAt(newX, newY) != -1) {
+			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
+			this.mapChange = -1;
+			this.x = newX;
+			this.y = newY;
+			GameManager.map.setMapAt(this.x, this.y, -1);
+			return true;
+		}
+		
+		return false;
 	}
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-		int newX = this.x;
-		int newY = this.y;
-		
 		if(counter - lastMove >= 6) {
-			if(InputUtility.getKeyPressed(up) && this.y != 1) {
-				newY--;
-			}
-			else if(InputUtility.getKeyPressed(down) && this.y != ConfigurableOption.mapHeight) {
-				newY++;
-			}
-			else if(InputUtility.getKeyPressed(left) && this.x != 1) {
-				newX--;
-			}
-			else if(InputUtility.getKeyPressed(right) && this.x != ConfigurableOption.mapWidth) {
-				newX++;
-			}
-			
-			if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			if(InputUtility.getKeyPressed(up) && moveUp()) {
 				lastMove = counter;
-				GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-				this.mapChange = this.id;
-				this.x = newX;
-				this.y = newY;
-				GameManager.map.setMapAt(this.x, this.y, -1);
+				Requester.sendMove("UP");
 			}
-			else if(GameManager.map.getMapAt(newX, newY) != -1) {
+			else if(InputUtility.getKeyPressed(down) && moveDown()) {
 				lastMove = counter;
-				GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-				this.mapChange = -1;
-				this.x = newX;
-				this.y = newY;
-				GameManager.map.setMapAt(this.x, this.y, -1);
+				Requester.sendMove("DOWN");
+			}
+			else if(InputUtility.getKeyPressed(left) && moveLeft()) {
+				lastMove = counter;
+				Requester.sendMove("LEFT");
+			}
+			else if(InputUtility.getKeyPressed(right) && moveRight()) {
+				lastMove = counter;
+				Requester.sendMove("RIGHT");
 			}
 		}
 	}

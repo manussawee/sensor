@@ -46,6 +46,8 @@ public class Map implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
+		if(!GameManager.isReady()) return;
+		
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(2);
 		gc.strokeRect((1 - GameManager.myHero.getX()) * 50 + 50 * 7.5, (1 - GameManager.myHero.getY()) * 50 + 50 * 5.5, ConfigurableOption.mapWidth * 50, ConfigurableOption.mapHeight * 50);

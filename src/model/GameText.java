@@ -1,9 +1,10 @@
 package model;
 
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import lib.DrawingUtility;
+import javafx.scene.text.TextAlignment;
 import lib.IRenderableObject;
 
 public class GameText implements IRenderableObject {
@@ -85,7 +86,17 @@ public class GameText implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		DrawingUtility.drawGameText(gc, text, x, y, lineWidth, font, fontColor, strokeColor);
+		// set property
+		gc.setFont(font);
+		gc.setFill(fontColor);
+		gc.setStroke(strokeColor);
+		gc.setLineWidth(lineWidth);
+		gc.setTextBaseline(VPos.CENTER);
+		gc.setTextAlign(TextAlignment.CENTER);
+				
+		// draw
+		gc.fillText(text, x, y);
+		gc.strokeText(text, x, y);
 	}
 
 }
