@@ -6,6 +6,7 @@ import lib.ConfigurableOption;
 import lib.DefaultManager;
 import lib.IRenderableHolder;
 import lib.InputUtility;
+import lib.Provider;
 import lib.Requester;
 import model.Hero;
 import model.Map;
@@ -16,21 +17,31 @@ public class GameManager extends DefaultManager {
 	public static Hero enemyHero;
 	public static Hero[] heroes;
 	public static Map map;
-	private static boolean isReady;
+	public static String gameType;
 	
 	private int counter = 0;
 	
-	public GameManager() {
+	public GameManager(String gameType) {
 		
+		GameManager.gameType = gameType;
 		heroes = new Hero[2];
-		isReady = false;
 		
 		map = new Map(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 0);
 		IRenderableHolder.getInstance().add(map);
 		counter = 0;
 		
-		Requester client = new Requester();
-		client.run();
+		if(gameType == "SERVER") {
+			createMyHero("0");
+			createEnemyHero("1");
+			Provider server = new Provider();
+			server.run();
+		}
+		else {
+			createMyHero("1");
+			createEnemyHero("0");
+			Requester client = new Requester("localhost");
+			client.run();
+		}
 	}
 	
 	public static void createMyHero(String position) {
@@ -66,30 +77,20 @@ public class GameManager extends DefaultManager {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(isReady) {
-			myHero.move(counter);
-			enemyHero.move(counter);
-		}
+		myHero.move(counter);
+		enemyHero.move(counter);
 		
 		// Reset
 		counter++;
 		InputUtility.clearKeyTriggered();
 	}
 
-	public static boolean isReady() {
-		return isReady;
-	}
-
-	public static void setReady(boolean isReady) {
-		GameManager.isReady = isReady;
-	}
-
 	public static void enemyMove(String move) {
 		// TODO Auto-generated method stub
-		if(move == "DOWN") enemyHero.moveDown();
-		else if(move == "UP") enemyHero.moveUp();
-		else if(move == "LEFT") enemyHero.moveLeft();
-		else if(move == "RIGHT") enemyHero.moveRight();
+		if(move.equals("DOWN")) enemyHero.moveDown();
+		else if(move.equals("UP")) enemyHero.moveUp();
+		else if(move.equals("LEFT")) enemyHero.moveLeft();
+		else if(move.equals("RIGHT")) enemyHero.moveRight();
 	}
 
 }

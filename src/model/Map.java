@@ -46,7 +46,6 @@ public class Map implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		if(!GameManager.isReady()) return;
 		
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(2);

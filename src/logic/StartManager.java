@@ -22,6 +22,7 @@ public class StartManager extends DefaultManager {
 	private GameButton startButton;
 	private GameButton tutorialButton;
 	private GameButton exitButton;
+	private GameButton clientButton;
 	
 	private int counter;
 	
@@ -30,7 +31,8 @@ public class StartManager extends DefaultManager {
 		this.primaryStage = primaryStage;
 		
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 3, font, Color.ORANGE, Color.BLACK);
-		startButton = new GameButton("START", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
+		startButton = new GameButton("SERVER", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
+		clientButton = new GameButton("CLIENT", 400, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
 		tutorialButton = new GameButton("TUTORIAL", 50, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
 		exitButton = new GameButton("EXIT", 50, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
 		
@@ -38,6 +40,7 @@ public class StartManager extends DefaultManager {
 		counter = 0;
 		IRenderableHolder.getInstance().add(gameTitle);
 		IRenderableHolder.getInstance().add(startButton);
+		IRenderableHolder.getInstance().add(clientButton);
 		IRenderableHolder.getInstance().add(tutorialButton);
 		IRenderableHolder.getInstance().add(exitButton);
 	}
@@ -52,7 +55,15 @@ public class StartManager extends DefaultManager {
 			if(InputUtility.isMouseLeftDown()) {
 				System.out.println("START");
 				IRenderableHolder.getInstance().getEntities().clear();
-				Main.changeManager(new GameManager());
+				Main.changeManager(new GameManager("SERVER"));
+			}
+		}
+		else if(pointObject == clientButton) {
+			// click
+			if(InputUtility.isMouseLeftDown()) {
+				System.out.println("START");
+				IRenderableHolder.getInstance().getEntities().clear();
+				Main.changeManager(new GameManager("CLIENT"));
 			}
 		}
 		else if(pointObject == tutorialButton) {

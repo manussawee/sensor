@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import lib.ConfigurableOption;
 import lib.IRenderableObject;
 import lib.InputUtility;
+import lib.Provider;
 import lib.Requester;
 import logic.GameManager;
 
@@ -79,7 +80,6 @@ public class Hero implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		if(!GameManager.isReady()) return;
 		gc.setFill(this.bodyColor);
 		gc.fillRect((this.x - GameManager.myHero.getX()) * 50 + 50 * 7.5, (this.y - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
 	}
@@ -198,22 +198,26 @@ public class Hero implements IRenderableObject {
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-		if(counter - lastMove >= 6) {
+		if(counter - lastMove >= 3) {
 			if(InputUtility.getKeyPressed(up) && moveUp()) {
 				lastMove = counter;
-				Requester.sendMove("UP");
+				if(GameManager.gameType == "CLIENT") Requester.sendMove("UP");
+				else Provider.sendMove("UP");
 			}
 			else if(InputUtility.getKeyPressed(down) && moveDown()) {
 				lastMove = counter;
-				Requester.sendMove("DOWN");
+				if(GameManager.gameType == "CLIENT") Requester.sendMove("DOWN");
+				else Provider.sendMove("DOWN");
 			}
 			else if(InputUtility.getKeyPressed(left) && moveLeft()) {
 				lastMove = counter;
-				Requester.sendMove("LEFT");
+				if(GameManager.gameType == "CLIENT") Requester.sendMove("LEFT");
+				else Provider.sendMove("LEFT");
 			}
 			else if(InputUtility.getKeyPressed(right) && moveRight()) {
 				lastMove = counter;
-				Requester.sendMove("RIGHT");
+				if(GameManager.gameType == "CLIENT") Requester.sendMove("RIGHT");
+				else Provider.sendMove("RIGHT");
 			}
 		}
 	}

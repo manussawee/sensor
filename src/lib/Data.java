@@ -3,25 +3,15 @@ package lib;
 public class Data {
 	private String option;
 	private String data;
-	private String channel;
 	
 	public Data(String allData) {
 		String[] rawData = allData.split(" ");
-		this.channel = rawData[0];
-		this.option = rawData[1];
-		this.data = rawData[2];
+		this.option = rawData[0];
+		this.data = rawData[1];
 	}
 
 	public String getRawData() {
-		return channel + " " + option + " " + data;
-	}
-
-	public String getChannel() {
-		return channel;
-	}
-
-	public void setChannel(String channel) {
-		this.channel = channel;
+		return option + " " + data;
 	}
 
 	public String getOption() {

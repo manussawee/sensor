@@ -11,15 +11,18 @@ public class Requester{
     ObjectInputStream in;
     String message;
     Data data;
-    String channel;
-    static String enemyChannel;
+    String ipAddress;
+    
+    public Requester(String ipAddress) {
+    	this.ipAddress = ipAddress;
+    }
 
     public void run()
     {
     	Thread thread = new Thread(() -> {
         try{
             //1. creating a socket to connect to the server
-            requestSocket = new Socket("localhost", 2004);
+            requestSocket = new Socket(ipAddress, 2004);
             System.out.println("Connected to localhost in port 2004");
             //2. get Input and Output streams
             out = new ObjectOutputStream(requestSocket.getOutputStream());
@@ -27,33 +30,14 @@ public class Requester{
             in = new ObjectInputStream(requestSocket.getInputStream());
             //3: Communicating with the server
             
-            Random rand = new Random();
-            channel = "ch_" + rand.nextInt(1000000);
-            
-            sendMessage(channel + " INIT null");
-            
             while(true) {
                 try{
-                    message = (String) in.readObject();
+                	message = (String)in.readObject();
                     data = new Data(message);
-                    System.out.println(message);
-        			if(data.getOption().equals("INIT")) {
-        				if(data.getChannel() == channel) {
-        					System.out.println("CREATE MY HERO");
-        					GameManager.createMyHero(data.getData());
-        				}
-        				else {
-        					System.out.println("CREATE ENEMY HERO");
-        					GameManager.createEnemyHero(data.getData());
-        				}
-        			}
-        			else if(data.getOption().equals("READY") && data.getChannel().equals(channel)) {
-        				GameManager.setReady(Boolean.parseBoolean(data.getData()));
-        			}
-        			else if(data.getOption().equals("MOVE") && !data.getChannel().equals(channel)){
-        				enemyChannel = data.getChannel();
-        				GameManager.enemyMove(data.getData());
-        			}
+//                    System.out.println("SERVER TO CLIENT " + message);
+                    if(data.getOption().equals("MOVE")) {
+                    	GameManager.enemyMove(data.getData());
+                    }
         			
         			Thread.sleep(1000/60);
                     
@@ -98,7 +82,7 @@ public class Requester{
         try{
             out.writeObject(msg);
             out.flush();
-            System.out.println("client>" + msg);
+//            System.out.println("client>" + msg);
         }
         catch(IOException ioException){
             ioException.printStackTrace();
@@ -106,7 +90,7 @@ public class Requester{
     }
     
     public static void sendMove(String direction) {
-    	sendMessage(enemyChannel + " MOVE " + direction);
+    	sendMessage("MOVE " + direction);
     }
     
 }
