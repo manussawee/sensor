@@ -21,7 +21,9 @@ public class GameManager extends DefaultManager {
 	
 	private int counter = 0;
 	
-	public GameManager(String gameType) {
+	public GameManager(String gameType, String ipAddress) {
+		
+		IRenderableHolder.getInstance().getEntities().clear();
 		
 		GameManager.gameType = gameType;
 		heroes = new Hero[2];
@@ -39,7 +41,7 @@ public class GameManager extends DefaultManager {
 		else {
 			createMyHero("1");
 			createEnemyHero("0");
-			Requester client = new Requester("localhost");
+			Requester client = new Requester(ipAddress);
 			client.run();
 		}
 	}
