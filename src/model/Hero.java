@@ -24,6 +24,7 @@ public class Hero implements IRenderableObject {
 	private int id;
 	private int mapChange;
 	
+	private int direction; // up=0, right=1, down=2, left=3
 	private int lastMove;
 
 	public Hero(int x, int y, int z, KeyCode up, KeyCode down, KeyCode left, KeyCode right, Color bodyColor, Color mapColor, int id) {
@@ -38,6 +39,7 @@ public class Hero implements IRenderableObject {
 		this.mapColor = mapColor;
 		this.id = id;
 		this.mapChange = id;
+		this.direction = 2;
 		lastMove = -5;
 	}
 	
@@ -68,7 +70,7 @@ public class Hero implements IRenderableObject {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -98,6 +100,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 0;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -106,6 +109,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 0;
 			return true;
 		}
 		
@@ -126,6 +130,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 2;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -134,6 +139,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 2;
 			return true;
 		}
 		
@@ -154,6 +160,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 3;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -162,6 +169,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 3;
 			return true;
 		}
 		
@@ -182,6 +190,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 1;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -190,6 +199,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			this.direction = 1;
 			return true;
 		}
 		

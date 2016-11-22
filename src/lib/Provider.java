@@ -18,9 +18,10 @@ public class Provider{
     	Thread thread = new Thread(() -> {
 	        try{
 
-	            providerSocket = new ServerSocket(2004);
+	            providerSocket = new ServerSocket(2016);
 	            System.out.println("Waiting for connection");
 	            connection = providerSocket.accept();
+	            GameManager.setReady(true);
                 System.out.println("Connection received from " + connection.getInetAddress().getHostName());
                 out = new ObjectOutputStream(connection.getOutputStream());
                 out.flush();

@@ -34,7 +34,7 @@ public class Map implements IRenderableObject {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

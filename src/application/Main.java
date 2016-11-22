@@ -13,19 +13,19 @@ import ui.GameScreen;
 public class Main extends Application {
 	
 	public static Main instance;
-	private Stage primaryStage;
-	private Scene gameScene;
-	private GameScreen gameScreen;
+	private static Stage primaryStage;
+	private static Scene gameScene;
+	private static GameScreen gameScreen;
 	private static DefaultManager currentManager;
 	public static AnimationTimer animationTimer;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		instance = this;
-		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("NONAME");
-		this.primaryStage.setResizable(false);
-		this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		Main.primaryStage = primaryStage;
+		Main.primaryStage.setTitle("NONAME");
+		Main.primaryStage.setResizable(false);
+		Main.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
 				System.exit(0);
@@ -41,20 +41,28 @@ public class Main extends Application {
             }
         };
 		
-        StartManager startManager = new StartManager(primaryStage);
+        StartManager startManager = new StartManager();
         currentManager = startManager;
 		
 		// create game scene
-		this.gameScreen = new GameScreen();
-		this.gameScene = new Scene(this.gameScreen);
-		this.gameScreen.requestFocusForCanvas();
+		Main.gameScreen = new GameScreen();
+		Main.gameScene = new Scene(Main.gameScreen);
+		Main.gameScreen.requestFocusForCanvas();
         
         animationTimer.start();
         
-		this.primaryStage.setScene(this.gameScene);
-		this.primaryStage.show();
+		Main.primaryStage.setScene(Main.gameScene);
+		Main.primaryStage.show();
 	}
 	
+	public static Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		Main.primaryStage = primaryStage;
+	}
+
 	public static void changeManager(DefaultManager manager) {
 		currentManager = manager;
 	}

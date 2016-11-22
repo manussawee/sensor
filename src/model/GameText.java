@@ -53,7 +53,7 @@ public class GameText implements IRenderableObject {
 	@Override
 	public boolean isVisible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	public void setZ(int z) {

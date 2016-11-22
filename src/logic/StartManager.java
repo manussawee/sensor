@@ -26,7 +26,7 @@ public class StartManager extends DefaultManager {
 	
 	private Stage primaryStage;
 	
-	private Font font = new Font("Tahoma", 72);
+	private Font font = new Font(null, 72);
 	
 	private GameText gameTitle;
 	private GameButton startButton;
@@ -35,17 +35,16 @@ public class StartManager extends DefaultManager {
 	
 	private int counter;
 	
-	public StartManager(Stage primaryStage) {
+	public StartManager() {
 		
 		IRenderableHolder.getInstance().getEntities().clear();
 		
-		this.primaryStage = primaryStage;
+		this.primaryStage = Main.getPrimaryStage();
 		
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 3, font, Color.ORANGE, Color.BLACK);
 		startButton = new GameButton("START", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
 		tutorialButton = new GameButton("TUTORIAL", 50, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
 		exitButton = new GameButton("EXIT", 50, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
-		
 		
 		counter = 0;
 		IRenderableHolder.getInstance().add(gameTitle);
@@ -72,8 +71,8 @@ public class StartManager extends DefaultManager {
 		
 		Button hostButton = new Button("HOST");
 		Button joinButton = new Button("JOIN");
-		subPane.add(hostButton, 1, 1);
-		subPane.add(joinButton, 2, 1);
+		subPane.add(hostButton, 2, 1);
+		subPane.add(joinButton, 1, 1);
 		
 		Scene scene = new Scene(mainPane);
 		Stage stg = new Stage();

@@ -3,7 +3,9 @@ package lib;
 import java.io.*;
 import java.net.*;
 
+import application.Main;
 import logic.GameManager;
+import logic.StartManager;
 public class Requester{
     Socket requestSocket;
     static ObjectOutputStream out;
@@ -21,7 +23,7 @@ public class Requester{
     	Thread thread = new Thread(() -> {
 	        try{
 	        	
-	            requestSocket = new Socket(ipAddress, 2004);
+	            requestSocket = new Socket(ipAddress, 2016);
 	            System.out.println("Connected to localhost in port 2004");
 	            out = new ObjectOutputStream(requestSocket.getOutputStream());
 	            out.flush();
@@ -50,6 +52,10 @@ public class Requester{
 					}
 	            }
 	            
+	        }
+	        catch(ConnectException connectExpt) {
+	        	System.out.println("server not found");
+	        	Main.changeManager(new StartManager());
 	        }
 	        catch(UnknownHostException unknownHost){
 	            System.err.println("You are trying to connect to an unknown host!");
