@@ -12,6 +12,7 @@ import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
 import lib.SocketService;
+import model.BombSkill;
 import model.DashSkill;
 import model.GameText;
 import model.Hero;
@@ -33,6 +34,10 @@ public class GameManager extends DefaultManager {
 	
 	private static int counter = 0;
 	
+	public static int getCounter() {
+		return counter;
+	}
+
 	public GameManager(String gameType, String ipAddress) {
 		
 		IRenderableHolder.getInstance().getEntities().clear();
@@ -99,8 +104,11 @@ public class GameManager extends DefaultManager {
 		
 		DashSkill dashSkill = new DashSkill(60 * 5, 50, ConfigurableOption.screenHeight - 100, 5, myHero, KeyCode.Z);
 		myHero.getSkills().add(dashSkill);
+		BombSkill bombSkill = new BombSkill(60 * 5, 125, ConfigurableOption.screenHeight - 100, 5, myHero, KeyCode.X);
+		myHero.getSkills().add(bombSkill);
 
 		IRenderableHolder.getInstance().add(dashSkill);
+		IRenderableHolder.getInstance().add(bombSkill);
 		IRenderableHolder.getInstance().add(myHero);
 		IRenderableHolder.getInstance().sort();
 	}
@@ -121,8 +129,12 @@ public class GameManager extends DefaultManager {
 		DashSkill dashSkill = new DashSkill(60 * 5, 0, 0, 0, enemyHero, null);
 		dashSkill.setVisible(false);
 		enemyHero.getSkills().add(dashSkill);
+		BombSkill bombSkill = new BombSkill(60 * 5, 125, ConfigurableOption.screenHeight - 100, 5, enemyHero, null);
+		bombSkill.setVisible(false);
+		enemyHero.getSkills().add(bombSkill);
 
 		IRenderableHolder.getInstance().add(dashSkill);
+		IRenderableHolder.getInstance().add(bombSkill);
 		IRenderableHolder.getInstance().add(enemyHero);
 		IRenderableHolder.getInstance().sort();
 	}

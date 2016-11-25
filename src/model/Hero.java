@@ -237,7 +237,7 @@ public class Hero implements IRenderableObject {
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-		if(counter - lastMove >= 3) {
+		if(counter - lastMove >= 10) {
 			if(InputUtility.getKeyPressed(up)) {
 				moveUp();
 				lastMove = counter;

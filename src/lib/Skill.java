@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import logic.GameManager;
 import model.Hero;
 
 public abstract class Skill implements IRenderableObject {
@@ -23,7 +24,7 @@ public abstract class Skill implements IRenderableObject {
 	
 	public Skill(int coolDown,int x, int y, int z, Hero hero, KeyCode keyCode) {
 		this.coolDown = coolDown;
-		this.lastUse = 0;
+		this.lastUse = -10000000;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -77,7 +78,10 @@ public abstract class Skill implements IRenderableObject {
 		gc.setFill(Color.color(1, 1, 1, 0.5));
 		gc.setStroke(Color.WHITE);
 		
-		gc.fillRoundRect(x, y, 50, 50, 5, 5);
+		int height = (int) (50 * (GameManager.getCounter() - lastUse) / coolDown);
+		if(height > 50) height = 50;
+		
+		gc.fillRoundRect(x, y + 50 - height, 50, height, 5, 5);
 		gc.strokeRoundRect(x, y, 50, 50, 5, 5);
 		
 		gc.setTextAlign(TextAlignment.CENTER);
