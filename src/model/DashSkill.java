@@ -32,10 +32,16 @@ public class DashSkill extends Skill {
 					else if(mapType != hero.getId()) hero.setMapChange(-1);
 					hero.setX(newX);
 					hero.setY(newY);
+					hero.getUltimateSkill().increaseUltimatePoint();
 				}
 				else break;
 			}
 		}
+	}
+	
+	@Override
+	public void postAction(int counter) {
+		
 	}
 	
 

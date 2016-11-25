@@ -57,7 +57,8 @@ public abstract class Skill implements IRenderableObject {
 		this.isVisible = isVisible;
 	}
 	
-	abstract public void action(int counter);
+	public abstract void action(int counter);
+	public abstract void postAction(int counter);
 
 	@Override
 	public boolean isVisible() {
@@ -74,18 +75,20 @@ public abstract class Skill implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		gc.setFont(new Font(null, 48));
 		gc.setFill(Color.color(1, 1, 1, 0.5));
+		gc.setLineWidth(2);
 		gc.setStroke(Color.WHITE);
 		
 		int height = (int) (50 * (GameManager.getCounter() - lastUse) / coolDown);
 		if(height > 50) height = 50;
 		
-		gc.fillRoundRect(x, y + 50 - height, 50, height, 5, 5);
-		gc.strokeRoundRect(x, y, 50, 50, 5, 5);
+		gc.fillRoundRect(x, y + 50 - height, 50, height, 10, 10);
+		gc.strokeRoundRect(x, y, 50, 50, 10, 10);
 		
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
+		gc.setFont(new Font(null, 48));
+		gc.setFill(Color.WHITE);
 		gc.fillText(keyCode.toString(), x + 25, y + 25);
 	}
 

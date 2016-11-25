@@ -11,6 +11,7 @@ import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
 import lib.Skill;
+import lib.UltimateSkill;
 import logic.GameManager;
 
 public class Hero implements IRenderableObject {
@@ -28,10 +29,20 @@ public class Hero implements IRenderableObject {
 	private int mapChange;
 	
 	private ArrayList<Skill> skills;
+	private UltimateSkill ultimateSkill;
 	
+	public UltimateSkill getUltimateSkill() {
+		return ultimateSkill;
+	}
+
+	public void setUltimateSkill(UltimateSkill ultimateSkill) {
+		this.ultimateSkill = ultimateSkill;
+	}
+
 	private int direction; // up=0, right=1, down=2, left=3
 
 	private int lastMove;
+	private int moveInterval;
 
 	public Hero(int x, int y, int z, KeyCode up, KeyCode down, KeyCode left, KeyCode right, Color bodyColor, Color mapColor, int id) {
 		this.x = x;
@@ -47,6 +58,7 @@ public class Hero implements IRenderableObject {
 		this.mapChange = id;
 		this.direction = 2;
 		this.skills = new ArrayList<Skill>();
+		this.moveInterval = 10;
 		lastMove = -5;
 	}
 	
@@ -112,6 +124,7 @@ public class Hero implements IRenderableObject {
 				skill.action(counter);
 				GameManager.socketService.sendSkill(skills.indexOf(skill));
 			}
+			skill.postAction(counter);
 		}
 	}
 	
@@ -131,6 +144,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -139,6 +153,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		
@@ -161,6 +176,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -169,6 +185,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		
@@ -191,6 +208,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -199,6 +217,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		
@@ -221,6 +240,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -229,6 +249,7 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
+			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
 		
@@ -237,7 +258,7 @@ public class Hero implements IRenderableObject {
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-		if(counter - lastMove >= 10) {
+		if(counter - lastMove >= moveInterval) {
 			if(InputUtility.getKeyPressed(up)) {
 				moveUp();
 				lastMove = counter;
@@ -267,5 +288,10 @@ public class Hero implements IRenderableObject {
 
 	public void setMapChange(int mapChange) {
 		this.mapChange = mapChange;
+	}
+
+	public void setMoveInterval(int moveInterval) {
+		// TODO Auto-generated method stub
+		this.moveInterval = moveInterval;
 	}
 }

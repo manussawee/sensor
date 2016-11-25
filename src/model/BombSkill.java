@@ -16,12 +16,12 @@ public class BombSkill extends Skill {
 		// TODO Auto-generated method stub
 		if(counter - lastUse >= coolDown) {
 			lastUse = counter;
-			for(int i = hero.getY() - 2; i <= hero.getY() + 2; i++) {
-				for(int j = hero.getX() - 2; j <= hero.getX() + 2; j++) {
+			for(int i = hero.getY() - 4; i <= hero.getY() + 4; i++) {
+				for(int j = hero.getX() - 4; j <= hero.getX() + 4; j++) {
 					
 					if(j == hero.getX() && i == hero.getY()) continue;
 					
-					if(Math.abs(hero.getY() - i) + Math.abs(hero.getX() - j) <= 2) {
+					if(Math.abs(hero.getY() - i) + Math.abs(hero.getX() - j) <= 4) {
 						if(GameManager.map.getMapAt(j, i) == -1) {
 							GameManager.map.setMapAt(j, i, 0);
 						}
@@ -29,6 +29,11 @@ public class BombSkill extends Skill {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void postAction(int counter) {
+		
 	}
 
 }

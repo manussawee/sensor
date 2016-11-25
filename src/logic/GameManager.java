@@ -17,6 +17,7 @@ import model.DashSkill;
 import model.GameText;
 import model.Hero;
 import model.Map;
+import model.SpeedSkill;
 import model.TransparentBackground;
 
 public class GameManager extends DefaultManager {
@@ -102,13 +103,18 @@ public class GameManager extends DefaultManager {
 		myHero = new Hero(x, y, 2, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, Color.BLUE, Color.CORNFLOWERBLUE, 1);
 		heroes[0] = myHero;
 		
-		DashSkill dashSkill = new DashSkill(60 * 5, 50, ConfigurableOption.screenHeight - 100, 5, myHero, KeyCode.Z);
+		DashSkill dashSkill = new DashSkill(60 * 5, 45, ConfigurableOption.screenHeight - 90, 5, myHero, KeyCode.Z);
 		myHero.getSkills().add(dashSkill);
-		BombSkill bombSkill = new BombSkill(60 * 5, 125, ConfigurableOption.screenHeight - 100, 5, myHero, KeyCode.X);
+		BombSkill bombSkill = new BombSkill(60 * 5, 120, ConfigurableOption.screenHeight - 90, 5, myHero, KeyCode.X);
 		myHero.getSkills().add(bombSkill);
+		
+		SpeedSkill speedSkill = new SpeedSkill(500, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 60, 5, myHero, KeyCode.C, 360);
+		myHero.getSkills().add(speedSkill);
+		myHero.setUltimateSkill(speedSkill);
 
 		IRenderableHolder.getInstance().add(dashSkill);
 		IRenderableHolder.getInstance().add(bombSkill);
+		IRenderableHolder.getInstance().add(speedSkill);
 		IRenderableHolder.getInstance().add(myHero);
 		IRenderableHolder.getInstance().sort();
 	}
@@ -132,9 +138,15 @@ public class GameManager extends DefaultManager {
 		BombSkill bombSkill = new BombSkill(60 * 5, 125, ConfigurableOption.screenHeight - 100, 5, enemyHero, null);
 		bombSkill.setVisible(false);
 		enemyHero.getSkills().add(bombSkill);
+		
+		SpeedSkill speedSkill = new SpeedSkill(500, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 140, 5, enemyHero, null, 360);
+		speedSkill.setVisible(false);
+		enemyHero.getSkills().add(speedSkill);
+		enemyHero.setUltimateSkill(speedSkill);
 
 		IRenderableHolder.getInstance().add(dashSkill);
 		IRenderableHolder.getInstance().add(bombSkill);
+		IRenderableHolder.getInstance().add(speedSkill);
 		IRenderableHolder.getInstance().add(enemyHero);
 		IRenderableHolder.getInstance().sort();
 	}
