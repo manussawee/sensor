@@ -62,6 +62,14 @@ public class Hero implements IRenderableObject {
 		lastMove = -5;
 	}
 	
+	public Color getBodyColor() {
+		return bodyColor;
+	}
+
+	public void setBodyColor(Color bodyColor) {
+		this.bodyColor = bodyColor;
+	}
+
 	public int getDirection() {
 		return direction;
 	}
@@ -139,12 +147,12 @@ public class Hero implements IRenderableObject {
 		else return false;
 		
 		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -152,7 +160,7 @@ public class Hero implements IRenderableObject {
 			this.mapChange = -1;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
@@ -171,12 +179,12 @@ public class Hero implements IRenderableObject {
 		else return false;
 		
 		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -184,7 +192,7 @@ public class Hero implements IRenderableObject {
 			this.mapChange = -1;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
@@ -203,12 +211,12 @@ public class Hero implements IRenderableObject {
 		else return false;
 		
 		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -216,7 +224,7 @@ public class Hero implements IRenderableObject {
 			this.mapChange = -1;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}
@@ -235,12 +243,12 @@ public class Hero implements IRenderableObject {
 		else return false;
 		
 		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
+			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -248,7 +256,7 @@ public class Hero implements IRenderableObject {
 			this.mapChange = -1;
 			this.x = newX;
 			this.y = newY;
-			GameManager.map.setMapAt(this.x, this.y, -1);
+//			GameManager.map.setMapAt(this.x, this.y, -1);
 			ultimateSkill.increaseUltimatePoint();
 			return true;
 		}

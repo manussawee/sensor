@@ -17,6 +17,7 @@ import model.DashSkill;
 import model.GameText;
 import model.Hero;
 import model.Map;
+import model.MiniMap;
 import model.SpeedSkill;
 import model.TransparentBackground;
 
@@ -28,6 +29,7 @@ public class GameManager extends DefaultManager {
 	public static Map map;
 	public static String gameType;
 	public static SocketService socketService;
+	public static MiniMap miniMap;
 	
 	private static GameText waitingText;
 	private static TransparentBackground waitingBG;
@@ -70,6 +72,10 @@ public class GameManager extends DefaultManager {
 			socketService = new Requester(ipAddress);
 			socketService.run();
 		}
+		
+		miniMap = new MiniMap(ConfigurableOption.screenWidth - 120, ConfigurableOption.screenHeight - 120, 5, myHero);
+		IRenderableHolder.getInstance().add(miniMap);
+		IRenderableHolder.getInstance().sort();
 	}
 	
 	public static boolean isReady() {
@@ -103,12 +109,12 @@ public class GameManager extends DefaultManager {
 		myHero = new Hero(x, y, 2, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, Color.BLUE, Color.CORNFLOWERBLUE, 1);
 		heroes[0] = myHero;
 		
-		DashSkill dashSkill = new DashSkill(60 * 5, 45, ConfigurableOption.screenHeight - 90, 5, myHero, KeyCode.Z);
+		DashSkill dashSkill = new DashSkill(60 * 5, 20, ConfigurableOption.screenHeight - 70, 5, myHero, KeyCode.Z);
 		myHero.getSkills().add(dashSkill);
-		BombSkill bombSkill = new BombSkill(60 * 5, 120, ConfigurableOption.screenHeight - 90, 5, myHero, KeyCode.X);
+		BombSkill bombSkill = new BombSkill(60 * 5, 90, ConfigurableOption.screenHeight - 70, 5, myHero, KeyCode.X);
 		myHero.getSkills().add(bombSkill);
 		
-		SpeedSkill speedSkill = new SpeedSkill(500, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 60, 5, myHero, KeyCode.C, 360);
+		SpeedSkill speedSkill = new SpeedSkill(500, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 55, 5, myHero, KeyCode.C, 360);
 		myHero.getSkills().add(speedSkill);
 		myHero.setUltimateSkill(speedSkill);
 

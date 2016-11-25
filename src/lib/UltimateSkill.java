@@ -36,10 +36,16 @@ public abstract class UltimateSkill extends Skill {
 	public void render(GraphicsContext gc) {
 		
 		gc.setFont(new Font(null, 48));
-		gc.setLineWidth(5);
-		gc.setStroke(Color.WHITE);
-		gc.setFill(Color.color(1, 1, 1, 0.5));
+		gc.setLineWidth(8);
+		
+		if(ultimatePoint < maxUltimatePoint) gc.setFill(Color.color(0, 0, 0, 0.5));
+		else gc.setFill(Color.color(1, 1, 1, 0.5));
 		gc.fillOval(x - 35, y - 35, 70, 70);
+		
+		gc.setStroke(Color.color(1, 1, 1, 0.5));
+		gc.strokeOval(x - 35, y - 35, 70, 70);
+		
+		gc.setStroke(Color.WHITE);
 		gc.strokeArc(x - 35, y - 35, 70, 70, 90 - ultimatePoint * 360 / maxUltimatePoint, ultimatePoint * 360 / maxUltimatePoint, ArcType.OPEN);
 		
 		gc.setTextAlign(TextAlignment.CENTER);
