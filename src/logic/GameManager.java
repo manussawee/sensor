@@ -11,6 +11,8 @@ import lib.IRenderableHolder;
 import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
+import lib.SocketService;
+import model.DashSkill;
 import model.GameText;
 import model.Hero;
 import model.Map;
@@ -23,12 +25,13 @@ public class GameManager extends DefaultManager {
 	public static Hero[] heroes;
 	public static Map map;
 	public static String gameType;
+	public static SocketService socketService;
 	
 	private static GameText waitingText;
 	private static TransparentBackground waitingBG;
 	private static boolean isReady;
 	
-	private int counter = 0;
+	private static int counter = 0;
 	
 	public GameManager(String gameType, String ipAddress) {
 		
@@ -50,16 +53,16 @@ public class GameManager extends DefaultManager {
 			
 			createMyHero("0");
 			createEnemyHero("1");
-			Provider server = new Provider();
-			server.run();
+			socketService = new Provider();
+			socketService.run();
 		}
 		else {
 			isReady = true;
 			
 			createMyHero("1");
 			createEnemyHero("0");
-			Requester client = new Requester(ipAddress);
-			client.run();
+			socketService = new Requester(ipAddress);
+			socketService.run();
 		}
 	}
 	
@@ -69,6 +72,7 @@ public class GameManager extends DefaultManager {
 
 	public static void setReady(boolean isReady) {
 		GameManager.isReady = isReady;
+		GameManager.counter = 0;
 		if(isReady) {
 			if(IRenderableHolder.getInstance().getEntities().contains(waitingText)) {
 				IRenderableHolder.getInstance().getEntities().remove(waitingText);
@@ -89,9 +93,16 @@ public class GameManager extends DefaultManager {
 			x = ConfigurableOption.mapWidth;
 			y = ConfigurableOption.mapHeight;
 		}
+
 		myHero = new Hero(x, y, 2, KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, Color.BLUE, Color.CORNFLOWERBLUE, 1);
 		heroes[0] = myHero;
-		IRenderableHolder.getInstance().addAndSort(myHero);
+		
+		DashSkill dashSkill = new DashSkill(60 * 5, 50, ConfigurableOption.screenHeight - 100, 5, myHero, KeyCode.Z);
+		myHero.getSkills().add(dashSkill);
+
+		IRenderableHolder.getInstance().add(dashSkill);
+		IRenderableHolder.getInstance().add(myHero);
+		IRenderableHolder.getInstance().sort();
 	}
 	
 	public static void createEnemyHero(String position) {
@@ -106,15 +117,22 @@ public class GameManager extends DefaultManager {
 		}
 		enemyHero = new Hero(x, y, 2, null, null, null, null, Color.RED, Color.INDIANRED, 2);
 		heroes[1] = enemyHero;
-		IRenderableHolder.getInstance().addAndSort(enemyHero);
+		
+		DashSkill dashSkill = new DashSkill(60 * 5, 0, 0, 0, enemyHero, null);
+		dashSkill.setVisible(false);
+		enemyHero.getSkills().add(dashSkill);
+
+		IRenderableHolder.getInstance().add(dashSkill);
+		IRenderableHolder.getInstance().add(enemyHero);
+		IRenderableHolder.getInstance().sort();
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 		if(isReady) {
-			myHero.move(counter);
-			enemyHero.move(counter);
+			myHero.update(counter);
+			enemyHero.update(counter);
 		}
 		
 		// Reset
@@ -128,6 +146,11 @@ public class GameManager extends DefaultManager {
 		else if(move.equals("UP")) enemyHero.moveUp();
 		else if(move.equals("LEFT")) enemyHero.moveLeft();
 		else if(move.equals("RIGHT")) enemyHero.moveRight();
+	}
+
+	public static void enemySkill(int index) {
+		// TODO Auto-generated method stub
+		enemyHero.getSkills().get(index).action(counter);
 	}
 
 }

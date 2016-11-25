@@ -19,7 +19,10 @@ public class InputUtility {
 	}
 
 	public static void setKeyPressed(KeyCode keycode, boolean pressed) {
-		if(pressed && !getKeyPressed(keycode)) keyPressed.add(keycode);
+		if(pressed && !getKeyPressed(keycode)) {
+			keyPressed.add(keycode);
+			keyTriggered.add(keycode);
+		}
 		else if(getKeyPressed(keycode)) keyPressed.remove(keycode);
 	}
 
@@ -28,8 +31,7 @@ public class InputUtility {
 	}
 
 	public static void setKeyTriggered(KeyCode keycode, boolean pressed) {
-		if(pressed && !getKeyTriggered(keycode)) keyTriggered.add(keycode);
-		else if(getKeyTriggered(keycode)) keyTriggered.remove(keycode);
+		if(pressed && getKeyTriggered(keycode)) keyTriggered.remove(keycode);
 	}
 	public static boolean isMouseOnScreen() {
 		return isMouseOnScreen;

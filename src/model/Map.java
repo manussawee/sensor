@@ -24,10 +24,12 @@ public class Map implements IRenderableObject {
 	}
 	
 	public void setMapAt(int x, int y, int value) {
+		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return;
 		table[y][x] = value;
 	}
 	
 	public int getMapAt(int x, int y) {
+		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return -2;
 		return table[y][x];
 	}
 
@@ -47,14 +49,14 @@ public class Map implements IRenderableObject {
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		
-		gc.setStroke(Color.BLACK);
+		gc.setStroke(Color.WHITE);
 		gc.setLineWidth(2);
 		gc.strokeRect((1 - GameManager.myHero.getX()) * 50 + 50 * 7.5, (1 - GameManager.myHero.getY()) * 50 + 50 * 5.5, ConfigurableOption.mapWidth * 50, ConfigurableOption.mapHeight * 50);
 		
 		for(int i = 1; i <= this.height; i++) {
 			for(int j = 1; j <= this.width; j++) {
 				
-				if(table[i][j] == 0) gc.setFill(Color.WHITE);
+				if(table[i][j] == 0) gc.setFill(Color.BLACK);
 				if(table[i][j] == -1) gc.setFill(Color.DARKGRAY);
 				else {
 					for(IRenderableObject obj : IRenderableHolder.getInstance().getEntities()) {

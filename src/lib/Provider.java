@@ -4,11 +4,10 @@ import java.io.*;
 import java.net.*;
 
 import logic.GameManager;
-public class Provider{
-    ServerSocket providerSocket;
+public class Provider extends SocketService{
+    
+	ServerSocket providerSocket;
     Socket connection = null;
-    static ObjectOutputStream out;
-    ObjectInputStream in;
     String message;
     Data data;
 
@@ -31,22 +30,26 @@ public class Provider{
                     try{
                         message = (String)in.readObject();
                         data = new Data(message);
-                        if(data.getOption().equals("MOVE")) {
-                        	GameManager.enemyMove(data.getData());
-                        }
-                        
+                        dataController(data);
             			Thread.sleep(1000/60);
                     }
+                    catch (EOFException e) {
+	                	System.err.println("player lost connection");
+	                	break;
+	                }
                     catch (ClassNotFoundException classNot) {
                         System.err.println("data received in unknown format");
+                        break;
                     } 
                     catch (IOException e) {
     					e.printStackTrace();
     					System.err.println("exception error");
+    					break;
     				} 
                     catch (InterruptedException e) {
     					e.printStackTrace();
     					System.err.println("sleep error");
+    					break;
     				}
                 }
 	        }
@@ -66,21 +69,5 @@ public class Provider{
     	});
     	
     	thread.start();
-    }
-
-    static void sendMessage(String msg)
-    {
-        try{
-            out.writeObject(msg);
-            out.flush();
-        }
-        catch(IOException ioException){
-            ioException.printStackTrace();
-        }
-    }
-    
-    public static void sendMove(String direction) {
-    	sendMessage("MOVE " + direction);
-    }
-    
+    }   
 }

@@ -27,13 +27,13 @@ public class GameScreen extends StackPane {
 	public void paintComponent() {
 		
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.setFill(Color.WHITE);
+		gc.setFill(Color.BLACK);
 		gc.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 		gc.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		// render 
 		for(IRenderableObject renderable: IRenderableHolder.getInstance().getEntities()) {
-			renderable.render(gc);
+			if(renderable.isVisible()) renderable.render(gc);
 		}
 	}
 	

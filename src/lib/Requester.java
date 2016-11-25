@@ -6,10 +6,8 @@ import java.net.*;
 import application.Main;
 import logic.GameManager;
 import logic.StartManager;
-public class Requester{
+public class Requester extends SocketService{
     Socket requestSocket;
-    static ObjectOutputStream out;
-    ObjectInputStream in;
     String message;
     Data data;
     String ipAddress;
@@ -24,7 +22,7 @@ public class Requester{
 	        try{
 	        	
 	            requestSocket = new Socket(ipAddress, 2016);
-	            System.out.println("Connected to localhost in port 2004");
+	            System.out.println("Connected to localhost in port 2016");
 	            out = new ObjectOutputStream(requestSocket.getOutputStream());
 	            out.flush();
 	            in = new ObjectInputStream(requestSocket.getInputStream());
@@ -33,22 +31,26 @@ public class Requester{
 	                try{
 	                	message = (String)in.readObject();
 	                    data = new Data(message);
-	                    if(data.getOption().equals("MOVE")) {
-	                    	GameManager.enemyMove(data.getData());
-	                    }
-	        			
+	                    dataController(data);
 	        			Thread.sleep(1000/60);  
+	                }
+	                catch (EOFException e) {
+	                	System.err.println("player lost connection");
+	                	break;
 	                }
 	                catch (ClassNotFoundException classNot) {
 	                    System.err.println("data received in unknown format");
+	                    break;
 	                } 
 	                catch (IOException e) {
 						e.printStackTrace();
 						System.err.println("exception error");
+						break;
 					} 
 	                catch (InterruptedException e) {
 						e.printStackTrace();
 						System.err.println("sleep error");
+						break;
 					}
 	            }
 	            
@@ -76,20 +78,6 @@ public class Requester{
     	});
     	
     	thread.start();
-    }
-    static void sendMessage(String msg)
-    {
-        try{
-            out.writeObject(msg);
-            out.flush();
-        }
-        catch(IOException ioException){
-            ioException.printStackTrace();
-        }
-    }
-    
-    public static void sendMove(String direction) {
-    	sendMessage("MOVE " + direction);
     }
     
 }

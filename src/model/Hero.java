@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -8,6 +10,7 @@ import lib.IRenderableObject;
 import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
+import lib.Skill;
 import logic.GameManager;
 
 public class Hero implements IRenderableObject {
@@ -24,7 +27,10 @@ public class Hero implements IRenderableObject {
 	private int id;
 	private int mapChange;
 	
+	private ArrayList<Skill> skills;
+	
 	private int direction; // up=0, right=1, down=2, left=3
+
 	private int lastMove;
 
 	public Hero(int x, int y, int z, KeyCode up, KeyCode down, KeyCode left, KeyCode right, Color bodyColor, Color mapColor, int id) {
@@ -40,7 +46,20 @@ public class Hero implements IRenderableObject {
 		this.id = id;
 		this.mapChange = id;
 		this.direction = 2;
+		this.skills = new ArrayList<Skill>();
 		lastMove = -5;
+	}
+	
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	
+	public ArrayList<Skill> getSkills() {
+		return skills;
 	}
 	
 	public int getId() {
@@ -86,10 +105,22 @@ public class Hero implements IRenderableObject {
 		gc.fillRect((this.x - GameManager.myHero.getX()) * 50 + 50 * 7.5, (this.y - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
 	}
 	
+	public void update(int counter) {
+		move(counter);
+		for(Skill skill: skills) {
+			if(skill.getkeyCode() != null && InputUtility.getKeyTriggered(skill.getkeyCode())) {
+				skill.action(counter);
+				GameManager.socketService.sendSkill(skills.indexOf(skill));
+			}
+		}
+	}
+	
 	public boolean moveUp() {
 		
 		int newX = this.x;
 		int newY = this.y;
+		
+		this.direction = 0;
 		
 		if(this.y != 1) newY--;
 		else return false;
@@ -100,7 +131,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 0;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -109,7 +139,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 0;
 			return true;
 		}
 		
@@ -121,6 +150,8 @@ public class Hero implements IRenderableObject {
 		int newX = this.x;
 		int newY = this.y;
 		
+		this.direction = 2;
+		
 		if(this.y != ConfigurableOption.mapHeight) newY++;
 		else return false;
 		
@@ -130,7 +161,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 2;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -139,7 +169,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 2;
 			return true;
 		}
 		
@@ -151,6 +180,8 @@ public class Hero implements IRenderableObject {
 		int newX = this.x;
 		int newY = this.y;
 		
+		this.direction = 3;
+		
 		if(this.x != 1) newX--;
 		else return false;
 		
@@ -160,7 +191,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 3;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -169,7 +199,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 3;
 			return true;
 		}
 		
@@ -181,6 +210,8 @@ public class Hero implements IRenderableObject {
 		int newX = this.x;
 		int newY = this.y;
 		
+		this.direction = 1;
+		
 		if(this.x != ConfigurableOption.mapWidth) newX++;
 		else return false;
 		
@@ -190,7 +221,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 1;
 			return true;
 		}
 		else if(GameManager.map.getMapAt(newX, newY) != -1) {
@@ -199,7 +229,6 @@ public class Hero implements IRenderableObject {
 			this.x = newX;
 			this.y = newY;
 			GameManager.map.setMapAt(this.x, this.y, -1);
-			this.direction = 1;
 			return true;
 		}
 		
@@ -209,26 +238,34 @@ public class Hero implements IRenderableObject {
 	public void move(int counter) {
 		// TODO Auto-generated method stub
 		if(counter - lastMove >= 3) {
-			if(InputUtility.getKeyPressed(up) && moveUp()) {
+			if(InputUtility.getKeyPressed(up)) {
+				moveUp();
 				lastMove = counter;
-				if(GameManager.gameType == "CLIENT") Requester.sendMove("UP");
-				else Provider.sendMove("UP");
+				GameManager.socketService.sendMove("UP");
 			}
-			else if(InputUtility.getKeyPressed(down) && moveDown()) {
+			else if(InputUtility.getKeyPressed(down)) {
+				moveDown();
 				lastMove = counter;
-				if(GameManager.gameType == "CLIENT") Requester.sendMove("DOWN");
-				else Provider.sendMove("DOWN");
+				GameManager.socketService.sendMove("DOWN");
 			}
-			else if(InputUtility.getKeyPressed(left) && moveLeft()) {
+			else if(InputUtility.getKeyPressed(left)) {
+				moveLeft();
 				lastMove = counter;
-				if(GameManager.gameType == "CLIENT") Requester.sendMove("LEFT");
-				else Provider.sendMove("LEFT");
+				GameManager.socketService.sendMove("LEFT");
 			}
-			else if(InputUtility.getKeyPressed(right) && moveRight()) {
+			else if(InputUtility.getKeyPressed(right)) {
+				moveRight();
 				lastMove = counter;
-				if(GameManager.gameType == "CLIENT") Requester.sendMove("RIGHT");
-				else Provider.sendMove("RIGHT");
+				GameManager.socketService.sendMove("RIGHT");
 			}
 		}
+	}
+
+	public int getMapChange() {
+		return mapChange;
+	}
+
+	public void setMapChange(int mapChange) {
+		this.mapChange = mapChange;
 	}
 }
