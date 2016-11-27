@@ -14,7 +14,7 @@ public class Provider extends SocketService{
     public Provider(){}
     public void run()
     {
-    	Thread thread = new Thread(() -> {
+    	thread = new Thread(() -> {
 	        try{
 
 	            providerSocket = new ServerSocket(2016);
@@ -48,7 +48,6 @@ public class Provider extends SocketService{
     				} 
                     catch (InterruptedException e) {
     					e.printStackTrace();
-    					System.err.println("sleep error");
     					break;
     				}
                 }

@@ -18,7 +18,7 @@ public class Requester extends SocketService{
 
     public void run()
     {
-    	Thread thread = new Thread(() -> {
+    	thread = new Thread(() -> {
 	        try{
 	        	
 	            requestSocket = new Socket(ipAddress, 2016);
@@ -49,7 +49,6 @@ public class Requester extends SocketService{
 					} 
 	                catch (InterruptedException e) {
 						e.printStackTrace();
-						System.err.println("sleep error");
 						break;
 					}
 	            }

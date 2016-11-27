@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.security.auth.login.Configuration;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -16,8 +18,13 @@ import logic.GameManager;
 
 public class Hero implements IRenderableObject {
 	
+	public static final int[] addX = {0, 1, 0, -1};
+	public static final int[] addY = {-1, 0, 1, 0};
+	
 	private int x;
 	private int y;
+	private double drawX;
+	private double drawY;
 	private int z;
 	private KeyCode up;
 	private KeyCode down;
@@ -27,6 +34,10 @@ public class Hero implements IRenderableObject {
 	private Color mapColor;
 	private int id;
 	private int mapChange;
+	
+	private int direction; // up=0, right=1, down=2, left=3
+	private int lastMove;
+	private int moveInterval;
 	
 	private ArrayList<Skill> skills;
 	private UltimateSkill ultimateSkill;
@@ -38,11 +49,6 @@ public class Hero implements IRenderableObject {
 	public void setUltimateSkill(UltimateSkill ultimateSkill) {
 		this.ultimateSkill = ultimateSkill;
 	}
-
-	private int direction; // up=0, right=1, down=2, left=3
-
-	private int lastMove;
-	private int moveInterval;
 
 	public Hero(int x, int y, int z, KeyCode up, KeyCode down, KeyCode left, KeyCode right, Color bodyColor, Color mapColor, int id) {
 		this.x = x;
@@ -59,7 +65,10 @@ public class Hero implements IRenderableObject {
 		this.direction = 2;
 		this.skills = new ArrayList<Skill>();
 		this.moveInterval = 10;
-		lastMove = -5;
+		this.lastMove = -100;
+		
+		this.drawX = (this.x - 1) * 50; 
+		this.drawY = (this.y - 1) * 50;
 	}
 	
 	public Color getBodyColor() {
@@ -122,169 +131,104 @@ public class Hero implements IRenderableObject {
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		gc.setFill(this.bodyColor);
-		gc.fillRect((this.x - GameManager.myHero.getX()) * 50 + 50 * 7.5, (this.y - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
+		gc.fillRect(this.drawX + GameManager.screenOffsetX(), this.drawY + GameManager.screenOffsetY(), 50, 50);
 	}
 	
+	public double getDrawX() {
+		return drawX;
+	}
+
+	public void setDrawX(double drawX) {
+		this.drawX = drawX;
+	}
+
+	public double getDrawY() {
+		return drawY;
+	}
+
+	public void setDrawY(double drawY) {
+		this.drawY = drawY;
+	}
+
 	public void update(int counter) {
-		move(counter);
+		
+		// calculate skill
 		for(Skill skill: skills) {
 			if(skill.getkeyCode() != null && InputUtility.getKeyTriggered(skill.getkeyCode())) {
 				skill.action(counter);
 				GameManager.socketService.sendSkill(skills.indexOf(skill));
 			}
-			skill.postAction(counter);
 		}
+		
+		// move
+		move(counter);
+		
+		// calculate position
+		this.drawX = (this.x - 1) * 50; 
+		this.drawY = (this.y - 1) * 50;
+				
+		if(counter - this.lastMove <= this.moveInterval) {
+			this.drawX += addX[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
+			this.drawY += addY[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
+			if(counter - this.lastMove == this.moveInterval) {
+				this.x += addX[this.direction];
+				this.y += addY[this.direction];
+			}
+		}
+				
+		for(Skill skill: skills) skill.postAction(counter);
+		
 	}
 	
-	public boolean moveUp() {
+	public boolean startMove(String directionString) {
+		if(directionString.equals("UP")) this.direction = 0;
+		else if(directionString.equals("RIGHT")) this.direction = 1;
+		else if(directionString.equals("DOWN")) this.direction = 2;
+		else if(directionString.equals("LEFT")) this.direction = 3;
 		
-		int newX = this.x;
-		int newY = this.y;
+		int newX = this.x + addX[this.direction];
+		int newY = this.y + addY[this.direction];
+		int mapType = GameManager.map.getMapAt(newX, newY);
 		
-		this.direction = 0;
-		
-		if(this.y != 1) newY--;
-		else return false;
-		
-		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
-			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
+		if(mapType == 0) {
+			this.ultimateSkill.increaseUltimatePoint();
+			this.lastMove = GameManager.getCounter();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			return true;
 		}
-		else if(GameManager.map.getMapAt(newX, newY) != -1) {
-			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-			this.mapChange = -1;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public boolean moveDown() {
-		
-		int newX = this.x;
-		int newY = this.y;
-		
-		this.direction = 2;
-		
-		if(this.y != ConfigurableOption.mapHeight) newY++;
-		else return false;
-		
-		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
-			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
+		else if(mapType == this.id) {
+			this.lastMove = GameManager.getCounter();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = this.id;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			return true;
 		}
-		else if(GameManager.map.getMapAt(newX, newY) != -1) {
+		else if(mapType > 0) {
+			this.ultimateSkill.increaseUltimatePoint();
+			this.lastMove = GameManager.getCounter();
 			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
 			this.mapChange = -1;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
-			return true;
 		}
-		
-		return false;
-	}
-	
-	public boolean moveLeft() {
-		
-		int newX = this.x;
-		int newY = this.y;
-		
-		this.direction = 3;
-		
-		if(this.x != 1) newX--;
 		else return false;
 		
-		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
-			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
-			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-			this.mapChange = this.id;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			return true;
-		}
-		else if(GameManager.map.getMapAt(newX, newY) != -1) {
-			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-			this.mapChange = -1;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public boolean moveRight() {
-		
-		int newX = this.x;
-		int newY = this.y;
-		
-		this.direction = 1;
-		
-		if(this.x != ConfigurableOption.mapWidth) newX++;
-		else return false;
-		
-		if(GameManager.map.getMapAt(newX, newY) == 0 || GameManager.map.getMapAt(newX, newY) == this.id) {
-			if(GameManager.map.getMapAt(newX, newY) == 0) ultimateSkill.increaseUltimatePoint();
-			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-			this.mapChange = this.id;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			return true;
-		}
-		else if(GameManager.map.getMapAt(newX, newY) != -1) {
-			GameManager.map.setMapAt(this.x, this.y, this.mapChange);
-			this.mapChange = -1;
-			this.x = newX;
-			this.y = newY;
-//			GameManager.map.setMapAt(this.x, this.y, -1);
-			ultimateSkill.increaseUltimatePoint();
-			return true;
-		}
-		
-		return false;
+		return true; 
 	}
 
 	public void move(int counter) {
 		// TODO Auto-generated method stub
-		if(counter - lastMove >= moveInterval) {
+		if(counter - lastMove > moveInterval) {
 			if(InputUtility.getKeyPressed(up)) {
-				moveUp();
-				lastMove = counter;
+				startMove("UP");
 				GameManager.socketService.sendMove("UP");
 			}
 			else if(InputUtility.getKeyPressed(down)) {
-				moveDown();
-				lastMove = counter;
+				startMove("DOWN");
 				GameManager.socketService.sendMove("DOWN");
 			}
 			else if(InputUtility.getKeyPressed(left)) {
-				moveLeft();
-				lastMove = counter;
+				startMove("LEFT");
 				GameManager.socketService.sendMove("LEFT");
 			}
 			else if(InputUtility.getKeyPressed(right)) {
-				moveRight();
-				lastMove = counter;
+				startMove("RIGHT");
 				GameManager.socketService.sendMove("RIGHT");
 			}
 		}
@@ -301,5 +245,20 @@ public class Hero implements IRenderableObject {
 	public void setMoveInterval(int moveInterval) {
 		// TODO Auto-generated method stub
 		this.moveInterval = moveInterval;
+	}
+
+	public int getMoveInterval() {
+		// TODO Auto-generated method stub
+		return this.moveInterval;
+	}
+
+	public int getLastMove() {
+		// TODO Auto-generated method stub
+		return this.lastMove;
+	}
+
+	public void setLastMove(int lastMove) {
+		// TODO Auto-generated method stub
+		this.lastMove = lastMove;
 	}
 }

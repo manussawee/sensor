@@ -81,6 +81,14 @@ public class GameManager extends DefaultManager {
 	public static boolean isReady() {
 		return isReady;
 	}
+	
+	public static double screenOffsetX() {
+		return - GameManager.myHero.getDrawX() + ConfigurableOption.screenWidth / 2 - 25;
+	}
+	
+	public static double screenOffsetY() {
+		return - GameManager.myHero.getDrawY() + ConfigurableOption.screenHeight / 2 - 25;
+	}
 
 	public static void setReady(boolean isReady) {
 		GameManager.isReady = isReady;
@@ -172,10 +180,7 @@ public class GameManager extends DefaultManager {
 
 	public static void enemyMove(String move) {
 		// TODO Auto-generated method stub
-		if(move.equals("DOWN")) enemyHero.moveDown();
-		else if(move.equals("UP")) enemyHero.moveUp();
-		else if(move.equals("LEFT")) enemyHero.moveLeft();
-		else if(move.equals("RIGHT")) enemyHero.moveRight();
+		enemyHero.startMove(move);
 	}
 
 	public static void enemySkill(int index) {

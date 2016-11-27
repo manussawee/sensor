@@ -51,7 +51,7 @@ public class Map implements IRenderableObject {
 		
 		gc.setStroke(Color.WHITE);
 		gc.setLineWidth(2);
-		gc.strokeRect((1 - GameManager.myHero.getX()) * 50 + 50 * 7.5, (1 - GameManager.myHero.getY()) * 50 + 50 * 5.5, ConfigurableOption.mapWidth * 50, ConfigurableOption.mapHeight * 50);
+		gc.strokeRect(GameManager.screenOffsetX(), GameManager.screenOffsetY(), ConfigurableOption.mapWidth * 50, ConfigurableOption.mapHeight * 50);
 		
 		for(int i = 1; i <= this.height; i++) {
 			for(int j = 1; j <= this.width; j++) {
@@ -66,7 +66,7 @@ public class Map implements IRenderableObject {
 					}
 				}
 				
-				gc.fillRect((j - GameManager.myHero.getX()) * 50 + 50 * 7.5, (i - GameManager.myHero.getY()) * 50 + 50 * 5.5, 50, 50);
+				gc.fillRect((j - 1) * 50 + GameManager.screenOffsetX(), (i - 1) * 50 + GameManager.screenOffsetY(), 50, 50);
 			}
 		}
 	}

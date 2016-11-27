@@ -96,7 +96,7 @@ public class GameText implements IRenderableObject {
 				
 		// draw
 		gc.fillText(text, x, y);
-		gc.strokeText(text, x, y);
+		if(lineWidth == 0) gc.strokeText(text, x, y);
 	}
 
 }

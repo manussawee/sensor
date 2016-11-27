@@ -8,8 +8,9 @@ import logic.GameManager;
 
 public abstract class SocketService {
 	
-	static ObjectOutputStream out;
-    ObjectInputStream in;
+	protected static ObjectOutputStream out;
+	protected ObjectInputStream in;
+	protected static Thread thread;
     
 	abstract public void run();
 	
@@ -22,6 +23,10 @@ public abstract class SocketService {
 		catch (IOException ioException) {
 			ioException.printStackTrace();
 		}
+	}
+	
+	public static void stop() {
+		thread.interrupt();
 	}
 	    
 	
