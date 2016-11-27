@@ -25,9 +25,7 @@ public class Provider extends SocketService{
                 out = new ObjectOutputStream(connection.getOutputStream());
                 out.flush();
                 in = new ObjectInputStream(connection.getInputStream());
-                
-                int countLoop = 0;
-                
+                 
                 Thread dataSyncthread = new Thread(() -> {
                 	while(true) {
                     	try {
@@ -41,7 +39,6 @@ public class Provider extends SocketService{
                         	strMap += "END";
                         	sendMap(strMap);
                         	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
-                        	sendHero(GameManager.heroes[1].getX(), GameManager.heroes[1].getY(), 2);
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block

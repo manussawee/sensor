@@ -27,6 +27,20 @@ public class Requester extends SocketService{
 	            out.flush();
 	            in = new ObjectInputStream(requestSocket.getInputStream());
 	            
+	            Thread dataSyncthread = new Thread(() -> {
+                	while(true) {
+                    	try {
+                    		System.out.println("DATASYNC");
+                        	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                	}
+                });
+                dataSyncthread.start();
+	            
 	            while(true) {
 	                try{
 	                	message = (String)in.readObject();
