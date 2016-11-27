@@ -38,8 +38,8 @@ public abstract class SocketService {
 		sendMessage("SKILL " + index);
 	}
 	
-	public void sendMap(int x, int y, int value) {
-		sendMessage("MAP " + x + "," + y + "," + value);
+	public void sendMap(String strMap) {
+		sendMessage("MAP " + strMap);
 	}
 	
 	public void sendHero(int x, int y, int id) {
@@ -55,12 +55,13 @@ public abstract class SocketService {
         }
         else if(data.getOption().equals("MAP")) {
         	String[] dt = data.getData().split(",");
-        	int x = Integer.parseInt(dt[0]);
-        	int y = Integer.parseInt(dt[1]);
-        	int value = Integer.parseInt(dt[2]);
-        	synchronized(GameManager.map) {
-        		if(value == 1) GameManager.map.setMapAt(x, y, 2);
-        		else if(value == 2) GameManager.map.setMapAt(x, y, 1);
+        	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
+        		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
+        			int mapType = Integer.parseInt(dt[j-1 + (i-1) * ConfigurableOption.mapHeight]);
+        			if(mapType == 1) mapType = 2;
+        			else if(mapType == 2) mapType = 1;
+        			GameManager.map.setMapAt(j, i, mapType);
+        		}
         	}
         }
         else if(data.getOption().equals("HERO")) {
@@ -68,10 +69,8 @@ public abstract class SocketService {
         	int x = Integer.parseInt(dt[0]);
         	int y = Integer.parseInt(dt[1]);
         	int index = Integer.parseInt(dt[2])%2;
-        	synchronized(GameManager.heroes) {
-        		GameManager.heroes[index].setX(x);
-            	GameManager.heroes[index].setY(y);
-        	}
+        	GameManager.heroes[index].setX(x);
+            GameManager.heroes[index].setY(y);
         }
 	}
 }

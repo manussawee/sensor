@@ -32,11 +32,14 @@ public class Provider extends SocketService{
                 	while(true) {
                     	try {
                     		System.out.println("DATASYNC");
+                    		String strMap = "";
                         	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
                         		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
-                        			sendMap(j, i, GameManager.map.getMapAt(j, i));
+                        			strMap += GameManager.map.getMapAt(j, i) + ",";
                         		}
                         	}
+                        	strMap += "END";
+                        	sendMap(strMap);
                         	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
                         	sendHero(GameManager.heroes[1].getX(), GameManager.heroes[1].getY(), 2);
 							Thread.sleep(1000);
