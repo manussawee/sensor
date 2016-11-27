@@ -22,8 +22,8 @@ public class DashSkill extends Skill {
 	public void postAction(int counter) {
 		if(counter - lastUse < 4) {
 			int lastMove = hero.getLastMove();
-			int newX = hero.getX() + hero.addX[hero.getDirection()];
-			int newY = hero.getY() + hero.addY[hero.getDirection()];
+			int newX = hero.getX() + Hero.addX[hero.getDirection()];
+			int newY = hero.getY() + Hero.addY[hero.getDirection()];
 			if(hero.startMove("STAY")) {
 				hero.setX(newX);
 				hero.setY(newY);

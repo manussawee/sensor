@@ -171,6 +171,11 @@ public class Hero implements IRenderableObject {
 			this.drawX += addX[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
 			this.drawY += addY[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
 			if(counter - this.lastMove == this.moveInterval) {
+				
+				int mapType = GameManager.map.getMapAt(this.x, this.y);
+				if(mapType == 0) GameManager.map.setMapAt(this.x, this.y, this.id);
+				else if(mapType != this.id && mapType > 0) GameManager.map.setMapAt(this.x, this.y, -1);
+				
 				this.x += addX[this.direction];
 				this.y += addY[this.direction];
 			}

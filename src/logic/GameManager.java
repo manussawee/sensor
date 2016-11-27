@@ -18,6 +18,7 @@ import model.GameText;
 import model.Hero;
 import model.Map;
 import model.MiniMap;
+import model.ScoreBar;
 import model.SpeedSkill;
 import model.TransparentBackground;
 
@@ -30,9 +31,12 @@ public class GameManager extends DefaultManager {
 	public static String gameType;
 	public static SocketService socketService;
 	public static MiniMap miniMap;
+	public static ScoreBar scoreBar;
 	
 	private static GameText waitingText;
 	private static TransparentBackground waitingBG;
+	private static GameText endingText;
+	private static GameText endingScore;
 	private static boolean isReady;
 	
 	private static int counter = 0;
@@ -49,7 +53,9 @@ public class GameManager extends DefaultManager {
 		heroes = new Hero[2];
 		
 		map = new Map(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 0);
-		IRenderableHolder.getInstance().addAndSort(map);
+		scoreBar = new ScoreBar(3 * 60, ConfigurableOption.screenWidth / 2, 30, 5);
+		IRenderableHolder.getInstance().add(scoreBar);
+		IRenderableHolder.getInstance().add(map);
 		counter = 0;
 		
 		if(gameType == "SERVER") {
@@ -69,6 +75,7 @@ public class GameManager extends DefaultManager {
 			
 			createMyHero("1");
 			createEnemyHero("0");
+			scoreBar.setStart(true);
 			socketService = new Requester(ipAddress);
 			socketService.run();
 		}
@@ -100,6 +107,10 @@ public class GameManager extends DefaultManager {
 			if(IRenderableHolder.getInstance().getEntities().contains(waitingBG)) {
 				IRenderableHolder.getInstance().getEntities().remove(waitingBG);
 			}
+			scoreBar.setStart(true);
+		}
+		else {
+			scoreBar.setStart(false);
 		}
 	}
 
@@ -171,6 +182,7 @@ public class GameManager extends DefaultManager {
 		if(isReady) {
 			myHero.update(counter);
 			enemyHero.update(counter);
+			scoreBar.update(counter);
 		}
 		
 		// Reset
@@ -186,6 +198,26 @@ public class GameManager extends DefaultManager {
 	public static void enemySkill(int index) {
 		// TODO Auto-generated method stub
 		enemyHero.getSkills().get(index).action(counter);
+	}
+
+	public static void gameEnd(int myScore, int enemyScore) {
+		// TODO Auto-generated method stub
+		String message;
+		Color color = enemyHero.getBodyColor();
+		if(myScore > enemyScore) {
+			message = "VICTORY";
+			color = myHero.getBodyColor();
+		}
+		else if(myScore < enemyScore) message = "DEFEAT";
+		else message = "DRAW";
+		
+		endingText = new GameText(message, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 - 50, 11, 1, Font.font("Tahoma", FontWeight.BOLD, 72), color, Color.WHITE);
+		endingScore = new GameText(myScore + " - " + enemyScore, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 + 20, 11, 0, Font.font("Tahoma", 48), Color.WHITE, Color.WHITE);
+		waitingBG = new TransparentBackground(Color.color(0, 0, 0, 0.5), 10);
+		
+		IRenderableHolder.getInstance().add(waitingBG);
+		IRenderableHolder.getInstance().add(endingText);
+		IRenderableHolder.getInstance().addAndSort(endingScore);
 	}
 
 }

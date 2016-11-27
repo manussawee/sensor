@@ -31,8 +31,7 @@ public class Requester extends SocketService{
 	                try{
 	                	message = (String)in.readObject();
 	                    data = new Data(message);
-	                    dataController(data);
-	        			Thread.sleep(1000/60);  
+	                    dataController(data); 
 	                }
 	                catch (EOFException e) {
 	                	System.err.println("player lost connection");
@@ -47,10 +46,6 @@ public class Requester extends SocketService{
 						System.err.println("exception error");
 						break;
 					} 
-	                catch (InterruptedException e) {
-						e.printStackTrace();
-						break;
-					}
 	            }
 	            
 	        }
