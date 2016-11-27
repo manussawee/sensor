@@ -27,16 +27,11 @@ public class Provider extends SocketService{
                 in = new ObjectInputStream(connection.getInputStream());
                 
                 int countLoop = 0;
-
-                while(true) {
-                    try{
-                        message = (String)in.readObject();
-                        data = new Data(message);
-                        dataController(data);
-                        
-//                         data sync
-                        if(countLoop%10 == 0) {
-                        	System.out.println("Data Sync");
+                
+                Thread dataSyncthread = new Thread(() -> {
+                	while(true) {
+                    	try {
+                    		System.out.println("DATASYNC");
                         	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
                         		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
                         			sendMap(j, i, GameManager.map.getMapAt(j, i));
@@ -44,9 +39,20 @@ public class Provider extends SocketService{
                         	}
                         	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
                         	sendHero(GameManager.heroes[1].getX(), GameManager.heroes[1].getY(), 2);
-                        }
-                        
-                        countLoop++;
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                	}
+                });
+                dataSyncthread.start();
+
+                while(true) {
+                    try{
+                        message = (String)in.readObject();
+                        data = new Data(message);
+                        dataController(data);
                     }
                     catch (EOFException e) {
 	                	System.err.println("player lost connection");
