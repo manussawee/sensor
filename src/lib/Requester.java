@@ -31,6 +31,14 @@ public class Requester extends SocketService{
                 	while(true) {
                     	try {
                     		System.out.println("DATASYNC");
+                    		String strMap = "";
+                        	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
+                        		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
+                        			strMap += GameManager.map.getMapAt(j, i) + ",";
+                        		}
+                        	}
+                        	strMap += "END";
+                        	sendMap(strMap);
                         	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {

@@ -60,7 +60,10 @@ public abstract class SocketService {
         			int mapType = Integer.parseInt(dt[j-1 + (i-1) * ConfigurableOption.mapHeight]);
         			if(mapType == 1) mapType = 2;
         			else if(mapType == 2) mapType = 1;
-        			GameManager.map.setMapAt(j, i, mapType);
+        			
+        			int currentType = GameManager.map.getMapAt(j, i);
+        			if(currentType == 0 && mapType == 2) GameManager.map.setMapAt(j, i, 2);
+        			else if(mapType == -1 || mapType + currentType == 3) GameManager.map.setMapAt(j, i, -1);
         		}
         	}
         }
