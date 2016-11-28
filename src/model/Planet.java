@@ -22,6 +22,7 @@ public class Planet implements IRenderableObject {
 	private double size;
 	private double positionOffset;
 	private int rotateDirection;
+	private final int sizeDelay = 10;
 	
 	public Planet(int x, int y, int z, int type) {
 		this.x = x;
@@ -49,7 +50,7 @@ public class Planet implements IRenderableObject {
 		this.type = type;
 		this.rotateFrame = 0;
 		this.state = 2;
-		this.sizeFrame = 20;
+		this.sizeFrame = this.sizeDelay;
 		randomRotateDirection();
 	}
 	
@@ -71,10 +72,10 @@ public class Planet implements IRenderableObject {
 		}
 		else if(this.state == 0) {
 			this.sizeFrame++;
-			if(this.sizeFrame == 20) this.state = 1;
+			if(this.sizeFrame == this.sizeDelay) this.state = 1;
 		}
 		
-		this.size = (double) this.sizeFrame / 20 * 50;
+		this.size = (double) this.sizeFrame / this.sizeDelay * 50;
 		this.positionOffset = (double) (50 - this.size) / 2;
 	}
 
