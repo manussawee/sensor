@@ -3,6 +3,7 @@ package lib;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.SocketException;
 
 import logic.GameManager;
 
@@ -11,18 +12,23 @@ public abstract class SocketService {
 	protected static ObjectOutputStream out;
 	protected ObjectInputStream in;
 	protected static Thread thread;
+	protected static boolean isStop = false;
     
 	abstract public void run();
 	
-	static void sendMessage(String msg)
-	{
+	static void sendMessage(String msg) {
 		try {
 			out.writeObject(msg);
 			out.flush();
 		}
-		catch (Exception e) {
-        	e.printStackTrace();
-        }
+		catch(SocketException e) {
+			System.err.println("CONNECTION ERROR");
+			isStop = true;
+		}
+		catch(IOException e) {
+			System.err.println("IO ERROR");
+			isStop = true;
+		}
 	}
 	
 	public static void stop() {

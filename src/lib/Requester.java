@@ -28,9 +28,8 @@ public class Requester extends SocketService{
 	            in = new ObjectInputStream(requestSocket.getInputStream());
 	            
 	            Thread dataSyncthread = new Thread(() -> {
-                	while(true) {
+                	while(true && !isStop) {
                     	try {
-                    		System.out.println("DATASYNC");
                     		String strMap = "";
                         	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
                         		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
@@ -49,15 +48,23 @@ public class Requester extends SocketService{
                 });
                 dataSyncthread.start();
 	            
-	            while(true) {
+	            while(true && !isStop) {
 	                try{
 	                	message = (String)in.readObject();
+	                	data = new Data(message);
+	                    dataController(data); 
 	                }
+	                catch (EOFException e) {
+	                	System.err.println("PLAYER LOST CONNECTION");
+	                	break;
+	                }
+	                catch (StreamCorruptedException e) {
+	                	System.err.println("CONNECTION ERROR");
+	                	break;
+                    }
 	                catch (Exception e) {
                     	e.printStackTrace();
                     }
-	                data = new Data(message);
-                    dataController(data); 
 	            }
 	            
 	        }
