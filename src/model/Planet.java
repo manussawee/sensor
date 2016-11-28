@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Rotate;
 import lib.IRenderableHolder;
@@ -19,6 +21,7 @@ public class Planet implements IRenderableObject {
 	private int z;
 	private double size;
 	private double positionOffset;
+	private int rotateDirection;
 	
 	public Planet(int x, int y, int z, int type) {
 		this.x = x;
@@ -32,6 +35,9 @@ public class Planet implements IRenderableObject {
 			if(type == -1) this.planetIndex = 0;
 			else this.planetIndex = this.type;
 		}
+		Random rand = new Random();
+		if(rand.nextBoolean()) rotateDirection = 1;
+		else rotateDirection = -1;
 	}
 	
 	public void changeType(int type) {
@@ -84,7 +90,7 @@ public class Planet implements IRenderableObject {
 		// TODO Auto-generated method stub
 		
 		gc.save();
-		Rotate r = new Rotate(this.rotateFrame, (this.x - 1) * 50 + GameManager.screenOffsetX() + 25, (this.y - 1) * 50 + GameManager.screenOffsetY() + 25);
+		Rotate r = new Rotate((this.rotateDirection * this.rotateFrame + 360) % 360, (this.x - 1) * 50 + GameManager.screenOffsetX() + 25, (this.y - 1) * 50 + GameManager.screenOffsetY() + 25);
 		gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
 		gc.drawImage(IRenderableHolder.planet[this.planetIndex], (this.x - 1) * 50 + GameManager.screenOffsetX() + this.positionOffset, (this.y - 1) * 50 + GameManager.screenOffsetY() + this.positionOffset, this.size, this.size);
 		gc.restore();
