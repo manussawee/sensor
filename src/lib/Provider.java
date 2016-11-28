@@ -8,8 +8,6 @@ public class Provider extends SocketService{
     
 	ServerSocket providerSocket;
     Socket connection = null;
-    String message;
-    Data data;
 
     public Provider(){}
     public void run()
@@ -27,44 +25,11 @@ public class Provider extends SocketService{
                 in = new ObjectInputStream(connection.getInputStream());
                  
                 Thread dataSyncthread = new Thread(() -> {
-                	while(true && !isStop) {
-                    	try {
-                    		String strMap = "";
-                        	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
-                        		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
-                        			strMap += GameManager.map.getMapAt(j, i) + "/" + GameManager.map.getLastUpdateAt(j, i) + ",";
-                        		}
-                        	}
-                        	strMap += "END";
-                        	sendMap(strMap);
-                        	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                	}
+                	syncData();
                 });
                 dataSyncthread.start();
 
-                while(true && !isStop) {
-                	try{
-	                	message = (String)in.readObject();
-	                	data = new Data(message);
-	                    dataController(data); 
-	                }
-	                catch (EOFException e) {
-	                	System.err.println("PLAYER LOST CONNECTION");
-	                	break;
-	                }
-                	catch (StreamCorruptedException e) {
-	                	System.err.println("CONNECTION ERROR");
-	                	break;
-                    }
-	                catch (Exception e) {
-                    	e.printStackTrace();
-                    }
-                }
+                receiveData();
 	        }
 	        catch(IOException ioException){
 	            ioException.printStackTrace();

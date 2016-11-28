@@ -1,8 +1,10 @@
 package lib;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.net.SocketException;
 
 import logic.GameManager;
@@ -13,6 +15,8 @@ public abstract class SocketService {
 	protected ObjectInputStream in;
 	protected static Thread thread;
 	protected static boolean isStop = false;
+	protected String message;
+    protected Data data;
     
 	abstract public void run();
 	
@@ -60,40 +64,102 @@ public abstract class SocketService {
         	GameManager.enemySkill(Integer.parseInt(data.getData()));
         }
         else if(data.getOption().equals("MAP")) {
-        	String[] dt = data.getData().split(",");
-        	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
-        		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
-        			String[] dtAt = dt[j-1 + (i-1) * ConfigurableOption.mapHeight].split("/");
-        			int mapType = Integer.parseInt(dtAt[0]);
-        			int lastUpdate = Integer.parseInt(dtAt[1]);
-        			
-        			if(mapType == 1) mapType = 2;
-        			else if(mapType == 2) mapType = 1;
-        			
-        			if(lastUpdate > GameManager.map.getLastUpdateAt(j, i)) {
-        				GameManager.map.setMapAt(j, i, mapType);
-        				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
-        			}
-        			else if(lastUpdate == GameManager.map.getLastUpdateAt(j, i)) {
-        				if(mapType == -1 || mapType + GameManager.map.getMapAt(j, i) == 3) {
-        					GameManager.map.setMapAt(j, i, -1);
-            				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
-        				}
-        				else if(mapType + GameManager.map.getMapAt(j, i) == 0) {
-        					GameManager.map.setMapAt(j, i, mapType);
-            				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
-        				}
-        			}
-        		}
-        	}
+        	syncMap(data.getData());
         }
         else if(data.getOption().equals("HERO")) {
-        	String[] dt = data.getData().split(",");
-        	int x = Integer.parseInt(dt[0]);
-        	int y = Integer.parseInt(dt[1]);
-        	int index = Integer.parseInt(dt[2])%2;
-        	GameManager.heroes[index].setX(x);
-            GameManager.heroes[index].setY(y);
+        	syncHero(data.getData());
+        }
+	}
+	
+	private void syncHero(String data) {
+		String[] dt = data.split(",");
+    	int x = Integer.parseInt(dt[0]);
+    	int y = Integer.parseInt(dt[1]);
+    	int index = Integer.parseInt(dt[2])%2;
+    	GameManager.heroes[index].setX(x);
+        GameManager.heroes[index].setY(y);
+	}
+	
+	private void syncMap(String data) {
+		String[] dt = data.split(",");
+    	
+    	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
+    		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
+    			
+    			int mapType = Integer.parseInt(dt[j-1 + (i-1) * ConfigurableOption.mapHeight]);
+    			int currentType = GameManager.map.getMapAt(j, i);
+    			
+    			if(mapType == 1) mapType = 2;
+    			else if(mapType == 2) mapType = 1;
+    			
+    			if(mapType != currentType) {
+    				
+    				if(currentType == 0) {
+    					if(mapType == -1) mapType = 0;
+    					else if(mapType == 1) mapType = 0;
+    					else if(mapType == 2) mapType = 2;
+    				}
+    				else if(currentType == -1) {
+    					if(mapType == 0) mapType = 0;
+    					else if(mapType == 1) mapType = 1;
+    					else if(mapType == 2) mapType = -1;
+    				}
+    				else if(currentType == 1) {
+    					if(mapType == 0) mapType = 1;
+    					else if(mapType == -1) mapType = -1;
+    					else if(mapType == 2) mapType = -1;
+    				}
+    				else if(currentType == 2) {
+    					if(mapType == 0) mapType = 0;
+    					else if(mapType == -1) mapType = 2;
+    					else if(mapType == 1) mapType = 0;
+    				}
+    				
+    				GameManager.map.setMapAt(j, i, mapType);
+    			}
+    			
+    		}
+    	}
+	}
+	
+	protected void syncData() {
+		while(true && !isStop) {
+        	try {
+        		String strMap = "";
+            	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
+            		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
+            			strMap += GameManager.map.getMapAt(j, i) + ",";
+            		}
+            	}
+            	strMap += "END";
+            	sendMap(strMap);
+            	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+	}
+	
+	protected void receiveData() {
+		while(true && !isStop) {
+            try{
+            	message = (String)in.readObject();
+            	data = new Data(message);
+                dataController(data); 
+            }
+            catch (EOFException e) {
+            	System.err.println("PLAYER LOST CONNECTION");
+            	break;
+            }
+            catch (StreamCorruptedException e) {
+            	System.err.println("CONNECTION ERROR");
+            	break;
+            }
+            catch (Exception e) {
+            	e.printStackTrace();
+            }
         }
 	}
 }
