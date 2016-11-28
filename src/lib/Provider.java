@@ -54,29 +54,9 @@ public class Provider extends SocketService{
                         data = new Data(message);
                         dataController(data);
                     }
-                    catch (UTFDataFormatException e) {
-	                	System.err.println("UTFDataFormatException");
-	                }
-                    catch (NumberFormatException e) {
-                    	System.err.println("NumberFormatException");
+                    catch (Exception e) {
+                    	e.printStackTrace();
                     }
-                    catch (StreamCorruptedException e) {
-	                	System.err.println("data error");
-//	                	break;
-	                }
-                    catch (EOFException e) {
-	                	System.err.println("player lost connection");
-	                	break;
-	                }
-                    catch (ClassNotFoundException classNot) {
-                        System.err.println("data received in unknown format");
-                        break;
-                    } 
-                    catch (IOException e) {
-    					e.printStackTrace();
-    					System.err.println("exception error");
-    					break;
-    				} 
                 }
 	        }
 	        catch(IOException ioException){
