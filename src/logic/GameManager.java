@@ -183,6 +183,7 @@ public class GameManager extends DefaultManager {
 			myHero.update(counter);
 			enemyHero.update(counter);
 			scoreBar.update(counter);
+			map.update(counter);
 		}
 		
 		// Reset

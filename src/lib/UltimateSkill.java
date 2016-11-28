@@ -61,5 +61,10 @@ public abstract class UltimateSkill extends Skill {
 			gc.fillText(keyCode.toString(), x, y);
 		}
 	}
+	
+	@Override
+	public void renderAnimation(GraphicsContext gc) {
+		
+	}
 
 }

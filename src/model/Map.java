@@ -14,22 +14,39 @@ public class Map implements IRenderableObject {
 	private int z;
 	
 	private int[][] table;
+	private Planet[][] planetTable;
 	
 	public Map(int width, int height, int z) {
 		this.width = width;
 		this.height = height;
 		this.z = z;
 		table = new int[height + 1][width + 1];
+		
+		planetTable = new Planet[height + 1][width + 1];
+		for(int i = 1; i <= height; i++) {
+			for(int j = 1; j <= width; j++) {
+				planetTable[i][j] = new Planet(j, i, z+1, 0);
+			}
+		}
 	}
 	
 	public synchronized void setMapAt(int x, int y, int value) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return;
 		table[y][x] = value;
+		planetTable[y][x].changeType(value);
 	}
 	
 	public synchronized int getMapAt(int x, int y) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return -2;
 		return table[y][x];
+	}
+	
+	public void update(int counter) {
+		for(int i = 1; i <= this.height; i++) {
+			for(int j = 1; j <= this.width; j++) {
+				planetTable[i][j].update(counter);
+			}
+		}
 	}
 
 	@Override
@@ -54,18 +71,7 @@ public class Map implements IRenderableObject {
 		
 		for(int i = 1; i <= this.height; i++) {
 			for(int j = 1; j <= this.width; j++) {
-				
-				if(table[i][j] == 0) gc.setFill(Color.BLACK);
-				if(table[i][j] == -1) gc.setFill(Color.DARKGRAY);
-				else {
-					for(IRenderableObject obj : IRenderableHolder.getInstance().getEntities()) {
-						if(obj instanceof Hero && ((Hero) obj).getId() == table[i][j]) { 
-							gc.setFill(((Hero) obj).getMapColor());
-						}
-					}
-				}
-				
-				gc.fillRect((j - 1) * 50 + GameManager.screenOffsetX(), (i - 1) * 50 + GameManager.screenOffsetY(), 50, 50);
+				if(planetTable[i][j].isVisible()) planetTable[i][j].render(gc);
 			}
 		}
 	}

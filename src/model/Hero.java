@@ -7,7 +7,9 @@ import javax.security.auth.login.Configuration;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 import lib.ConfigurableOption;
+import lib.IRenderableHolder;
 import lib.IRenderableObject;
 import lib.InputUtility;
 import lib.Provider;
@@ -36,6 +38,7 @@ public class Hero implements IRenderableObject {
 	private int mapChange;
 	
 	private int direction; // up=0, right=1, down=2, left=3
+	private int frameIndex;
 	private int lastMove;
 	private int moveInterval;
 	
@@ -130,8 +133,11 @@ public class Hero implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		gc.setFill(this.bodyColor);
-		gc.fillRect(this.drawX + GameManager.screenOffsetX(), this.drawY + GameManager.screenOffsetY(), 50, 50);
+		gc.save();
+		Rotate r = new Rotate(90 * this.direction, this.drawX + GameManager.screenOffsetX() + 25, this.drawY + GameManager.screenOffsetY() + 25);
+		gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+		gc.drawImage(IRenderableHolder.spaceshipFrames[this.id - 1][this.frameIndex], this.drawX + GameManager.screenOffsetX(), this.drawY + GameManager.screenOffsetY());
+		gc.restore();
 	}
 	
 	public double getDrawX() {
@@ -166,7 +172,7 @@ public class Hero implements IRenderableObject {
 		// calculate position
 		this.drawX = (this.x - 1) * 50; 
 		this.drawY = (this.y - 1) * 50;
-				
+		
 		if(counter - this.lastMove <= this.moveInterval) {
 			this.drawX += addX[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
 			this.drawY += addY[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
@@ -179,6 +185,10 @@ public class Hero implements IRenderableObject {
 				this.x += addX[this.direction];
 				this.y += addY[this.direction];
 			}
+			this.frameIndex =  (counter - this.lastMove) * 3 / this.moveInterval;
+		}
+		else {
+			this.frameIndex = 0;
 		}
 				
 		for(Skill skill: skills) skill.postAction(counter);

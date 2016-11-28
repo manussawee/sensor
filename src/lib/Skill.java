@@ -59,6 +59,7 @@ public abstract class Skill implements IRenderableObject {
 	
 	public abstract void action(int counter);
 	public abstract void postAction(int counter);
+	public abstract void renderAnimation(GraphicsContext gc);
 
 	@Override
 	public boolean isVisible() {
@@ -75,6 +76,8 @@ public abstract class Skill implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
+		renderAnimation(gc);
+		
 		gc.setFill(Color.color(1, 1, 1, 0.5));
 		gc.setLineWidth(2);
 		gc.setStroke(Color.WHITE);

@@ -1,9 +1,8 @@
 package model;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import lib.InputUtility;
 import lib.Skill;
-import logic.GameManager;
 
 public class DashSkill extends Skill {
 
@@ -30,6 +29,11 @@ public class DashSkill extends Skill {
 			}
 			hero.setLastMove(lastMove);
 		}
+	}
+	
+	@Override
+	public void renderAnimation(GraphicsContext gc) {
+		
 	}
 	
 
