@@ -46,7 +46,7 @@ public abstract class SocketService {
 		sendMessage("HERO " + x + "," + y + "," + id);
 	}
 	
-	public void dataController(Data data) {
+	public void dataController(Data data) throws NumberFormatException {
         if(data.getOption().equals("MOVE")) {
         	GameManager.enemyMove(data.getData());
         }

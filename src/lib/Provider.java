@@ -54,8 +54,12 @@ public class Provider extends SocketService{
                         data = new Data(message);
                         dataController(data);
                     }
+                    catch (NumberFormatException e) {
+                    	System.err.println("NumberFormatException");
+                    }
                     catch (StreamCorruptedException e) {
 	                	System.err.println("data error");
+//	                	break;
 	                }
                     catch (EOFException e) {
 	                	System.err.println("player lost connection");

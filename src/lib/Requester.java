@@ -55,6 +55,9 @@ public class Requester extends SocketService{
 	                    data = new Data(message);
 	                    dataController(data); 
 	                }
+	                catch (NumberFormatException e) {
+                    	System.err.println("NumberFormatException");
+                    }
 	                catch (StreamCorruptedException e) {
 	                	System.err.println("data error");
 	                }
