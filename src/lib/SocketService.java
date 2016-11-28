@@ -64,7 +64,7 @@ public abstract class SocketService {
         			if(mapType == 1) mapType = 2;
         			else if(mapType == 2) mapType = 1;
         			
-        			if(lastUpdate >= GameManager.map.getLastUpdateAt(j, i)) {
+        			if(lastUpdate >= GameManager.map.getLastUpdateAt(j, i) && mapType != 1) {
         				GameManager.map.setMapAt(j, i, mapType);
         				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
         			}
