@@ -54,6 +54,9 @@ public class Provider extends SocketService{
                         data = new Data(message);
                         dataController(data);
                     }
+                    catch (UTFDataFormatException e) {
+	                	System.err.println("UTFDataFormatException");
+	                }
                     catch (NumberFormatException e) {
                     	System.err.println("NumberFormatException");
                     }
