@@ -21,7 +21,6 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		
 		instance = this;
 		Main.primaryStage = primaryStage;
 		Main.primaryStage.setTitle("NONAME");
