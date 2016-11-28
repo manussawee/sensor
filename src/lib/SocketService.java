@@ -64,9 +64,19 @@ public abstract class SocketService {
         			if(mapType == 1) mapType = 2;
         			else if(mapType == 2) mapType = 1;
         			
-        			if(lastUpdate >= GameManager.map.getLastUpdateAt(j, i) && mapType != 1) {
+        			if(lastUpdate > GameManager.map.getLastUpdateAt(j, i)) {
         				GameManager.map.setMapAt(j, i, mapType);
         				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
+        			}
+        			else if(lastUpdate == GameManager.map.getLastUpdateAt(j, i)) {
+        				if(mapType == -1 || mapType + GameManager.map.getMapAt(j, i) == 3) {
+        					GameManager.map.setMapAt(j, i, -1);
+            				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
+        				}
+        				else if(mapType + GameManager.map.getMapAt(j, i) == 0) {
+        					GameManager.map.setMapAt(j, i, mapType);
+            				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
+        				}
         			}
         		}
         	}
