@@ -20,9 +20,9 @@ public abstract class SocketService {
 			out.writeObject(msg);
 			out.flush();
 		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+		catch (Exception e) {
+        	e.printStackTrace();
+        }
 	}
 	
 	public static void stop() {
