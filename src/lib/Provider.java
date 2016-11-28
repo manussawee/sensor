@@ -51,12 +51,12 @@ public class Provider extends SocketService{
                 while(true) {
                     try{
                         message = (String)in.readObject();
-                        data = new Data(message);
-                        dataController(data);
                     }
                     catch (Exception e) {
                     	e.printStackTrace();
                     }
+                    data = new Data(message);
+                    dataController(data);
                 }
 	        }
 	        catch(IOException ioException){
