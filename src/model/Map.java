@@ -14,23 +14,30 @@ public class Map implements IRenderableObject {
 	private int z;
 	
 	private int[][] table;
+	private int[][] lastUpdate;
 	
 	public Map(int width, int height, int z) {
 		this.width = width;
 		this.height = height;
 		this.z = z;
 		
+		lastUpdate = new int[height + 1][width + 1];
 		table = new int[height + 1][width + 1];
 	}
 	
 	public void setMapAt(int x, int y, int value) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return;
 		table[y][x] = value;
+		lastUpdate[y][x] = GameManager.getCounter();
 	}
 	
 	public int getMapAt(int x, int y) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return -2;
 		return table[y][x];
+	}
+	
+	public int getLastUpdateAt(int x, int y) {
+		return lastUpdate[y][x];
 	}
 
 	@Override
@@ -69,6 +76,11 @@ public class Map implements IRenderableObject {
 				gc.fillRect((j - 1) * 50 + GameManager.screenOffsetX(), (i - 1) * 50 + GameManager.screenOffsetY(), 50, 50);
 			}
 		}
+	}
+
+	public void setLastUpdateAt(int j, int i, int lastUpdate) {
+		// TODO Auto-generated method stub
+		this.lastUpdate[i][j] = lastUpdate;
 	}
 
 }

@@ -57,13 +57,17 @@ public abstract class SocketService {
         	String[] dt = data.getData().split(",");
         	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
         		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
-        			int mapType = Integer.parseInt(dt[j-1 + (i-1) * ConfigurableOption.mapHeight]);
+        			String[] dtAt = dt[j-1 + (i-1) * ConfigurableOption.mapHeight].split("/");
+        			int mapType = Integer.parseInt(dtAt[0]);
+        			int lastUpdate = Integer.parseInt(dtAt[1]);
+        			
         			if(mapType == 1) mapType = 2;
         			else if(mapType == 2) mapType = 1;
         			
-        			int currentType = GameManager.map.getMapAt(j, i);
-        			if(currentType == 0 && mapType == 2) GameManager.map.setMapAt(j, i, 2);
-        			else if(mapType == -1 || mapType + currentType == 3) GameManager.map.setMapAt(j, i, -1);
+        			if(lastUpdate >= GameManager.map.getLastUpdateAt(j, i)) {
+        				GameManager.map.setMapAt(j, i, mapType);
+        				GameManager.map.setLastUpdateAt(j, i, lastUpdate);
+        			}
         		}
         	}
         }

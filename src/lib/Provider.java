@@ -33,7 +33,7 @@ public class Provider extends SocketService{
                     		String strMap = "";
                         	for(int i = 1; i <= ConfigurableOption.mapHeight; i++) {
                         		for(int j = 1; j <= ConfigurableOption.mapWidth; j++) {
-                        			strMap += GameManager.map.getMapAt(j, i) + ",";
+                        			strMap += GameManager.map.getMapAt(j, i) + "/" + GameManager.map.getLastUpdateAt(j, i) + ",";
                         		}
                         	}
                         	strMap += "END";
