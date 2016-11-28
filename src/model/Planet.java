@@ -35,6 +35,10 @@ public class Planet implements IRenderableObject {
 			if(type == -1) this.planetIndex = 0;
 			else this.planetIndex = this.type;
 		}
+		randomRotateDirection();
+	}
+	
+	private void randomRotateDirection() {
 		Random rand = new Random();
 		if(rand.nextBoolean()) rotateDirection = 1;
 		else rotateDirection = -1;
@@ -46,6 +50,7 @@ public class Planet implements IRenderableObject {
 		this.rotateFrame = 0;
 		this.state = 2;
 		this.sizeFrame = 20;
+		randomRotateDirection();
 	}
 	
 	public void update(int counter) {
