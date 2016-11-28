@@ -54,6 +54,9 @@ public class Provider extends SocketService{
                         data = new Data(message);
                         dataController(data);
                     }
+                    catch (StreamCorruptedException e) {
+	                	System.err.println("data error");
+	                }
                     catch (EOFException e) {
 	                	System.err.println("player lost connection");
 	                	break;
