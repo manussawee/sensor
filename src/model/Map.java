@@ -25,18 +25,18 @@ public class Map implements IRenderableObject {
 		table = new int[height + 1][width + 1];
 	}
 	
-	public void setMapAt(int x, int y, int value) {
+	public synchronized void setMapAt(int x, int y, int value) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return;
 		table[y][x] = value;
 		lastUpdate[y][x] = GameManager.getCounter();
 	}
 	
-	public int getMapAt(int x, int y) {
+	public synchronized int getMapAt(int x, int y) {
 		if(1 > x || x > ConfigurableOption.mapWidth || 1 > y || y > ConfigurableOption.mapHeight) return -2;
 		return table[y][x];
 	}
 	
-	public int getLastUpdateAt(int x, int y) {
+	public synchronized int getLastUpdateAt(int x, int y) {
 		return lastUpdate[y][x];
 	}
 
@@ -78,7 +78,7 @@ public class Map implements IRenderableObject {
 		}
 	}
 
-	public void setLastUpdateAt(int j, int i, int lastUpdate) {
+	public synchronized void setLastUpdateAt(int j, int i, int lastUpdate) {
 		// TODO Auto-generated method stub
 		this.lastUpdate[i][j] = lastUpdate;
 	}

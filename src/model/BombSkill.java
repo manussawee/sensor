@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.input.KeyCode;
 import lib.Skill;
+import lib.UltimateSkill;
 import logic.GameManager;
 
 public class BombSkill extends Skill {
@@ -24,6 +25,7 @@ public class BombSkill extends Skill {
 					if(Math.abs(hero.getY() - i) + Math.abs(hero.getX() - j) <= 4) {
 						if(GameManager.map.getMapAt(j, i) == -1) {
 							GameManager.map.setMapAt(j, i, 0);
+							hero.getUltimateSkill().increaseUltimatePoint();
 						}
 					}
 				}
