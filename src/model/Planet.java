@@ -22,7 +22,11 @@ public class Planet implements IRenderableObject {
 	private double size;
 	private double positionOffset;
 	private int rotateDirection;
+<<<<<<< HEAD
 	private final int sizeDelay = 13;
+=======
+	private final int sizeDelay = 14;
+>>>>>>> origin/develop
 	
 	public Planet(int x, int y, int z, int type) {
 		this.x = x;
