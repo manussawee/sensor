@@ -12,6 +12,7 @@ import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
 import lib.SocketService;
+import model.Background;
 import model.BombSkill;
 import model.DashSkill;
 import model.GameText;
@@ -32,6 +33,7 @@ public class GameManager extends DefaultManager {
 	public static SocketService socketService;
 	public static MiniMap miniMap;
 	public static ScoreBar scoreBar;
+	public static Background background;
 	
 	private static GameText waitingText;
 	private static TransparentBackground waitingBG;
@@ -81,6 +83,9 @@ public class GameManager extends DefaultManager {
 		}
 		
 		miniMap = new MiniMap(ConfigurableOption.screenWidth - 120, ConfigurableOption.screenHeight - 120, 5, myHero);
+		background = new Background(0);
+		
+		IRenderableHolder.getInstance().add(background);
 		IRenderableHolder.getInstance().add(miniMap);
 		IRenderableHolder.getInstance().sort();
 	}
@@ -184,7 +189,11 @@ public class GameManager extends DefaultManager {
 			enemyHero.update(counter);
 			scoreBar.update(counter);
 			map.update(counter);
+			if(myHero.getUltimateSkill().isActive()) background.setFastOffset(true);
+			else background.setFastOffset(false);
 		}
+		
+		background.update(counter);
 		
 		// Reset
 		counter++;

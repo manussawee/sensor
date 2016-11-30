@@ -67,4 +67,9 @@ public abstract class UltimateSkill extends Skill {
 		
 	}
 
+	public boolean isActive() {
+		// TODO Auto-generated method stub
+		return isUse;
+	}
+
 }

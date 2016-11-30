@@ -93,7 +93,7 @@ public class ScoreBar implements IRenderableObject {
 		gc.setLineWidth(4);
 		gc.setStroke(Color.WHITE);
 		
-//		gc.setGlobalAlpha(0.5);
+		gc.setGlobalAlpha(0.5);
 		// my score
 		gc.setFill(GameManager.myHero.getBodyColor());
 		gc.fillRoundRect(this.x - 100, this.y, 100, 50, 10, 10);
@@ -103,7 +103,7 @@ public class ScoreBar implements IRenderableObject {
 		gc.fillRoundRect(this.x, this.y, 100, 50, 10, 10);
 		gc.fillRect(this.x, this.y, 3, 50);
 		
-//		gc.setGlobalAlpha(1);
+		gc.setGlobalAlpha(1);
 		
 		gc.strokeRoundRect(this.x - 100, this.y, 200, 50, 10, 10);
 		
