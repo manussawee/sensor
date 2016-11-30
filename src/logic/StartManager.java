@@ -21,7 +21,6 @@ import lib.Pointable;
 import model.Background;
 import model.GameButton;
 import model.GameText;
-import ui.GameScreen;
 
 public class StartManager extends DefaultManager {
 	
@@ -45,9 +44,9 @@ public class StartManager extends DefaultManager {
 		
 		background = new Background(0);
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, titleFont, Color.ORANGE, Color.WHITE);
-		startButton = new GameButton("PLAY", 50, 285, 1, 225, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
-		tutorialButton = new GameButton("SETTINGS", 50, 360, 1, 350, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
-		exitButton = new GameButton("EXIT", 50, 435, 1, 150, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
+		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
+		tutorialButton = new GameButton("SETTINGS", 50, 360, 1, 400, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
+		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
 		
 		counter = 0;
 		IRenderableHolder.getInstance().add(background);
