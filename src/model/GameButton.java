@@ -95,7 +95,7 @@ public class GameButton implements IRenderableObject, Pointable{
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-
+		System.out.println(font);
 		// set property
 		gc.setFont(font);
 		gc.setFill(fontColor);

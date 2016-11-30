@@ -1,16 +1,8 @@
-/img/
-/model/
-<<<<<<< HEAD
-/se/
-/lib/
-/logic/
-=======
-/logic/
 /application/
-/lib/
-<<<<<<< HEAD
->>>>>>> origin/develop
-=======
 /font/
->>>>>>> origin/develop
+/img/
+/lib/
+/logic/
+/model/
 /sfx/
+/ui/

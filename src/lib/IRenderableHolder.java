@@ -79,11 +79,12 @@ public class IRenderableHolder {
 		}
 		
 		// load sound
-		bg = new AudioClip(ClassLoader.getSystemResource("se/sound-bg.wav").toString());
+		bg = new AudioClip(ClassLoader.getSystemResource("sfx/sound-bg.wav").toString());
 		IRenderableHolder.bg.setVolume(0.15);
 		IRenderableHolder.bg.setCycleCount((int) Double.POSITIVE_INFINITY);
 		
 		mainFontName = ClassLoader.getSystemResource("font/spaceranger.ttf").toString();
+		
 	}
 
 	public void addAndSort(IRenderableObject entity) {

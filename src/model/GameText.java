@@ -127,7 +127,7 @@ public class GameText implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(font);
 		gc.setFont(font);
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);
