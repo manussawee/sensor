@@ -26,7 +26,6 @@ import ui.GameScreen;
 public class StartManager extends DefaultManager {
 	
 	private Stage primaryStage;
-	private Font font;
 	private Background background;
 	private GameText gameTitle;
 	private GameButton startButton;
@@ -41,13 +40,14 @@ public class StartManager extends DefaultManager {
 		
 		this.primaryStage = Main.getPrimaryStage();
 		
-		font = Font.loadFont(IRenderableHolder.mainFontName, 100);
+		Font titleFont = Font.loadFont(IRenderableHolder.mainFontName, 100);
+		Font buttonFont = Font.loadFont(IRenderableHolder.mainFontName, 75);
 		
 		background = new Background(0);
-		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, font, Color.WHITE, Color.WHITE);
-		startButton = new GameButton("START", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
-		tutorialButton = new GameButton("TUTORIAL", 50, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
-		exitButton = new GameButton("EXIT", 50, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
+		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, titleFont, Color.ORANGE, Color.WHITE);
+		startButton = new GameButton("PLAY", 50, 285, 1, 225, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
+		tutorialButton = new GameButton("SETTINGS", 50, 360, 1, 350, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
+		exitButton = new GameButton("EXIT", 50, 435, 1, 150, 72, 3, buttonFont, Color.WHITE, Color.BLACK);
 		
 		counter = 0;
 		IRenderableHolder.getInstance().add(background);
@@ -115,12 +115,12 @@ public class StartManager extends DefaultManager {
 				}
 			}
 		}
-		else if(pointObject == tutorialButton) {
-			// click
-			if(InputUtility.isMouseLeftDown()) {
-				System.out.println("TUTORIAL");
-			}
-		}
+//		else if(pointObject == tutorialButton) {
+//			// click
+//			if(InputUtility.isMouseLeftDown()) {
+//				System.out.println("TUTORIAL");
+//			}
+//		}
 		else if(pointObject == exitButton) {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
