@@ -19,23 +19,20 @@ public class GameButton implements IRenderableObject, Pointable{
 	private int defaultY;
 	private int lineWidth;
 	private boolean isPoint;
-	private Font font;
 	private Font maskFont;
 	private Color fontColor; 
 	private Color strokeColor;
 	private int startPoint;
-
+	private int fontSize;
 	private int z;
 	
-	public GameButton(String text, int x, int y, int z, int width, int height, int lineWidth, Font font, Color fontColor, Color strokeColor) {
+	public GameButton(String text, int x, int y, int z, int width, int height, int lineWidth, int fontSize, Color fontColor, Color strokeColor) {
 		this.text = text;
 		this.defaultX = x;
 		this.defaultY = y;
 		this.x = x;
 		this.y = y;
 		this.lineWidth = lineWidth;
-		this.font = font;
-		this.font = maskFont;
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
 		this.width = width;
@@ -43,6 +40,7 @@ public class GameButton implements IRenderableObject, Pointable{
 		this.z = z;
 		this.isPoint = false;
 		this.startPoint = 0;
+		this.fontSize = fontSize;
 	}
 	
 	public void setPoint(boolean p, int counter) {
@@ -70,9 +68,9 @@ public class GameButton implements IRenderableObject, Pointable{
 		if(isPoint) {
 			int addSize = (counter - startPoint) * 3;
 			if(addSize > 25) addSize = 25;
-			maskFont = Font.loadFont(IRenderableHolder.mainFontName, 75 + addSize);
+			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize + addSize);
 		}
-		else maskFont = Font.loadFont(IRenderableHolder.mainFontName, 75);
+		else maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize);
 	}
 
 	@Override

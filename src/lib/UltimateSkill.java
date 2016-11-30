@@ -35,7 +35,6 @@ public abstract class UltimateSkill extends Skill {
 	@Override
 	public void render(GraphicsContext gc) {
 		
-		gc.setFont(new Font(null, 48));
 		gc.setLineWidth(8);
 		
 		if(ultimatePoint < maxUltimatePoint) gc.setFill(Color.color(0, 0, 0, 0.5));
@@ -53,11 +52,11 @@ public abstract class UltimateSkill extends Skill {
 		gc.setFill(Color.WHITE);
 		
 		if(ultimatePoint < maxUltimatePoint) {
-			gc.setFont(new Font(null, 30));
+			gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 28));
 			gc.fillText((ultimatePoint * 100 / maxUltimatePoint) + "%", x, y);
 		}
 		else {
-			gc.setFont(new Font(null, 48));
+			gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 48));
 			gc.fillText(keyCode.toString(), x, y);
 		}
 	}

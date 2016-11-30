@@ -1,7 +1,5 @@
 package logic;
 
-import java.net.*;
-
 import application.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lib.ConfigurableOption;
 import lib.DefaultManager;
@@ -40,14 +37,11 @@ public class StartManager extends DefaultManager {
 		
 		this.primaryStage = Main.getPrimaryStage();
 		
-		Font titleFont = Font.loadFont(IRenderableHolder.mainFontName, 100);
-		Font buttonFont = Font.loadFont(IRenderableHolder.mainFontName, 75);
-		
 		background = new Background(0);
-		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, titleFont, Color.ORANGE, Color.WHITE);
-		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
-		settingsButton = new GameButton("SETTINGS", 50, 360, 1, 400, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
-		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
+		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
+		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, 75, Color.WHITE, Color.BLACK);
+		settingsButton = new GameButton("SETTINGS", 50, 360, 1, 400, 75, 3, 75, Color.WHITE, Color.BLACK);
+		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, 75, Color.WHITE, Color.BLACK);
 		
 		counter = 0;
 		IRenderableHolder.getInstance().add(background);
