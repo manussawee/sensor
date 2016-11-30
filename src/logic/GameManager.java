@@ -162,11 +162,9 @@ public class GameManager extends DefaultManager {
 		enemyHero = new Hero(x, y, 2, null, null, null, null, Color.RED, Color.INDIANRED, 2);
 		heroes[1] = enemyHero;
 		
-		DashSkill dashSkill = new DashSkill(60 * 5, 0, 0, 0, enemyHero, null);
-		dashSkill.setVisible(false);
+		DashSkill dashSkill = new DashSkill(60 * 5, 1000, 1000, 5, enemyHero, null);
 		enemyHero.getSkills().add(dashSkill);
-		BombSkill bombSkill = new BombSkill(60 * 5, 125, ConfigurableOption.screenHeight - 100, 5, enemyHero, null);
-		bombSkill.setVisible(false);
+		BombSkill bombSkill = new BombSkill(60 * 5, 1000, 1000, 5, enemyHero, null);
 		enemyHero.getSkills().add(bombSkill);
 		
 		SpeedSkill speedSkill = new SpeedSkill(500, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 140, 5, enemyHero, null, 360);
