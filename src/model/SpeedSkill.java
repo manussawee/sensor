@@ -44,6 +44,7 @@ public class SpeedSkill extends UltimateSkill {
 		else if(counter%12 == 0){
 			increaseUltimatePoint();
 		}
+		readyText.update(counter);
 	}
 
 }

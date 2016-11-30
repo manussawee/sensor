@@ -28,6 +28,7 @@ public class GameText implements IRenderableObject {
 	private boolean shockFront;
 	private boolean isShock;
 	private Color shockColor;
+	private boolean enableShock;
 	
 	private int z;
 	
@@ -49,6 +50,7 @@ public class GameText implements IRenderableObject {
 		this.shockFront = false;
 		this.isShock = false;
 		this.shockColor = Color.BLUE;
+		this.enableShock = true;
 	}
 
 	public int getDefaultX() {
@@ -69,7 +71,7 @@ public class GameText implements IRenderableObject {
 	
 	public void update(int counter) {
 		Random rand = new Random();
-		if(counter >= nextShock) {
+		if(counter >= nextShock && enableShock) {
 			nextShock = counter + rand.nextInt(100) + 200;
 			shockEnd = counter + rand.nextInt(60) + 30;
 		}
@@ -85,6 +87,11 @@ public class GameText implements IRenderableObject {
 			shockX = 0;
 			shockY = 0;
 		}
+	}
+	
+	public void shockText(int counter) {
+		nextShock = counter;
+		shockEnd = counter + 60;
 	}
 
 	@Override
@@ -147,6 +154,11 @@ public class GameText implements IRenderableObject {
 			gc.fillText(text, x + shockX, y + shockY);
 			gc.setGlobalAlpha(1);
 		}
+	}
+
+	public void setEnableShock(boolean b) {
+		// TODO Auto-generated method stub
+		enableShock = b;
 	}
 
 }

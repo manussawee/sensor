@@ -49,6 +49,8 @@ public class BombSkill extends Skill {
 			}
 		}
 		else this.bombFrame = -1;
+		
+		keyText.update(counter);
 	}
 	
 	@Override
