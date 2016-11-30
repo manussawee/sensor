@@ -14,6 +14,6 @@ public class ConfigurableOption {
 	public static KeyCode right = KeyCode.RIGHT;
 	public static KeyCode firstSkill = KeyCode.Z;
 	public static KeyCode secondSkill = KeyCode.X;
-	public static KeyCode UltimateSkill = KeyCode.C;
+	public static KeyCode ultimateSkill = KeyCode.C;
 	
 }

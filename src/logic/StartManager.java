@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -60,18 +61,21 @@ public class StartManager extends DefaultManager {
 	public void openGameType() throws Exception {
 		
 		GridPane mainPane = new GridPane();
-		mainPane.setPrefSize(300, 150);
 		mainPane.setAlignment(Pos.CENTER);
 		mainPane.setPadding(new Insets(5));
 		
+		Label ipLabel = new Label("IP ADDRESS");
+		ipLabel.setPadding(new Insets(5));
+		mainPane.add(ipLabel, 1, 1);
+		
 		TextField ipField = new TextField();
-		ipField.setPrefWidth(200);
-		mainPane.add(ipField, 1, 1);
+		ipField.setPrefWidth(150);
+		mainPane.add(ipField, 2, 1);
 		
 		GridPane subPane = new GridPane();
 		subPane.setAlignment(Pos.CENTER);
 		subPane.setPadding(new Insets(5));
-		mainPane.add(subPane, 1, 2);
+		mainPane.add(subPane, 3, 1);
 		
 		Button hostButton = new Button("HOST");
 		Button joinButton = new Button("JOIN");
