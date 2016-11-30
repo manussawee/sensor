@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import lib.ConfigurableOption;
+import lib.IRenderableHolder;
 import lib.IRenderableObject;
 import logic.GameManager;
 
@@ -111,7 +112,7 @@ public class ScoreBar implements IRenderableObject {
 		gc.fillOval(this.x - 40, this.y - 15, 80, 80);
 		gc.strokeOval(this.x - 40, this.y - 15, 80, 80);
 		
-		gc.setFont(new Font(null, 20));
+		gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 20));
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFill(Color.WHITE);
 		
@@ -119,7 +120,7 @@ public class ScoreBar implements IRenderableObject {
 		gc.fillText(scores[0] + "%", this.x - 70, this.y + 25);
 		gc.fillText(scores[1] + "%", this.x + 70, this.y + 25);
 		
-		gc.setFont(new Font(null, 26));
+		gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 26));
 		if(sec < 10) gc.fillText(min + ":0" + sec, this.x, this.y + 25);
 		else gc.fillText(min + ":" + sec, this.x, this.y + 25);
 		

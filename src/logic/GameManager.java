@@ -1,10 +1,6 @@
 package logic;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import lib.ConfigurableOption;
 import lib.DefaultManager;
 import lib.IRenderableHolder;
@@ -55,14 +51,14 @@ public class GameManager extends DefaultManager {
 		heroes = new Hero[2];
 		
 		map = new Map(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 0);
-		scoreBar = new ScoreBar(3 * 60, ConfigurableOption.screenWidth / 2, 30, 5);
+		scoreBar = new ScoreBar(60 * 3, ConfigurableOption.screenWidth / 2, 30, 5);
 		IRenderableHolder.getInstance().add(scoreBar);
 		IRenderableHolder.getInstance().add(map);
 		counter = 0;
 		
 		if(gameType == "SERVER") {
 			isReady = false;
-			waitingText = new GameText("WAITING FOR PLAYER", ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2, 11, 0, Font.font(null, FontWeight.BOLD, 42), Color.WHITE, Color.WHITE);
+			waitingText = new GameText("WAITING FOR PLAYER", ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2, 11, 0, 42, Color.WHITE, Color.WHITE);
 			waitingBG = new TransparentBackground(Color.color(0, 0, 0, 0.5), 10);
 			IRenderableHolder.getInstance().addAndSort(waitingText);
 			IRenderableHolder.getInstance().addAndSort(waitingBG);
@@ -224,8 +220,8 @@ public class GameManager extends DefaultManager {
 		else if(myScore < enemyScore) message = "DEFEAT";
 		else message = "DRAW";
 		
-		endingText = new GameText(message, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 - 50, 11, 1, Font.font("Tahoma", FontWeight.BOLD, 72), color, Color.WHITE);
-		endingScore = new GameText(myScore + " - " + enemyScore, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 + 20, 11, 0, Font.font("Tahoma", 48), Color.WHITE, Color.WHITE);
+		endingText = new GameText(message, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 - 50, 11, 1, 100, color, Color.WHITE);
+		endingScore = new GameText(myScore + " - " + enemyScore, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 + 10, 11, 0, 48, Color.WHITE, Color.WHITE);
 		waitingBG = new TransparentBackground(Color.color(0, 0, 0, 0.5), 10);
 		
 		IRenderableHolder.getInstance().add(waitingBG);

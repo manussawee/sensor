@@ -2,18 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-import javax.security.auth.login.Configuration;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
-import lib.ConfigurableOption;
 import lib.IRenderableHolder;
 import lib.IRenderableObject;
 import lib.InputUtility;
-import lib.Provider;
-import lib.Requester;
 import lib.Skill;
 import lib.UltimateSkill;
 import logic.GameManager;

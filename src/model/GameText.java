@@ -18,41 +18,39 @@ public class GameText implements IRenderableObject {
 	private int defaultX;
 	private int defaultY;
 	private int lineWidth;
-	private Font font;
 	private Color fontColor; 
 	private Color strokeColor;
 	private int nextShock;
-	private int lastShock;
-	
+	private int fontSize;
 	private int shockX;
 	private int shockY;
 	private int shockEnd;
 	private boolean shockFront;
 	private boolean isShock;
 	private Color shockColor;
+	private boolean enableShock;
 	
 	private int z;
 	
-	public GameText(String text, int x, int y, int z, int lineWidth, Font font, Color fontColor, Color strokeColor) {
+	public GameText(String text, int x, int y, int z, int lineWidth, int fontSize, Color fontColor, Color strokeColor) {
 		this.text = text;
 		this.defaultX = x;
 		this.defaultY = y;
 		this.x = x;
 		this.y = y;
 		this.lineWidth = lineWidth;
-		this.font = font;
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
 		this.z = z;
-		
+		this.fontSize = fontSize;
 		this.nextShock = 0;
-		this.lastShock = -1000;
 		this.shockX = 0;
 		this.shockY = 0;
 		this.shockEnd = -1000;
 		this.shockFront = false;
 		this.isShock = false;
 		this.shockColor = Color.BLUE;
+		this.enableShock = true;
 	}
 
 	public int getDefaultX() {
@@ -73,7 +71,7 @@ public class GameText implements IRenderableObject {
 	
 	public void update(int counter) {
 		Random rand = new Random();
-		if(counter >= nextShock) {
+		if(counter >= nextShock && enableShock) {
 			nextShock = counter + rand.nextInt(100) + 200;
 			shockEnd = counter + rand.nextInt(60) + 30;
 		}
@@ -89,6 +87,11 @@ public class GameText implements IRenderableObject {
 			shockX = 0;
 			shockY = 0;
 		}
+	}
+	
+	public void shockText(int counter) {
+		nextShock = counter;
+		shockEnd = counter + 60;
 	}
 
 	@Override
@@ -127,8 +130,8 @@ public class GameText implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		System.out.println(font);
-		gc.setFont(font);
+		
+		gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, fontSize));
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);
 		gc.setTextBaseline(VPos.CENTER);
@@ -152,6 +155,11 @@ public class GameText implements IRenderableObject {
 			gc.fillText(text, x + shockX, y + shockY);
 			gc.setGlobalAlpha(1);
 		}
+	}
+
+	public void setEnableShock(boolean b) {
+		// TODO Auto-generated method stub
+		enableShock = b;
 	}
 
 }

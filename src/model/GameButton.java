@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import lib.Pointable;
+import lib.IRenderableHolder;
 import lib.IRenderableObject;
 
 public class GameButton implements IRenderableObject, Pointable{
@@ -17,25 +18,34 @@ public class GameButton implements IRenderableObject, Pointable{
 	private int defaultX;
 	private int defaultY;
 	private int lineWidth;
-	private Font font;
+	private boolean isPoint;
+	private Font maskFont;
 	private Color fontColor; 
 	private Color strokeColor;
-
+	private int startPoint;
+	private int fontSize;
 	private int z;
 	
-	public GameButton(String text, int x, int y, int z, int width, int height, int lineWidth, Font font, Color fontColor, Color strokeColor) {
+	public GameButton(String text, int x, int y, int z, int width, int height, int lineWidth, int fontSize, Color fontColor, Color strokeColor) {
 		this.text = text;
 		this.defaultX = x;
 		this.defaultY = y;
 		this.x = x;
 		this.y = y;
 		this.lineWidth = lineWidth;
-		this.font = font;
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
 		this.width = width;
 		this.height = height;
 		this.z = z;
+		this.isPoint = false;
+		this.startPoint = 0;
+		this.fontSize = fontSize;
+	}
+	
+	public void setPoint(boolean p, int counter) {
+		if(!this.isPoint && p) startPoint = counter;
+		this.isPoint = p;
 	}
 
 	public int getDefaultX() {
@@ -52,6 +62,15 @@ public class GameButton implements IRenderableObject, Pointable{
 
 	public void setDefaultY(int defaultY) {
 		this.defaultY = defaultY;
+	}
+	
+	public void update(int counter) {
+		if(isPoint) {
+			int addSize = (counter - startPoint) * 3;
+			if(addSize > 25) addSize = 25;
+			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize + addSize);
+		}
+		else maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize);
 	}
 
 	@Override
@@ -95,9 +114,9 @@ public class GameButton implements IRenderableObject, Pointable{
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		System.out.println(font);
+		
 		// set property
-		gc.setFont(font);
+		gc.setFont(maskFont);
 		gc.setFill(fontColor);
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);

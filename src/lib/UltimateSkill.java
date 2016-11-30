@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import model.GameText;
 import model.Hero;
 
 public abstract class UltimateSkill extends Skill {
@@ -15,6 +16,7 @@ public abstract class UltimateSkill extends Skill {
 	protected int ultimatePoint;
 	protected boolean isUse;
 	protected int ultimateDuration;
+	protected GameText readyText;
 	
 	public UltimateSkill(int maxUltimatePoint, int x, int y, int z, Hero hero, KeyCode keyCode, int ultimateDuration) {
 		super(0, x, y, z, hero, keyCode);
@@ -23,6 +25,7 @@ public abstract class UltimateSkill extends Skill {
 		this.ultimatePoint = 0;
 		this.isUse = false;
 		this.ultimateDuration = ultimateDuration;
+		this.readyText = new GameText(keyCode != null ? keyCode.toString() : "", x, y, z, 0, 54, Color.WHITE, Color.WHITE);
 	}
 	
 	public void increaseUltimatePoint() {
@@ -35,7 +38,6 @@ public abstract class UltimateSkill extends Skill {
 	@Override
 	public void render(GraphicsContext gc) {
 		
-		gc.setFont(new Font(null, 48));
 		gc.setLineWidth(8);
 		
 		if(ultimatePoint < maxUltimatePoint) gc.setFill(Color.color(0, 0, 0, 0.5));
@@ -53,12 +55,11 @@ public abstract class UltimateSkill extends Skill {
 		gc.setFill(Color.WHITE);
 		
 		if(ultimatePoint < maxUltimatePoint) {
-			gc.setFont(new Font(null, 30));
+			gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 28));
 			gc.fillText((ultimatePoint * 100 / maxUltimatePoint) + "%", x, y);
 		}
 		else {
-			gc.setFont(new Font(null, 48));
-			gc.fillText(keyCode.toString(), x, y);
+			readyText.render(gc);
 		}
 	}
 	

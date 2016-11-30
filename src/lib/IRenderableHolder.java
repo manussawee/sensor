@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 public class IRenderableHolder {
 	private static final IRenderableHolder instance = new IRenderableHolder();

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import logic.GameManager;
+import model.GameText;
 import model.Hero;
 
 public abstract class Skill implements IRenderableObject {
@@ -21,6 +22,7 @@ public abstract class Skill implements IRenderableObject {
 	
 	protected Hero hero;
 	protected KeyCode keyCode;
+	protected GameText keyText;
 	
 	public Skill(int coolDown,int x, int y, int z, Hero hero, KeyCode keyCode) {
 		this.coolDown = coolDown;
@@ -31,6 +33,8 @@ public abstract class Skill implements IRenderableObject {
 		this.hero = hero;
 		this.keyCode = keyCode;
 		this.isVisible = true;
+		this.keyText = new GameText((keyCode == null) ? "" : keyCode.toString(), x + 25, y + 25, z, 0, 48, Color.WHITE, Color.WHITE);
+		this.keyText.setEnableShock(false);
 	}
 
 	public int getX() {
@@ -83,16 +87,13 @@ public abstract class Skill implements IRenderableObject {
 		gc.setStroke(Color.WHITE);
 		
 		int height = (int) (50 * (GameManager.getCounter() - lastUse) / coolDown);
+		if(height == 50) keyText.shockText(GameManager.getCounter());
 		if(height > 50) height = 50;
 		
 		gc.fillRoundRect(x, y + 50 - height, 50, height, 10, 10);
 		gc.strokeRoundRect(x, y, 50, 50, 10, 10);
 		
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-		gc.setFont(new Font(null, 48));
-		gc.setFill(Color.WHITE);
-		gc.fillText((keyCode == null) ? "" : keyCode.toString(), x + 25, y + 25);
+		keyText.render(gc);
 	}
 
 	public KeyCode getkeyCode() {

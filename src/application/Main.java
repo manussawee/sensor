@@ -72,7 +72,7 @@ public class Main extends Application {
 	}
 	
 	public void drawGameScreen(){
-		this.gameScreen.paintComponent();
+		gameScreen.paintComponent();
 	}
 	
 }

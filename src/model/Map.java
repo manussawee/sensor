@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Random;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import lib.ConfigurableOption;
@@ -99,7 +97,7 @@ public class Map implements IRenderableObject {
 		gc.setStroke(borderColor);
 		gc.setLineWidth(lineWidth);
 		gc.setGlobalAlpha(alpha);
-		gc.strokeRect(GameManager.screenOffsetX() - 5, GameManager.screenOffsetY() - 5, ConfigurableOption.mapWidth * 50 + 5, ConfigurableOption.mapHeight * 50 + 5);
+		gc.strokeRoundRect(GameManager.screenOffsetX() - 5, GameManager.screenOffsetY() - 5, ConfigurableOption.mapWidth * 50 + 5, ConfigurableOption.mapHeight * 50 + 5, 10, 10);
 		gc.setGlobalAlpha(1);
 		
 		renderPlanet(gc);

@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 
 import application.Main;
-import logic.GameManager;
 import logic.StartManager;
 public class Requester extends SocketService{
     Socket requestSocket;

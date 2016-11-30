@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import lib.IRenderableHolder;
 import lib.Skill;
-import lib.UltimateSkill;
 import logic.GameManager;
 
 public class BombSkill extends Skill {
@@ -50,6 +49,8 @@ public class BombSkill extends Skill {
 			}
 		}
 		else this.bombFrame = -1;
+		
+		keyText.update(counter);
 	}
 	
 	@Override

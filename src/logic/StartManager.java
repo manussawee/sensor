@@ -1,8 +1,5 @@
 package logic;
 
-import java.io.FileInputStream;
-import java.net.*;
-
 import application.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lib.ConfigurableOption;
 import lib.DefaultManager;
@@ -31,7 +27,7 @@ public class StartManager extends DefaultManager {
 	private Background background;
 	private GameText gameTitle;
 	private GameButton startButton;
-	private GameButton tutorialButton;
+	private GameButton settingsButton;
 	private GameButton exitButton;
 	
 	private int counter;
@@ -42,20 +38,17 @@ public class StartManager extends DefaultManager {
 		
 		this.primaryStage = Main.getPrimaryStage();
 		
-		Font titleFont = Font.loadFont(IRenderableHolder.mainFontName, 100);
-		Font buttonFont = Font.loadFont(IRenderableHolder.mainFontName, 75);
-		
 		background = new Background(0);
-		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, titleFont, Color.ORANGE, Color.WHITE);
-		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
-		tutorialButton = new GameButton("SETTINGS", 50, 360, 1, 400, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
-		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, buttonFont, Color.WHITE, Color.BLACK);
+		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
+		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, 75, Color.WHITE, Color.BLACK);
+		settingsButton = new GameButton("SETTINGS", 50, 360, 1, 400, 75, 3, 75, Color.WHITE, Color.BLACK);
+		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, 75, Color.WHITE, Color.BLACK);
 		
 		counter = 0;
 		IRenderableHolder.getInstance().add(background);
 		IRenderableHolder.getInstance().add(gameTitle);
 		IRenderableHolder.getInstance().add(startButton);
-		IRenderableHolder.getInstance().add(tutorialButton);
+		IRenderableHolder.getInstance().add(settingsButton);
 		IRenderableHolder.getInstance().add(exitButton);
 		IRenderableHolder.getInstance().sort();
 	}
@@ -103,12 +96,12 @@ public class StartManager extends DefaultManager {
 	@Override
 	public void update() {
 		
-		background.update(counter);
-		gameTitle.update(counter);
-		
 		// mouse over
 		Pointable pointObject = this.getTopMostTargetAt(InputUtility.getMouseX(), InputUtility.getMouseY());
 		if(pointObject == startButton) {
+			startButton.setPoint(true, counter);
+			settingsButton.setPoint(false, counter);
+			exitButton.setPoint(false, counter);
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				System.out.println("START");
@@ -120,19 +113,36 @@ public class StartManager extends DefaultManager {
 				}
 			}
 		}
-//		else if(pointObject == tutorialButton) {
-//			// click
-//			if(InputUtility.isMouseLeftDown()) {
-//				System.out.println("TUTORIAL");
-//			}
-//		}
+		else if(pointObject == settingsButton) {
+			settingsButton.setPoint(true, counter);
+			startButton.setPoint(false, counter);
+			exitButton.setPoint(false, counter);
+			// click
+			if(InputUtility.isMouseLeftDown()) {
+				System.out.println("TUTORIAL");
+			}
+		}
 		else if(pointObject == exitButton) {
+			exitButton.setPoint(true, counter);
+			startButton.setPoint(false, counter);
+			settingsButton.setPoint(false, counter);
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				System.out.println("EXIT");
 				primaryStage.close();
 			}
 		}
+		else {
+			startButton.setPoint(false, counter);
+			settingsButton.setPoint(false, counter);
+			exitButton.setPoint(false, counter);
+		}
+		
+		background.update(counter);
+		gameTitle.update(counter);
+		startButton.update(counter);
+		settingsButton.update(counter);
+		exitButton.update(counter);
 		
 		// Reset
 		counter++;

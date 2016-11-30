@@ -29,6 +29,7 @@ public class DashSkill extends Skill {
 			}
 			hero.setLastMove(lastMove);
 		}
+		keyText.update(counter);
 	}
 	
 	@Override
