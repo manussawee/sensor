@@ -83,6 +83,8 @@ public class GameManager extends DefaultManager {
 		miniMap = new MiniMap(ConfigurableOption.screenWidth - 120, ConfigurableOption.screenHeight - 120, 5, myHero);
 		IRenderableHolder.getInstance().add(miniMap);
 		IRenderableHolder.getInstance().sort();
+		
+		IRenderableHolder.bg.play();
 	}
 	
 	public static boolean isReady() {

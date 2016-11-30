@@ -7,6 +7,7 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.media.AudioClip;
 
 public class IRenderableHolder {
 	private static final IRenderableHolder instance = new IRenderableHolder();
@@ -19,6 +20,8 @@ public class IRenderableHolder {
 	private static Image[] explosion;
 	public static Image[][] explosionFrames;
 	public static Image[] planet;
+	// sound
+	public static AudioClip bg;
 	
 	public IRenderableHolder() {
 		entities = new ArrayList<IRenderableObject>();
@@ -61,6 +64,11 @@ public class IRenderableHolder {
 			spaceshipFrames[0][i] = new WritableImage(spaceship[0].getPixelReader(), i * 50, 0, 50, 50);
 			spaceshipFrames[1][i] = new WritableImage(spaceship[1].getPixelReader(), i * 50, 0, 50, 50);
 		}
+		
+		// load sound
+		bg = new AudioClip(ClassLoader.getSystemResource("se/sound-bg.wav").toString());
+		IRenderableHolder.bg.setVolume(0.15);
+		IRenderableHolder.bg.setCycleCount((int) Double.POSITIVE_INFINITY);
 	}
 
 	public void addAndSort(IRenderableObject entity) {
