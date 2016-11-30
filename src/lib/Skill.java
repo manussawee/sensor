@@ -92,7 +92,7 @@ public abstract class Skill implements IRenderableObject {
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFont(new Font(null, 48));
 		gc.setFill(Color.WHITE);
-		gc.fillText(keyCode.toString(), x + 25, y + 25);
+		gc.fillText((keyCode == null) ? "" : keyCode.toString(), x + 25, y + 25);
 	}
 
 	public KeyCode getkeyCode() {

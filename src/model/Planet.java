@@ -22,6 +22,7 @@ public class Planet implements IRenderableObject {
 	private double size;
 	private double positionOffset;
 	private int rotateDirection;
+
 	private final int sizeDelay = 14;
 	
 	public Planet(int x, int y, int z, int type) {

@@ -41,10 +41,9 @@ public class BombSkill extends Skill {
 					
 					if(Math.abs(hero.getY() - i) + Math.abs(hero.getX() - j) <= diff) {
 						
-						if(GameManager.map.getMapAt(j, i) != -2 && GameManager.map.getMapAt(j, i) != 0) {
-							
+						if(GameManager.map.getMapAt(j, i) == -1) {
 							GameManager.map.setMapAt(j, i, 0);
-							if(GameManager.map.getMapAt(j, i) != hero.getId()) hero.getUltimateSkill().increaseUltimatePoint();
+							hero.getUltimateSkill().increaseUltimatePoint();
 						}
 					}
 				}

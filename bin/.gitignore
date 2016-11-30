@@ -1,5 +1,11 @@
 /img/
 /model/
+<<<<<<< HEAD
 /se/
 /lib/
 /logic/
+=======
+/logic/
+/application/
+/lib/
+>>>>>>> origin/develop

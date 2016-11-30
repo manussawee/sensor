@@ -20,6 +20,10 @@ public class IRenderableHolder {
 	private static Image[] explosion;
 	public static Image[][] explosionFrames;
 	public static Image[] planet;
+	
+	public static Image backgroundImage;
+	public static Image[] backgroundFrames;
+	
 	// sound
 	public static AudioClip bg;
 	
@@ -41,7 +45,13 @@ public class IRenderableHolder {
 	}
 	
 	private static void loadResource() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
+		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.png").toString());
+		backgroundFrames = new Image[6];
+		for(int i = 0; i < 6; i++) {
+			backgroundFrames[i] = new WritableImage(backgroundImage.getPixelReader(), (int) (backgroundImage.getWidth() * i / 6), 0, (int) (backgroundImage.getWidth() / 6), (int) backgroundImage.getHeight());
+		}
+		
 		planet = new Image[3];
 		planet[0] = new Image(ClassLoader.getSystemResource("img/planet_gray.png").toString());
 		planet[1] = new Image(ClassLoader.getSystemResource("img/planet_blue.png").toString());
