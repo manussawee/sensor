@@ -26,9 +26,7 @@ import ui.GameScreen;
 public class StartManager extends DefaultManager {
 	
 	private Stage primaryStage;
-	
-	private Font font = new Font(null, 72);
-	
+	private Font font;
 	private Background background;
 	private GameText gameTitle;
 	private GameButton startButton;
@@ -43,8 +41,10 @@ public class StartManager extends DefaultManager {
 		
 		this.primaryStage = Main.getPrimaryStage();
 		
+		font = Font.loadFont(IRenderableHolder.mainFontName, 100);
+		
 		background = new Background(0);
-		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 3, font, Color.ORANGE, Color.BLACK);
+		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, font, Color.WHITE, Color.WHITE);
 		startButton = new GameButton("START", 50, 250, 1, 225, 72, 3, font, Color.RED, Color.BLACK);
 		tutorialButton = new GameButton("TUTORIAL", 50, 350, 1, 350, 72, 3, font, Color.RED, Color.BLACK);
 		exitButton = new GameButton("EXIT", 50, 450, 1, 150, 72, 3, font, Color.RED, Color.BLACK);
@@ -99,6 +99,7 @@ public class StartManager extends DefaultManager {
 	public void update() {
 		
 		background.update(counter);
+		gameTitle.update(counter);
 		
 		// mouse over
 		Pointable pointObject = this.getTopMostTargetAt(InputUtility.getMouseX(), InputUtility.getMouseY());

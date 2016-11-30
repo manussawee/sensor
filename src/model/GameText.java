@@ -1,10 +1,13 @@
 package model;
 
+import java.util.Random;
+
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import lib.IRenderableHolder;
 import lib.IRenderableObject;
 
 public class GameText implements IRenderableObject {
@@ -18,6 +21,15 @@ public class GameText implements IRenderableObject {
 	private Font font;
 	private Color fontColor; 
 	private Color strokeColor;
+	private int nextShock;
+	private int lastShock;
+	
+	private int shockX;
+	private int shockY;
+	private int shockEnd;
+	private boolean shockFront;
+	private boolean isShock;
+	private Color shockColor;
 	
 	private int z;
 	
@@ -32,6 +44,15 @@ public class GameText implements IRenderableObject {
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
 		this.z = z;
+		
+		this.nextShock = 0;
+		this.lastShock = -1000;
+		this.shockX = 0;
+		this.shockY = 0;
+		this.shockEnd = -1000;
+		this.shockFront = false;
+		this.isShock = false;
+		this.shockColor = Color.BLUE;
 	}
 
 	public int getDefaultX() {
@@ -48,6 +69,26 @@ public class GameText implements IRenderableObject {
 
 	public void setDefaultY(int defaultY) {
 		this.defaultY = defaultY;
+	}
+	
+	public void update(int counter) {
+		Random rand = new Random();
+		if(counter >= nextShock) {
+			nextShock = counter + rand.nextInt(100) + 200;
+			shockEnd = counter + rand.nextInt(60) + 30;
+		}
+		if(isShock = shockEnd >= counter) {
+			if(counter % 3 == 0) {
+				shockX = rand.nextInt(20) - 10;
+				shockY = rand.nextInt(20) - 10;
+				shockFront = rand.nextInt(3) == 0;
+				shockColor = IRenderableHolder.randomColor();
+			}
+		}
+		else {
+			shockX = 0;
+			shockY = 0;
+		}
 	}
 
 	@Override
@@ -86,18 +127,30 @@ public class GameText implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		// set property
+		
 		gc.setFont(font);
-		gc.setFill(fontColor);
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setTextAlign(TextAlignment.CENTER);
-				
+		
+		if(!shockFront && isShock) {
+			gc.setFill(shockColor);
+			gc.fillText(text, x + shockX, y + shockY);
+		}
+	
+		gc.setFill(fontColor);
 		// draw
 		gc.fillText(text, x, y);
 		if(lineWidth != 0) {
 			gc.strokeText(text, x, y);
+		}
+		
+		if(shockFront && isShock) {
+			gc.setGlobalAlpha(0.5);
+			gc.setFill(shockColor);
+			gc.fillText(text, x + shockX, y + shockY);
+			gc.setGlobalAlpha(1);
 		}
 	}
 

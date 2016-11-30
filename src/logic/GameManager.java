@@ -194,6 +194,9 @@ public class GameManager extends DefaultManager {
 		}
 		
 		background.update(counter);
+
+		if(endingText != null) endingText.update(counter);
+		if(waitingText != null) waitingText.update(counter);
 		
 		// Reset
 		counter++;

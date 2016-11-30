@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class IRenderableHolder {
 	private static final IRenderableHolder instance = new IRenderableHolder();
@@ -20,12 +23,12 @@ public class IRenderableHolder {
 	private static Image[] explosion;
 	public static Image[][] explosionFrames;
 	public static Image[] planet;
-	
 	public static Image backgroundImage;
 	public static Image[] backgroundFrames;
-	
 	// sound
 	public static AudioClip bg;
+	
+	public static String mainFontName;
 	
 	public IRenderableHolder() {
 		entities = new ArrayList<IRenderableObject>();
@@ -45,7 +48,7 @@ public class IRenderableHolder {
 	}
 	
 	private static void loadResource() {
-		// TODO Auto-generated method stu
+		// TODO Auto-generated method
 		backgroundImage = new Image(ClassLoader.getSystemResource("img/background.png").toString());
 		backgroundFrames = new Image[6];
 		for(int i = 0; i < 6; i++) {
@@ -79,6 +82,8 @@ public class IRenderableHolder {
 		bg = new AudioClip(ClassLoader.getSystemResource("se/sound-bg.wav").toString());
 		IRenderableHolder.bg.setVolume(0.15);
 		IRenderableHolder.bg.setCycleCount((int) Double.POSITIVE_INFINITY);
+		
+		mainFontName = ClassLoader.getSystemResource("font/spaceranger.ttf").toString();
 	}
 
 	public void addAndSort(IRenderableObject entity) {
@@ -97,5 +102,13 @@ public class IRenderableHolder {
 
 	public List<IRenderableObject> getEntities() {
 		return entities;
+	}
+	
+	public static Color randomColor() {
+		Random rand = new Random();
+		double r = rand.nextDouble();
+		double g = rand.nextDouble();
+		double b = rand.nextDouble();
+		return Color.color(r, g, b);
 	}
 }
