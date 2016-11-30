@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import lib.Pointable;
+import lib.IRenderableHolder;
 import lib.IRenderableObject;
 
 public class GameButton implements IRenderableObject, Pointable{
@@ -17,9 +18,12 @@ public class GameButton implements IRenderableObject, Pointable{
 	private int defaultX;
 	private int defaultY;
 	private int lineWidth;
+	private boolean isPoint;
 	private Font font;
+	private Font maskFont;
 	private Color fontColor; 
 	private Color strokeColor;
+	private int startPoint;
 
 	private int z;
 	
@@ -31,11 +35,19 @@ public class GameButton implements IRenderableObject, Pointable{
 		this.y = y;
 		this.lineWidth = lineWidth;
 		this.font = font;
+		this.font = maskFont;
 		this.fontColor  = fontColor;
 		this.strokeColor = strokeColor;
 		this.width = width;
 		this.height = height;
 		this.z = z;
+		this.isPoint = false;
+		this.startPoint = 0;
+	}
+	
+	public void setPoint(boolean p, int counter) {
+		if(!this.isPoint && p) startPoint = counter;
+		this.isPoint = p;
 	}
 
 	public int getDefaultX() {
@@ -52,6 +64,15 @@ public class GameButton implements IRenderableObject, Pointable{
 
 	public void setDefaultY(int defaultY) {
 		this.defaultY = defaultY;
+	}
+	
+	public void update(int counter) {
+		if(isPoint) {
+			int addSize = (counter - startPoint) * 3;
+			if(addSize > 25) addSize = 25;
+			maskFont = Font.loadFont(IRenderableHolder.mainFontName, 75 + addSize);
+		}
+		else maskFont = Font.loadFont(IRenderableHolder.mainFontName, 75);
 	}
 
 	@Override
@@ -97,7 +118,7 @@ public class GameButton implements IRenderableObject, Pointable{
 		// TODO Auto-generated method stub
 
 		// set property
-		gc.setFont(font);
+		gc.setFont(maskFont);
 		gc.setFill(fontColor);
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);
