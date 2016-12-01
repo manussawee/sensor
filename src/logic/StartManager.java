@@ -19,7 +19,6 @@ import lib.Pointable;
 import model.Background;
 import model.GameButton;
 import model.GameText;
-import sun.font.TrueTypeFont;
 
 public class StartManager extends DefaultManager {
 	
