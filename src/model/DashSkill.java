@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import lib.IRenderableHolder;
 import lib.Skill;
+import logic.GameManager;
 
 public class DashSkill extends Skill {
 

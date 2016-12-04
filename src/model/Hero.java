@@ -165,25 +165,31 @@ public class Hero implements IRenderableObject {
 		move(counter);
 		
 		// calculate position
+		
+		
 		this.drawX = (this.x - 1) * 50; 
 		this.drawY = (this.y - 1) * 50;
 		
-		if(counter - this.lastMove <= this.moveInterval) {
-			this.drawX += addX[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
-			this.drawY += addY[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
-			if(counter - this.lastMove == this.moveInterval) {
-				
-				int mapType = GameManager.map.getMapAt(this.x, this.y);
-				if(mapType == 0) GameManager.map.setMapAt(this.x, this.y, this.id);
-				else if(mapType != this.id && mapType > 0) GameManager.map.setMapAt(this.x, this.y, -1);
-				
-				this.x += addX[this.direction];
-				this.y += addY[this.direction];
+		int newX = this.x + addX[this.direction];
+		int newY = this.y + addY[this.direction];
+		int newMapType = GameManager.map.getMapAt(newX, newY);
+		if(newMapType != -2){	
+			if(counter - this.lastMove <= this.moveInterval) {
+				this.drawX += addX[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
+				this.drawY += addY[this.direction] * (double) (counter - this.lastMove) / this.moveInterval * 50;
+				if(counter - this.lastMove == this.moveInterval) {
+					int mapType = GameManager.map.getMapAt(this.x, this.y);
+					if(mapType == 0) GameManager.map.setMapAt(this.x, this.y, this.id);
+					else if(mapType != this.id && mapType > 0) GameManager.map.setMapAt(this.x, this.y, -1);
+					
+					this.x += addX[this.direction];
+					this.y += addY[this.direction];
+				}
+				this.frameIndex =  (counter - this.lastMove) * 3 / this.moveInterval;
 			}
-			this.frameIndex =  (counter - this.lastMove) * 3 / this.moveInterval;
-		}
-		else {
-			this.frameIndex = 0;
+			else {
+				this.frameIndex = 0;
+			}
 		}
 				
 		for(Skill skill: skills) skill.postAction(counter);
@@ -199,6 +205,8 @@ public class Hero implements IRenderableObject {
 		int newX = this.x + addX[this.direction];
 		int newY = this.y + addY[this.direction];
 		int mapType = GameManager.map.getMapAt(newX, newY);
+		
+		System.out.println(mapType);
 		
 		if(mapType == 0) {
 			this.ultimateSkill.increaseUltimatePoint();
