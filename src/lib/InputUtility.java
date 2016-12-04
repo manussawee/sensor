@@ -23,7 +23,7 @@ public class InputUtility {
 			keyPressed.add(keycode);
 			keyTriggered.add(keycode);
 		}
-		else if(getKeyPressed(keycode)) keyPressed.remove(keycode);
+		else if(!pressed && getKeyPressed(keycode)) keyPressed.remove(keycode);
 	}
 
 	public static boolean getKeyTriggered(KeyCode keycode) {
