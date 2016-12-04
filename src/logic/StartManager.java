@@ -27,7 +27,7 @@ public class StartManager extends DefaultManager {
 	public StartManager() {
 		
 		IRenderableHolder.getInstance().getEntities().clear();
-		if(SocketService.isEnable()) SocketService.stop();
+//		if(SocketService.isEnable()) SocketService.stop();
 		
 		background = new Background(0);
 		gameTitle = new GameText("STARBRAWL", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
@@ -61,7 +61,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new ConnectionScreen();
-				 IRenderableHolder.mouseClickSound.play();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else if(pointObject == settingsButton) {
@@ -73,7 +73,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new OptionsScreen();
-				 IRenderableHolder.mouseClickSound.play();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else if(pointObject == exitButton) {
@@ -85,7 +85,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new ExitScreen();
-				 IRenderableHolder.mouseClickSound.play();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else {

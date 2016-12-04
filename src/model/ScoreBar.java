@@ -3,7 +3,6 @@ package model;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import lib.ConfigurableOption;
 import lib.IRenderableHolder;

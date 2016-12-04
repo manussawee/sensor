@@ -52,10 +52,15 @@ public class GameManager extends DefaultManager {
 		heroes = new Hero[2];
 		
 		map = new Map(ConfigurableOption.mapWidth, ConfigurableOption.mapHeight, 0);
-		scoreBar = new ScoreBar(60 * 3, ConfigurableOption.screenWidth / 2, 30, 5);
+		scoreBar = new ScoreBar(ConfigurableOption.matchTime, ConfigurableOption.screenWidth / 2, 30, 5);
 		IRenderableHolder.getInstance().add(scoreBar);
 		IRenderableHolder.getInstance().add(map);
 		counter = 0;
+		
+		if(socketService != null) {
+			SocketService.stop();
+			socketService = null;
+		}
 		
 		if(gameType == "SERVER") {
 			isReady = false;

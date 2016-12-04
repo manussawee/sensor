@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.net.ServerSocket;
 import java.net.SocketException;
 
 import javafx.application.Platform;
@@ -14,6 +15,7 @@ import logic.GameManager;
 
 public abstract class SocketService {
 	
+	protected static ServerSocket providerSocket;
 	protected static ObjectOutputStream out;
 	protected ObjectInputStream in;
 	protected static Thread thread;
@@ -23,6 +25,15 @@ public abstract class SocketService {
     protected static String mode;
     
 	abstract public void run();
+	
+	static {
+		try {
+			providerSocket = new ServerSocket(2016);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	static void sendMessage(String msg) {
 		try {
@@ -47,6 +58,7 @@ public abstract class SocketService {
 	
 	public static void stop() {
 		thread.interrupt();
+		
 	}
 	    
 	
@@ -144,7 +156,7 @@ public abstract class SocketService {
             	strMap += "END";
             	sendMap(strMap);
             	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
-				Thread.sleep(10000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				System.err.print(mode);
@@ -177,6 +189,7 @@ public abstract class SocketService {
             catch (Exception e) {
             	System.err.print(mode);
             	e.printStackTrace();
+            	reportError("CONNECTION ERROR", "CONNECTION PROBLEMS");
             	isStop = true;
             	break;
             }

@@ -6,9 +6,8 @@ import java.net.*;
 import application.Main;
 import logic.GameManager;
 import logic.StartManager;
-public class Provider extends SocketService{
+public class Provider extends SocketService {
     
-	ServerSocket providerSocket;
     Socket connection = null;
 
     public Provider(){}
@@ -17,9 +16,7 @@ public class Provider extends SocketService{
     	mode = "PROVIDER: ";
     	isStop = false;
     	thread = new Thread(() -> {
-	        try{
-
-	            providerSocket = new ServerSocket(2016);
+	        try {
 	            System.out.println("Waiting for connection");
 	            connection = providerSocket.accept();
 	            GameManager.setReady(true);
@@ -39,6 +36,13 @@ public class Provider extends SocketService{
 	            ioException.printStackTrace();
 	            isStop = true;
 	        }
+	        
+	        try {
+				connection.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        
 	        Main.changeManager(new StartManager());
     	});
