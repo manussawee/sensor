@@ -27,6 +27,7 @@ public class GameManager extends DefaultManager {
 	public static Map map;
 	public static String gameType;
 	public static SocketService socketService;
+	public static String ipAddress;
 	public static MiniMap miniMap;
 	public static ScoreBar scoreBar;
 	public static Background background;
@@ -74,6 +75,7 @@ public class GameManager extends DefaultManager {
 			createMyHero("1");
 			createEnemyHero("0");
 			scoreBar.setStart(true);
+			GameManager.ipAddress = ipAddress;
 			socketService = new Requester(ipAddress);
 			socketService.run();
 		}

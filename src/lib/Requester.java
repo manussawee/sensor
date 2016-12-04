@@ -5,7 +5,7 @@ import java.net.*;
 
 import application.Main;
 import logic.StartManager;
-public class Requester extends SocketService{
+public class Requester extends SocketService {
     Socket requestSocket;
     String ipAddress;
     
@@ -15,6 +15,8 @@ public class Requester extends SocketService{
 
     public void run()
     {
+    	mode = "REQUESTER: ";
+    	isStop = false;
     	thread = new Thread(() -> {
 	        try{
 	        	
@@ -34,24 +36,16 @@ public class Requester extends SocketService{
 	        }
 	        catch(ConnectException connectExpt) {
 	        	System.out.println("server not found");
+	        	reportError("SERVER NOT FOUND", "CONNECTION PROBLEMS");
+	        	isStop = true;
 	        	Main.changeManager(new StartManager());
-	        }
-	        catch(UnknownHostException unknownHost){
-	            System.err.println("You are trying to connect to an unknown host!");
 	        }
 	        catch(IOException ioException){
 	            ioException.printStackTrace();
+	            isStop = true;
 	        }
-	        finally{
-	            try{
-	                in.close();
-	                out.close();
-	                requestSocket.close();
-	            }
-	            catch(IOException ioException){
-	                ioException.printStackTrace();
-	            }
-	        }
+	        
+	        Main.changeManager(new StartManager());
     	});
     	
     	thread.start();

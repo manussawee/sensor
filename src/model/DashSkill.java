@@ -18,7 +18,7 @@ public class DashSkill extends Skill {
 		// TODO Auto-generated method stub
 		if(counter - lastUse >= coolDown) {
 			lastUse = counter;
-			IRenderableHolder.dashSound.play();
+			 IRenderableHolder.dashSound.play();
 		}
 	}
 	

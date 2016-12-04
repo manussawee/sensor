@@ -3,7 +3,9 @@ package lib;
 import java.io.*;
 import java.net.*;
 
+import application.Main;
 import logic.GameManager;
+import logic.StartManager;
 public class Provider extends SocketService{
     
 	ServerSocket providerSocket;
@@ -12,6 +14,8 @@ public class Provider extends SocketService{
     public Provider(){}
     public void run()
     {
+    	mode = "PROVIDER: ";
+    	isStop = false;
     	thread = new Thread(() -> {
 	        try{
 
@@ -33,17 +37,10 @@ public class Provider extends SocketService{
 	        }
 	        catch(IOException ioException){
 	            ioException.printStackTrace();
+	            isStop = true;
 	        }
-	        finally{
-	            try{
-	                in.close();
-	                out.close();
-	                providerSocket.close();
-	            }
-	            catch(IOException ioException){
-	                ioException.printStackTrace();
-	            }
-	        }
+	        
+	        Main.changeManager(new StartManager());
     	});
     	
     	thread.start();

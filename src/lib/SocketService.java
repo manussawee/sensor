@@ -7,6 +7,9 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.net.SocketException;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import logic.GameManager;
 
 public abstract class SocketService {
@@ -14,9 +17,10 @@ public abstract class SocketService {
 	protected static ObjectOutputStream out;
 	protected ObjectInputStream in;
 	protected static Thread thread;
-	protected static boolean isStop = false;
+	protected static boolean isStop = true;
 	protected String message;
     protected Data data;
+    protected static String mode;
     
 	abstract public void run();
 	
@@ -26,13 +30,19 @@ public abstract class SocketService {
 			out.flush();
 		}
 		catch(SocketException e) {
+			System.err.print(mode);
 			System.err.println("CONNECTION ERROR");
 			isStop = true;
 		}
 		catch(IOException e) {
+			System.err.print(mode);
 			System.err.println("IO ERROR");
 			isStop = true;
 		}
+	}
+	
+	public static boolean isEnable() {
+		return !isStop;
 	}
 	
 	public static void stop() {
@@ -134,9 +144,10 @@ public abstract class SocketService {
             	strMap += "END";
             	sendMap(strMap);
             	sendHero(GameManager.heroes[0].getX(), GameManager.heroes[0].getY(), 1);
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
+				System.err.print(mode);
 				e.printStackTrace();
 			}
     	}
@@ -150,16 +161,35 @@ public abstract class SocketService {
                 dataController(data); 
             }
             catch (EOFException e) {
-            	System.err.println("PLAYER LOST CONNECTION");
+            	System.err.print(mode);
+            	System.err.println("ENEMY PLAYER LOST CONNECTION");
+            	reportError("ENEMY PLAYER LOST CONNECTION", "CONNECTION PROBLEMS");
+            	isStop = true;
             	break;
             }
             catch (StreamCorruptedException e) {
+            	System.err.print(mode);
             	System.err.println("CONNECTION ERROR");
+            	reportError("CONNECTION ERROR", "CONNECTION PROBLEMS");
+            	isStop = true;
             	break;
             }
             catch (Exception e) {
+            	System.err.print(mode);
             	e.printStackTrace();
+            	isStop = true;
+            	break;
             }
         }
+	}
+	
+	protected void reportError(String message, String title) {
+		Platform.runLater(() -> {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle(title);
+        	alert.setContentText(message);
+        	alert.setHeaderText(null);
+        	alert.showAndWait();
+    	});
 	}
 }

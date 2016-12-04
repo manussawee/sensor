@@ -20,7 +20,7 @@ public class SpeedSkill extends UltimateSkill {
 			isUse = true;
 			lastUse = counter;
 			hero.setMoveInterval(3);
-			IRenderableHolder.ultimateSoud.play();
+			 IRenderableHolder.ultimateSoud.play();
 		}
 	}
 
