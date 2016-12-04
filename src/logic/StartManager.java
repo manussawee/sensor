@@ -17,7 +17,6 @@ import ui.OptionsScreen;
 
 public class StartManager extends DefaultManager {
 	
-	private Stage primaryStage;
 	private Background background;
 	private GameText gameTitle;
 	private GameButton startButton;
@@ -29,8 +28,6 @@ public class StartManager extends DefaultManager {
 	public StartManager() {
 		
 		IRenderableHolder.getInstance().getEntities().clear();
-		
-		this.primaryStage = Main.getPrimaryStage();
 		
 		background = new Background(0);
 		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
@@ -45,6 +42,9 @@ public class StartManager extends DefaultManager {
 		IRenderableHolder.getInstance().add(settingsButton);
 		IRenderableHolder.getInstance().add(exitButton);
 		IRenderableHolder.getInstance().sort();
+		
+		IRenderableHolder.stopAllSounds();
+		IRenderableHolder.startSound.play();
 	}
 	
 	@Override

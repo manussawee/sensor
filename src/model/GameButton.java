@@ -25,6 +25,7 @@ public class GameButton implements IRenderableObject, Pointable{
 	private int startPoint;
 	private int fontSize;
 	private int z;
+	private boolean isFirstPoint = true;
 	
 	public GameButton(String text, int x, int y, int z, int width, int height, int lineWidth, int fontSize, Color fontColor, Color strokeColor) {
 		this.text = text;
@@ -69,8 +70,15 @@ public class GameButton implements IRenderableObject, Pointable{
 			int addSize = (counter - startPoint) * 3;
 			if(addSize > 25) addSize = 25;
 			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize + addSize);
+			if(isFirstPoint) {
+				IRenderableHolder.mouseOverSound.play();
+				isFirstPoint = false;
+			}
 		}
-		else maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize);
+		else {
+			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize);
+			isFirstPoint = true;
+		}
 	}
 
 	@Override

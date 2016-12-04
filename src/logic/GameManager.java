@@ -85,7 +85,8 @@ public class GameManager extends DefaultManager {
 		IRenderableHolder.getInstance().add(miniMap);
 		IRenderableHolder.getInstance().sort();
 		
-		IRenderableHolder.bg.play();
+		IRenderableHolder.stopAllSounds();
+		IRenderableHolder.gameSound.play();
 	}
 	
 	public static boolean isReady() {

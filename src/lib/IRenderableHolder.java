@@ -25,7 +25,13 @@ public class IRenderableHolder {
 	public static Image backgroundImage;
 	public static Image[] backgroundFrames;
 	// sound
-	public static AudioClip bg;
+	public static AudioClip startSound;
+	public static AudioClip gameSound;
+	public static AudioClip mouseOverSound;
+	public static AudioClip mouseClickSound;
+	public static AudioClip bombSound;
+	public static AudioClip dashSound;
+	public static AudioClip ultimateSoud;
 	
 	public static String mainFontName;
 	
@@ -78,12 +84,41 @@ public class IRenderableHolder {
 		}
 		
 		// load sound
-		bg = new AudioClip(ClassLoader.getSystemResource("sfx/sound-bg.wav").toString());
-		IRenderableHolder.bg.setVolume(0.15);
-		IRenderableHolder.bg.setCycleCount((int) Double.POSITIVE_INFINITY);
+		startSound = new AudioClip(ClassLoader.getSystemResource("sfx/start_sound.wav").toString());
+		startSound.setVolume(0.2);
+		startSound.setCycleCount((int) Double.POSITIVE_INFINITY);
+		
+		gameSound = new AudioClip(ClassLoader.getSystemResource("sfx/game_sound.wav").toString());
+		gameSound.setVolume(0.5);
+		gameSound.setCycleCount((int) Double.POSITIVE_INFINITY);
+		
+		mouseOverSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseover_sound.wav").toString());
+		mouseOverSound.setVolume(0.5);
+		
+		mouseClickSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		mouseClickSound.setVolume(0.5);
+		
+		bombSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		bombSound.setVolume(0.5);
+		
+		dashSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		dashSound.setVolume(0.5);
+		
+		ultimateSoud = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		ultimateSoud.setVolume(0.5);
 		
 		mainFontName = ClassLoader.getSystemResource("font/spaceranger.ttf").toString();
 		
+	}
+	
+	public static void stopAllSounds() {
+		startSound.stop();
+		gameSound.stop();
+		mouseOverSound.stop();
+		mouseClickSound.stop();
+		bombSound.stop();
+		dashSound.stop();
+		ultimateSoud.stop();
 	}
 
 	public void addAndSort(IRenderableObject entity) {
