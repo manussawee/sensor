@@ -206,8 +206,6 @@ public class Hero implements IRenderableObject {
 		int newY = this.y + addY[this.direction];
 		int mapType = GameManager.map.getMapAt(newX, newY);
 		
-		System.out.println(mapType);
-		
 		if(mapType == 0) {
 			this.ultimateSkill.increaseUltimatePoint();
 			this.lastMove = GameManager.getCounter();

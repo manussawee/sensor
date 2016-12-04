@@ -55,7 +55,7 @@ public abstract class UltimateSkill extends Skill {
 		gc.setFill(Color.WHITE);
 		
 		if(ultimatePoint < maxUltimatePoint) {
-			gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, 28));
+			gc.setFont(IRenderableHolder.mainFont[28]);
 			gc.fillText((ultimatePoint * 100 / maxUltimatePoint) + "%", x, y);
 		}
 		else {

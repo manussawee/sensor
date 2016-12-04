@@ -69,14 +69,14 @@ public class GameButton implements IRenderableObject, Pointable{
 		if(isPoint) {
 			int addSize = (counter - startPoint) * 3;
 			if(addSize > 25) addSize = 25;
-			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize + addSize);
+			maskFont = IRenderableHolder.mainFont[fontSize + addSize];
 			if(isFirstPoint) {
 				IRenderableHolder.mouseOverSound.play();
 				isFirstPoint = false;
 			}
 		}
 		else {
-			maskFont = Font.loadFont(IRenderableHolder.mainFontName, fontSize);
+			maskFont = IRenderableHolder.mainFont[fontSize];
 			isFirstPoint = true;
 		}
 	}

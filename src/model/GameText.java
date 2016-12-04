@@ -131,7 +131,7 @@ public class GameText implements IRenderableObject {
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
 		
-		gc.setFont(Font.loadFont(IRenderableHolder.mainFontName, fontSize));
+		gc.setFont(IRenderableHolder.mainFont[fontSize]);
 		gc.setStroke(strokeColor);
 		gc.setLineWidth(lineWidth);
 		gc.setTextBaseline(VPos.CENTER);

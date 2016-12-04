@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class IRenderableHolder {
 	private static final IRenderableHolder instance = new IRenderableHolder();
@@ -34,6 +35,7 @@ public class IRenderableHolder {
 	public static AudioClip ultimateSoud;
 	
 	public static String mainFontName;
+	public static Font[] mainFont;
 	
 	public IRenderableHolder() {
 		entities = new ArrayList<IRenderableObject>();
@@ -108,6 +110,11 @@ public class IRenderableHolder {
 		ultimateSoud.setVolume(0.5);
 		
 		mainFontName = ClassLoader.getSystemResource("font/spaceranger.ttf").toString();
+		mainFont = new Font[200];
+		
+		for(int i = 0; i < 200; i++) {
+			mainFont[i] = Font.loadFont(mainFontName, i);
+		}
 		
 	}
 	
