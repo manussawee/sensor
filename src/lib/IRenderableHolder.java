@@ -98,13 +98,13 @@ public class IRenderableHolder {
 		mouseClickSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
 		mouseClickSound.setVolume(1);
 		
-		bombSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		bombSound = new AudioClip(ClassLoader.getSystemResource("sfx/bomb_sound.wav").toString());
 		bombSound.setVolume(0.5);
 		
-		dashSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		dashSound = new AudioClip(ClassLoader.getSystemResource("sfx/dash_sound.wav").toString());
 		dashSound.setVolume(0.5);
 		
-		ultimateSoud = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
+		ultimateSoud = new AudioClip(ClassLoader.getSystemResource("sfx/ultimate_sound.wav").toString());
 		ultimateSoud.setVolume(0.5);
 		
 		mainFontName = ClassLoader.getSystemResource("font/spaceranger.ttf").toString();

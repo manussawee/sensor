@@ -2,6 +2,7 @@ package model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import lib.IRenderableHolder;
 import lib.Skill;
 
 public class DashSkill extends Skill {
@@ -14,7 +15,10 @@ public class DashSkill extends Skill {
 	@Override
 	public void action(int counter) {
 		// TODO Auto-generated method stub
-		if(counter - lastUse >= coolDown) lastUse = counter;
+		if(counter - lastUse >= coolDown) {
+			lastUse = counter;
+			IRenderableHolder.dashSound.play();
+		}
 	}
 	
 	@Override

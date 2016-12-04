@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.input.KeyCode;
+import lib.IRenderableHolder;
 import lib.UltimateSkill;
 import logic.GameManager;
 
@@ -19,6 +20,7 @@ public class SpeedSkill extends UltimateSkill {
 			isUse = true;
 			lastUse = counter;
 			hero.setMoveInterval(3);
+			IRenderableHolder.ultimateSoud.play();
 		}
 	}
 

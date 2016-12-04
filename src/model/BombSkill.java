@@ -22,6 +22,7 @@ public class BombSkill extends Skill {
 	public void action(int counter) {
 		// TODO Auto-generated method stub
 		if(counter - lastUse >= coolDown) {
+			IRenderableHolder.bombSound.play();
 			lastUse = counter;
 			bombX = hero.getX();
 			bombY = hero.getY();
