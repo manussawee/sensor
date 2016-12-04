@@ -15,7 +15,7 @@ public class ConfigurableOption {
 	public static KeyCode firstSkill = KeyCode.Z;
 	public static KeyCode secondSkill = KeyCode.X;
 	public static KeyCode ultimateSkill = KeyCode.C;
-	public static int matchTime = 10;
+	public static int matchTime = 180;
 	
 	public static KeyCode getKey(String keyName) {
 		if(keyName == "UP") return up;

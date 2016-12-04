@@ -25,7 +25,7 @@ public class Provider extends SocketService {
                 out.flush();
                 in = new ObjectInputStream(connection.getInputStream());
                  
-                Thread dataSyncthread = new Thread(() -> {
+                dataSyncthread = new Thread(() -> {
                 	syncData();
                 });
                 dataSyncthread.start();

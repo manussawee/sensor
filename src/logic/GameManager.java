@@ -1,9 +1,14 @@
 package logic;
 
+import javax.security.auth.login.Configuration;
+
+import application.Main;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import lib.ConfigurableOption;
 import lib.DefaultManager;
 import lib.IRenderableHolder;
+import lib.IRenderableObject;
 import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
@@ -36,6 +41,7 @@ public class GameManager extends DefaultManager {
 	private static TransparentBackground waitingBG;
 	private static GameText endingText;
 	private static GameText endingScore;
+	private static GameText endingSubText;
 	private static boolean isReady;
 	
 	private static int counter = 0;
@@ -55,17 +61,15 @@ public class GameManager extends DefaultManager {
 		scoreBar = new ScoreBar(ConfigurableOption.matchTime, ConfigurableOption.screenWidth / 2, 30, 5);
 		IRenderableHolder.getInstance().add(scoreBar);
 		IRenderableHolder.getInstance().add(map);
+		IRenderableHolder.getInstance().sort();
 		counter = 0;
-		
-		if(socketService != null) {
-			SocketService.stop();
-			socketService = null;
-		}
 		
 		if(gameType == "SERVER") {
 			isReady = false;
 			waitingText = new GameText("WAITING FOR PLAYER", ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2, 11, 0, 42, Color.WHITE, Color.WHITE);
 			waitingBG = new TransparentBackground(Color.color(0, 0, 0, 0.5), 10);
+			endingSubText = new GameText("PRESS ESC TO EXIT", ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 120, 13, 0, 20, Color.WHITE, Color.WHITE);
+			IRenderableHolder.getInstance().addAndSort(endingSubText);
 			IRenderableHolder.getInstance().addAndSort(waitingText);
 			IRenderableHolder.getInstance().addAndSort(waitingBG);
 			
@@ -86,7 +90,7 @@ public class GameManager extends DefaultManager {
 		}
 		
 		miniMap = new MiniMap(ConfigurableOption.screenWidth - 120, ConfigurableOption.screenHeight - 120, 5, myHero);
-		background = new Background(0);
+		background = new Background(-1);
 		
 		IRenderableHolder.getInstance().add(background);
 		IRenderableHolder.getInstance().add(miniMap);
@@ -94,6 +98,7 @@ public class GameManager extends DefaultManager {
 		
 		IRenderableHolder.stopAllSounds();
 		IRenderableHolder.gameSound.play();
+
 	}
 	
 	public static boolean isReady() {
@@ -192,11 +197,14 @@ public class GameManager extends DefaultManager {
 			myHero.update(counter);
 			enemyHero.update(counter);
 			scoreBar.update(counter);
-			map.update(counter);
 			if(myHero.getUltimateSkill().isActive()) background.setFastOffset(true);
 			else background.setFastOffset(false);
 		}
+		else {
+			checkExit();
+		}
 		
+		map.update(counter);
 		background.update(counter);
 
 		if(endingText != null) endingText.update(counter);
@@ -228,13 +236,23 @@ public class GameManager extends DefaultManager {
 		else if(myScore < enemyScore) message = "DEFEAT";
 		else message = "DRAW";
 		
-		endingText = new GameText(message, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 - 50, 11, 1, 100, color, Color.WHITE);
-		endingScore = new GameText(myScore + " - " + enemyScore, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 + 10, 11, 0, 48, Color.WHITE, Color.WHITE);
+		endingText = new GameText(message, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 - 50, 15, 1, 100, color, Color.WHITE);
+		endingScore = new GameText(myScore + " - " + enemyScore, ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight / 2 + 10, 14, 0, 48, Color.WHITE, Color.WHITE);
+		endingSubText = new GameText("PRESS ESC TO EXIT", ConfigurableOption.screenWidth / 2, ConfigurableOption.screenHeight - 120, 13, 0, 20, Color.WHITE, Color.WHITE);
 		waitingBG = new TransparentBackground(Color.color(0, 0, 0, 0.5), 10);
 		
 		IRenderableHolder.getInstance().add(waitingBG);
 		IRenderableHolder.getInstance().add(endingText);
-		IRenderableHolder.getInstance().addAndSort(endingScore);
+		IRenderableHolder.getInstance().add(endingSubText);
+		IRenderableHolder.getInstance().add(endingScore);
+		IRenderableHolder.getInstance().sort();
+	}
+
+	private static void checkExit() {
+		// TODO Auto-generated method stub
+		if(InputUtility.getKeyTriggered(KeyCode.ESCAPE)) {
+			System.exit(0);
+		}
 	}
 
 }

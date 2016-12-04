@@ -27,7 +27,6 @@ public class StartManager extends DefaultManager {
 	public StartManager() {
 		
 		IRenderableHolder.getInstance().getEntities().clear();
-//		if(SocketService.isEnable()) SocketService.stop();
 		
 		background = new Background(0);
 		gameTitle = new GameText("STARBRAWL", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);

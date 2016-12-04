@@ -93,7 +93,6 @@ public class Map implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
-		
 		gc.setStroke(borderColor);
 		gc.setLineWidth(lineWidth);
 		gc.setGlobalAlpha(alpha);

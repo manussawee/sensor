@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lib.DefaultManager;
+import logic.GameManager;
 import logic.StartManager;
 import javafx.scene.Scene;
 import ui.GameScreen;
@@ -73,6 +74,11 @@ public class Main extends Application {
 	
 	public void drawGameScreen(){
 		gameScreen.paintComponent();
+	}
+
+	public static DefaultManager getCurrentManager() {
+		// TODO Auto-generated method stub
+		return currentManager;
 	}
 	
 }

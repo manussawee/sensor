@@ -62,6 +62,7 @@ public class Background implements IRenderableObject {
 	@Override
 	public void render(GraphicsContext gc) {
 		// TODO Auto-generated method stub
+
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
 				gc.drawImage(IRenderableHolder.backgroundFrames[(this.framesCounter / this.delays[i][j]) % 6], j * frameWidth - this.offsetX, i * frameHeight);

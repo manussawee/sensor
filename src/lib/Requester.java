@@ -26,7 +26,7 @@ public class Requester extends SocketService {
 	            out.flush();
 	            in = new ObjectInputStream(requestSocket.getInputStream());
 	            
-	            Thread dataSyncthread = new Thread(() -> {
+	            dataSyncthread = new Thread(() -> {
                 	syncData();
                 });
                 dataSyncthread.start();

@@ -17,8 +17,9 @@ public abstract class SocketService {
 	
 	protected static ServerSocket providerSocket;
 	protected static ObjectOutputStream out;
-	protected ObjectInputStream in;
+	protected static Thread dataSyncthread;
 	protected static Thread thread;
+	protected ObjectInputStream in;
 	protected static boolean isStop = true;
 	protected String message;
     protected Data data;
@@ -50,17 +51,7 @@ public abstract class SocketService {
 			System.err.println("IO ERROR");
 			isStop = true;
 		}
-	}
-	
-	public static boolean isEnable() {
-		return !isStop;
-	}
-	
-	public static void stop() {
-		thread.interrupt();
-		
-	}
-	    
+	}   
 	
 	public void sendMove(String direction) {
     	sendMessage("MOVE " + direction);
@@ -161,6 +152,7 @@ public abstract class SocketService {
 				// TODO Auto-generated catch block
 				System.err.print(mode);
 				e.printStackTrace();
+				break;
 			}
     	}
 	}
@@ -170,7 +162,11 @@ public abstract class SocketService {
             try{
             	message = (String)in.readObject();
             	data = new Data(message);
-                dataController(data); 
+                dataController(data);
+                Thread.sleep(1000/60);
+            }
+            catch (InterruptedException e) {
+            	break;
             }
             catch (EOFException e) {
             	System.err.print(mode);

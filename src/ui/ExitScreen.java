@@ -19,7 +19,7 @@ public class ExitScreen extends Alert {
 		Platform.runLater(() -> {
 			Optional<ButtonType> result = this.showAndWait();
 			if (result.get() == ButtonType.OK){
-			    Main.getPrimaryStage().close();
+			    System.exit(0);
 			} else {
 			    this.close();
 			}

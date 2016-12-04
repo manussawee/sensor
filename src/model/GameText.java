@@ -148,7 +148,7 @@ public class GameText implements IRenderableObject {
 		if(lineWidth != 0) {
 			gc.strokeText(text, x, y);
 		}
-		
+ 		
 		if(shockFront && isShock) {
 			gc.setGlobalAlpha(0.5);
 			gc.setFill(shockColor);

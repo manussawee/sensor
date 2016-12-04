@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Map;
+
+import application.Main;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -12,6 +15,8 @@ import lib.ConfigurableOption;
 import lib.IRenderableHolder;
 import lib.IRenderableObject;
 import lib.InputUtility;
+import logic.GameManager;
+import logic.StartManager;
 
 public class GameScreen extends StackPane {
 	
@@ -33,6 +38,9 @@ public class GameScreen extends StackPane {
 
 		// render 
 		for(IRenderableObject renderable: IRenderableHolder.getInstance().getEntities()) {
+			if(renderable instanceof Map) {
+				System.out.println("HI");
+			}
 			if(renderable.isVisible()) renderable.render(gc);
 		}
 	}
