@@ -96,7 +96,7 @@ public class IRenderableHolder {
 		mouseOverSound.setVolume(0.5);
 		
 		mouseClickSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
-		mouseClickSound.setVolume(0.5);
+		mouseClickSound.setVolume(1);
 		
 		bombSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
 		bombSound.setVolume(0.5);

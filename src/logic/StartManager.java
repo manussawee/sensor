@@ -30,7 +30,7 @@ public class StartManager extends DefaultManager {
 		IRenderableHolder.getInstance().getEntities().clear();
 		
 		background = new Background(0);
-		gameTitle = new GameText("NONAME", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
+		gameTitle = new GameText("STARBRAWL", ConfigurableOption.screenWidth / 2, 100, 1, 0, 100, Color.ORANGE, Color.WHITE);
 		startButton = new GameButton("PLAY", 50, 285, 1, 200, 75, 3, 75, Color.WHITE, Color.BLACK);
 		settingsButton = new GameButton("OPTIONS", 50, 360, 1, 320, 75, 3, 75, Color.WHITE, Color.BLACK);
 		exitButton = new GameButton("EXIT", 50, 435, 1, 180, 75, 3, 75, Color.WHITE, Color.BLACK);
@@ -61,6 +61,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new ConnectionScreen();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else if(pointObject == settingsButton) {
@@ -72,6 +73,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new OptionsScreen();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else if(pointObject == exitButton) {
@@ -83,6 +85,7 @@ public class StartManager extends DefaultManager {
 			// click
 			if(InputUtility.isMouseLeftDown()) {
 				new ExitScreen();
+				IRenderableHolder.mouseClickSound.play();
 			}
 		}
 		else {

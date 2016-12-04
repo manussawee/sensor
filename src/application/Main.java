@@ -23,7 +23,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		instance = this;
 		Main.primaryStage = primaryStage;
-		Main.primaryStage.setTitle("NONAME");
+		Main.primaryStage.setTitle("STARBRAWL");
 		Main.primaryStage.setResizable(false);
 		Main.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
