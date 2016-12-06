@@ -38,16 +38,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="lib.SocketService" project="ProgMethGame" 
-    file="/ProgMethGame/src/lib/SocketService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1371" y="174"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="6" language="java" name="lib.IRenderableObject" project="ProgMethGame" 
+  <interface id="5" language="java" name="lib.IRenderableObject" project="ProgMethGame" 
     file="/ProgMethGame/src/lib/IRenderableObject.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1058" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -56,7 +47,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="lib.Provider" project="ProgMethGame" file="/ProgMethGame/src/lib/Provider.java" 
+  <class id="6" language="java" name="lib.Provider" project="ProgMethGame" file="/ProgMethGame/src/lib/Provider.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1267" y="572"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -65,7 +56,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="lib.IRenderableHolder" project="ProgMethGame" 
+  <class id="7" language="java" name="lib.IRenderableHolder" project="ProgMethGame" 
     file="/ProgMethGame/src/lib/IRenderableHolder.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="569" width="276" x="667" y="-64"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -74,7 +65,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="lib.ConfigurableOption" project="ProgMethGame" 
+  <class id="8" language="java" name="lib.ConfigurableOption" project="ProgMethGame" 
     file="/ProgMethGame/src/lib/ConfigurableOption.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="430" y="635"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -83,7 +74,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="lib.Requester" project="ProgMethGame" file="/ProgMethGame/src/lib/Requester.java" 
+  <class id="9" language="java" name="lib.Requester" project="ProgMethGame" file="/ProgMethGame/src/lib/Requester.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1415" y="569"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -92,7 +83,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="lib.DefaultManager" project="ProgMethGame" 
+  <class id="10" language="java" name="lib.DefaultManager" project="ProgMethGame" 
     file="/ProgMethGame/src/lib/DefaultManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="230" y="359"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -101,30 +92,48 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="lib.Data" project="ProgMethGame" file="/ProgMethGame/src/lib/Data.java" 
+  <class id="11" language="java" name="lib.Data" project="ProgMethGame" file="/ProgMethGame/src/lib/Data.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="206" y="166"/>    
+    <position height="-1" width="-1" x="244" y="154"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="13">    
+  <class id="12" language="java" name="lib.SocketService" project="ProgMethGame" 
+    file="/ProgMethGame/src/lib/SocketService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1378" y="176"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="lib.DataFormatException" project="ProgMethGame" 
+    file="/ProgMethGame/src/lib/DataFormatException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="226" y="524"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="14">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
-  <generalization id="14">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
   <realization id="15">    
     <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="TARGET" refId="5"/>  
   </realization>  
   <generalization id="16">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

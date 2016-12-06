@@ -4,8 +4,13 @@ public class Data {
 	private String option;
 	private String data;
 	
-	public Data(String allData) {
+	public Data(String allData) throws DataFormatException {
 		String[] rawData = allData.split(" ");
+		
+		if(rawData.length > 2 || rawData.length == 0) {
+			throw new DataFormatException();
+		}
+		
 		this.option = rawData[0];
 		this.data = rawData[1];
 	}

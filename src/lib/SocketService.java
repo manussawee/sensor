@@ -36,7 +36,7 @@ public abstract class SocketService {
 		}
 	}
 	
-	static void sendMessage(String msg) {
+	protected static synchronized void sendMessage(String msg) {
 		try {
 			out.writeObject(msg);
 			out.flush();
@@ -164,6 +164,10 @@ public abstract class SocketService {
             	data = new Data(message);
                 dataController(data);
                 Thread.sleep(1000/60);
+            }
+            catch (DataFormatException e)  {
+            	System.err.println(mode);
+            	System.err.println("WRONG FORMAT DATA");
             }
             catch (InterruptedException e) {
             	break;

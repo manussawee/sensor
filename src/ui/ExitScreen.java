@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Optional;
 
-import application.Main;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

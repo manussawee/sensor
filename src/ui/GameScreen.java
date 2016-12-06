@@ -2,7 +2,6 @@ package ui;
 
 import java.util.Map;
 
-import application.Main;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -15,8 +14,6 @@ import lib.ConfigurableOption;
 import lib.IRenderableHolder;
 import lib.IRenderableObject;
 import lib.InputUtility;
-import logic.GameManager;
-import logic.StartManager;
 
 public class GameScreen extends StackPane {
 	

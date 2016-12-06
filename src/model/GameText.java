@@ -5,7 +5,6 @@ import java.util.Random;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import lib.IRenderableHolder;
 import lib.IRenderableObject;

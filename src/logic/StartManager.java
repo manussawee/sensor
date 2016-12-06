@@ -6,7 +6,6 @@ import lib.DefaultManager;
 import lib.IRenderableHolder;
 import lib.InputUtility;
 import lib.Pointable;
-import lib.SocketService;
 import model.Background;
 import model.GameButton;
 import model.GameText;

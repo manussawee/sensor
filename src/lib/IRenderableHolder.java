@@ -95,10 +95,10 @@ public class IRenderableHolder {
 		gameSound.setCycleCount((int) Double.POSITIVE_INFINITY);
 		
 		mouseOverSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseover_sound.wav").toString());
-		mouseOverSound.setVolume(0.5);
+		mouseOverSound.setVolume(0.2);
 		
 		mouseClickSound = new AudioClip(ClassLoader.getSystemResource("sfx/mouseclick_sound.wav").toString());
-		mouseClickSound.setVolume(1);
+		mouseClickSound.setVolume(0.2);
 		
 		bombSound = new AudioClip(ClassLoader.getSystemResource("sfx/bomb_sound.wav").toString());
 		bombSound.setVolume(0.5);

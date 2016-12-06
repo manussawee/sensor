@@ -1,14 +1,10 @@
 package logic;
 
-import javax.security.auth.login.Configuration;
-
-import application.Main;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import lib.ConfigurableOption;
 import lib.DefaultManager;
 import lib.IRenderableHolder;
-import lib.IRenderableObject;
 import lib.InputUtility;
 import lib.Provider;
 import lib.Requester;
@@ -122,6 +118,9 @@ public class GameManager extends DefaultManager {
 			}
 			if(IRenderableHolder.getInstance().getEntities().contains(waitingBG)) {
 				IRenderableHolder.getInstance().getEntities().remove(waitingBG);
+			}
+			if(IRenderableHolder.getInstance().getEntities().contains(endingSubText)) {
+				IRenderableHolder.getInstance().getEntities().remove(endingSubText);
 			}
 			scoreBar.setStart(true);
 		}
