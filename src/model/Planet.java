@@ -1,3 +1,5 @@
+// planet animation controller
+
 package model;
 
 import java.util.Random;

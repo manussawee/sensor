@@ -1,3 +1,5 @@
+// status bar with score and time counter
+
 package model;
 
 import javafx.geometry.VPos;

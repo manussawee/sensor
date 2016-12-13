@@ -1,3 +1,5 @@
+// game settings
+
 package lib;
 
 import javafx.scene.input.KeyCode;

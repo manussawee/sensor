@@ -1,3 +1,5 @@
+// just button with effect
+
 package model;
 
 import javafx.geometry.VPos;

@@ -1,3 +1,5 @@
+// receiving input class
+
 package lib;
 
 import java.util.ArrayList;

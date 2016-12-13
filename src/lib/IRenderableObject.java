@@ -1,3 +1,5 @@
+// template of displayed object
+
 package lib;
 
 import javafx.scene.canvas.GraphicsContext;

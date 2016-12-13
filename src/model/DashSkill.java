@@ -1,3 +1,5 @@
+// moving faster skill in short duration
+
 package model;
 
 import javafx.scene.canvas.GraphicsContext;

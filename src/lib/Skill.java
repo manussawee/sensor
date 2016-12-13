@@ -1,3 +1,5 @@
+// template of skill
+
 package lib;
 
 import javafx.scene.canvas.GraphicsContext;

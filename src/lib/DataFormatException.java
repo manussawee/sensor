@@ -1,3 +1,5 @@
+// Data format checking (Custom exception)
+
 package lib;
 
 public class DataFormatException extends Exception {

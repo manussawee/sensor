@@ -1,3 +1,5 @@
+// background that make the text is more obvious
+
 package model;
 
 import javafx.scene.canvas.GraphicsContext;

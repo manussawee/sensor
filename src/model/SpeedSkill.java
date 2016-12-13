@@ -1,3 +1,5 @@
+// ultimate skill make the hero is moving faster in the long duration
+
 package model;
 
 import javafx.scene.input.KeyCode;

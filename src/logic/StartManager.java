@@ -1,3 +1,5 @@
+// manager of menu screen
+
 package logic;
 
 import javafx.scene.paint.Color;

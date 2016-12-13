@@ -1,3 +1,5 @@
+// create client and connect to the server
+
 package lib;
 
 import java.io.*;

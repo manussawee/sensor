@@ -1,3 +1,5 @@
+// template of data to transfer with another player
+
 package lib;
 
 public class Data {

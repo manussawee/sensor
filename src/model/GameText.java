@@ -1,3 +1,5 @@
+// just text with effect
+
 package model;
 
 import java.util.Random;

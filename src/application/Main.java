@@ -1,3 +1,5 @@
+// main class to launch gui
+
 package application;
 
 import javafx.animation.AnimationTimer;

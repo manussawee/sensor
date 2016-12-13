@@ -1,3 +1,5 @@
+// mini map controller
+
 package model;
 
 import javafx.scene.canvas.GraphicsContext;

@@ -1,3 +1,5 @@
+// template of manager
+
 package lib;
 
 public abstract class DefaultManager {

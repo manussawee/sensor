@@ -1,3 +1,5 @@
+// map animation and logic controller
+
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -62,6 +64,7 @@ public class Map implements IRenderableObject {
 		}
 	}
 	
+	// animation of the map border
 	private void breathBorder(int counter) {
 		this.lineWidth = (double) (counter % breathingInterval + 1) / breathingInterval * 4;
 		this.alpha = (double) (breathingInterval - (counter % breathingInterval + 1)) / breathingInterval;

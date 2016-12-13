@@ -1,3 +1,5 @@
+// settings screen
+
 package ui;
 
 import javafx.application.Platform;

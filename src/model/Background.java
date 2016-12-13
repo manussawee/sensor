@@ -1,3 +1,5 @@
+// background animation controller
+
 package model;
 
 import java.util.Random;

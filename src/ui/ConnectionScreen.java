@@ -1,3 +1,5 @@
+// network settings screen
+
 package ui;
 
 import application.Main;

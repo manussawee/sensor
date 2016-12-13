@@ -1,3 +1,5 @@
+// hero or spaceship class
+
 package model;
 
 import java.util.ArrayList;

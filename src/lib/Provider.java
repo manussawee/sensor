@@ -1,3 +1,5 @@
+// create the server of the game
+
 package lib;
 
 import java.io.*;

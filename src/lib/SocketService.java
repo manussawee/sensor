@@ -1,3 +1,5 @@
+// template of class about networking (using exception and runLater)
+
 package lib;
 
 import java.io.EOFException;

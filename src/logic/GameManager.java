@@ -1,3 +1,5 @@
+// game manager
+
 package logic;
 
 import javafx.scene.input.KeyCode;
@@ -39,7 +41,6 @@ public class GameManager extends DefaultManager {
 	private static GameText endingScore;
 	private static GameText endingSubText;
 	private static boolean isReady;
-	
 	private static int counter = 0;
 	
 	public static int getCounter() {
